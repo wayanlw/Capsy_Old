@@ -1,7 +1,6 @@
-#lwwkeymap
 Using the Useless CapsLock key to achive efficiency, staying in the home row.
 
-##Functionality:
+Functionality:
 - Deactivates capslock for normal (accidental) use.
 - Hold Capslock and drag anywhere in a window to move it (not just the title bar).
 - Access the following functions when pressing Capslock: 
