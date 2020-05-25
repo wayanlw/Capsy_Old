@@ -39,7 +39,7 @@ sometimes alt key binds to menu key. Then click escape and type the shortcut aga
 
 ; Make Capslock & Alt Equivalent to Control+Alt
 ;!Capslock ::SendInput {LAlt Up}{LCtrl down} 
-;!Capslock up ::SendInput {LCtrl up} 
+;!CapsloWck up ::SendInput {LCtrl up} 
 ;Capslock & b::SendInput {Blind}{Insert Down}
 */
 
@@ -47,17 +47,18 @@ sometimes alt key binds to menu key. Then click escape and type the shortcut aga
 
 
 
+
 #SingleInstance, Force
 
->^q::ExitApp
 MsgBox press RCtrl+Q to Exit
+
 
 #Persistent
 SetCapsLockState, AlwaysOff
+
 SetScrollLockState, AlwaysOff
 
-RAlt::ESC ;map right alt to escape 
-
+RAlt::ESC
 
 /*
 ;#################### NORMAL MODE ###############################
@@ -98,6 +99,9 @@ return
 Capslock & j::Send {Blind}{Left DownTemp}
 Capslock & j up::Send {Blind}{Left Up}
 
+Capslock & h::Send {Blind}{Left DownTemp}
+Capslock & h up::Send {Blind}{Left Up}
+
 Capslock & k::Send {Blind}{Down DownTemp}
 Capslock & k up::Send {Blind}{Down Up}
 
@@ -108,6 +112,11 @@ Capslock & l::Send {Blind}{Right DownTemp}
 Capslock & l up::Send {Blind}{Right Up}
 
 ;#################### END NORMAL MODE ###############################
+
+
+
+
+
 
 
 
@@ -184,7 +193,7 @@ Capslock & p up::SendInput {Blind}{End Up}
 
 ; Capslock + werq (close tab or window, press esc)
 
-Capslock & w::SendInput {Ctrl down}{F4}{Ctrl up}
+Capslock & w::SendInput {Ctrl down}{w down}{Ctrl up}
 Capslock & e::SendInput {Alt down}{F4}{Alt up}
 
 Capslock & q::SendInput {Blind}{Esc Down}
@@ -215,8 +224,8 @@ Capslock & m::SendInput {Blind}{Del Down}
 Capslock & BS::SendInput {Blind}{BS Down}
 
 ; Capslock + ,/. (undo/redo)
-Capslock & z::SendInput {Ctrl Down}{z Down}
-Capslock & z up::SendInput {Ctrl Up}{z Up}
+Capslock & ,::SendInput {Ctrl Down}{z Down}
+Capslock & , up::SendInput {Ctrl Up}{z Up}
 
 Capslock & r::SendInput {Ctrl Down}{y Down}
 Capslock & r up::SendInput {Ctrl Up}{y Up}
@@ -255,11 +264,10 @@ Capslock & SC027::send {Enter}
 
 ; Make Win Key + Capslock work like Capslock (in case it's ever needed)
 #Capslock::
-    If GetKeyState("CapsLock", "T") = 1
-        SetCapsLockState, AlwaysOff
-    Else 
-        SetCapsLockState, AlwaysOn
-
+If GetKeyState("CapsLock", "T") = 1
+    SetCapsLockState, AlwaysOff
+Else 
+    SetCapsLockState, AlwaysOn
 Return
 
 
@@ -348,5 +356,17 @@ return
 
 
 ;########################## End Drag Windows ##################################################################
+
+
+
+
+
+
+;RightCtrl+q to exit the macro
+>^q::ExitApp
+MsgBox "press RCtrl+Q to Exit"
+
+
+
 
 
