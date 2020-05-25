@@ -1,3 +1,9 @@
+;###################################            Start Header      ############################################
+; Autohotkey Capslock Remapping Script 
+; Danik
+; More info at http://danikgames.com/blog/?p=714
+; danikgames.com
+; 
 ; Functionality:
 ; - Deactivates capslock for normal (accidental) use.
 ; - Hold Capslock and drag anywhere in a window to move it (not just the title bar).
@@ -26,15 +32,7 @@
 
 /*
 ;####################### AvailableKeys and keys to reuse ##################
-w,e,r
-
 sometimes alt key binds to menu key. Then click escape and type the shortcut again
-
-; Capslock + wer (close tab or window, press esc)
-
-Capslock & w::SendInput {Ctrl down}{F4}{Ctrl up}
-Capslock & e::SendInput {Alt down}{F4}{Alt up}
-Capslock & r::SendInput {Blind}{Esc Down}
 
 ; Make Capslock & Enter equivalent to Control+Enter
 ;Capslock & Enter::SendInput {Ctrl down}{Enter}{Ctrl up}
@@ -43,46 +41,29 @@ Capslock & r::SendInput {Blind}{Esc Down}
 ;!Capslock ::SendInput {LAlt Up}{LCtrl down} 
 ;!Capslock up ::SendInput {LCtrl up} 
 ;Capslock & b::SendInput {Blind}{Insert Down}
-
-;############## Normal mode 
-; Capslock + jkli (left, down, up, right)
-
-Capslock & j::Send {Blind}{Left DownTemp}
-Capslock & j up::Send {Blind}{Left Up}
-
-Capslock & k::Send {Blind}{Down DownTemp}
-Capslock & k up::Send {Blind}{Down Up}
-
-Capslock & i::Send {Blind}{Up DownTemp}
-Capslock & i up::Send {Blind}{Up Up}
-
-Capslock & l::Send {Blind}{Right DownTemp}
-Capslock & l up::Send {Blind}{Right Up}
-
-;############## VIM Mode
-; VIM MODE:Capslock + hjkl (left, down, up, right)
-Capslock & h::Send {Blind}{Left DownTemp}
-Capslock & h up::Send {Blind}{Left Up}
-
-Capslock & j::Send {Blind}{Down DownTemp}
-Capslock & j up::Send {Blind}{Down Up}
-
-Capslock & k::Send {Blind}{Up DownTemp}
-Capslock & k up::Send {Blind}{Up Up}
-
-Capslock & l::Send {Blind}{Right DownTemp}
-Capslock & l up::Send {Blind}{Right Up}
-
 */
 
+;###################################            End Header      ############################################
+
+
+
+#SingleInstance, Force
+
+>^q::ExitApp
 MsgBox press RCtrl+Q to Exit
 
 #Persistent
 SetCapsLockState, AlwaysOff
 SetScrollLockState, AlwaysOff
 
+RAlt::ESC ;map right alt to escape 
+
+
+/*
 ;#################### NORMAL MODE ###############################
-; Capslock + ijkl (up, left, down, pgdn)
+; Capslock + ijkl (up, left, down, right)
+
+;### Normal Mode with Alt
 CapsLock & i::
     if getkeystate("alt") = 0
         Send,{Up}
@@ -110,11 +91,33 @@ CapsLock & l::
         Send,^{Right}
 return
 
+*/
+;###### Normal mode wo Alt
+; Capslock + jkli (left, down, up, right)
+
+Capslock & j::Send {Blind}{Left DownTemp}
+Capslock & j up::Send {Blind}{Left Up}
+
+Capslock & k::Send {Blind}{Down DownTemp}
+Capslock & k up::Send {Blind}{Down Up}
+
+Capslock & i::Send {Blind}{Up DownTemp}
+Capslock & i up::Send {Blind}{Up Up}
+
+Capslock & l::Send {Blind}{Right DownTemp}
+Capslock & l up::Send {Blind}{Right Up}
+
 ;#################### END NORMAL MODE ###############################
 
+
+
+
+
 /*
-#################### Start VIM MODE ################################
+;#################### Start VIM MODE ################################
 ; VIM MODE:Capslock + hjkl (left, down, up, right)
+
+;####  VIM mode with alt as shift
 
 CapsLock & k::
     if getkeystate("alt") = 0
@@ -140,8 +143,30 @@ CapsLock & l::
     else
         Send,+{Right}
 return
+
+
+;##### VIM mode wo alt as shift
+Capslock & h::Send {Blind}{Left DownTemp}
+Capslock & h up::Send {Blind}{Left Up}
+
+Capslock & j::Send {Blind}{Down DownTemp}
+Capslock & j up::Send {Blind}{Down Up}
+
+Capslock & k::Send {Blind}{Up DownTemp}
+Capslock & k up::Send {Blind}{Up Up}
+
+Capslock & l::Send {Blind}{Right DownTemp}
+Capslock & l up::Send {Blind}{Right Up}
+
+;make i escape for accidental presses 
+Capslock & i::
+
 ;####################### End Vim Mode #####################################
+
 */
+
+
+
 
 ; Capslock + ypuo (home, end, pgup, pgdn)
 
@@ -157,43 +182,54 @@ Capslock & y up::SendInput {Blind}{Home Up}
 Capslock & P::SendInput {Blind}{End Down}
 Capslock & p up::SendInput {Blind}{End Up}
 
-; Capslock + asdf (select all, cut-copy-paste)
+; Capslock + werq (close tab or window, press esc)
 
-Capslock & a::SendInput {Ctrl Down}{x Down}
-Capslock & a up::SendInput {Ctrl Up}{x Up}
+Capslock & w::SendInput {Ctrl down}{F4}{Ctrl up}
+Capslock & e::SendInput {Alt down}{F4}{Alt up}
 
-Capslock & s::SendInput {Ctrl Down}{c Down}
-Capslock & s up::SendInput {Ctrl Up}{c Up}
-Capslock & x::SendInput ^x
-<!x::^x
-
-Capslock & d::SendInput {Ctrl Down}{v Down}
-Capslock & d up::SendInput {Ctrl Up}{v Up}
-Capslock & c::SendInput ^c
-
-Capslock & f::SendInput {Ctrl Down}{a Down} 
-Capslock & f up::SendInput {Ctrl Up}{a Up}
-Capslock & v::SendInput ^v
-
-; Capslock + nm ( backspace, del)
-Capslock & m::SendInput {Blind}{Del Down}
-Capslock & n::SendInput {Blind}{BS Down}
-Capslock & BS::SendInput {Blind}{BS Down}
-
-; Capslock + ,/. (undo/redo)
-Capslock & ,::SendInput {Ctrl Down}{z Down}
-Capslock & , up::SendInput {Ctrl Up}{z Up}
-
-Capslock & .::SendInput {Ctrl Down}{y Down}
-Capslock & . up::SendInput {Ctrl Up}{y Up}
-
-; Capslock + q Esc
 Capslock & q::SendInput {Blind}{Esc Down}
 Capslock & q up::SendInput {Blind}{Esc Up}
 
+; Capslock + asdf (select all, cut-copy-paste)
+
+Capslock & s::SendInput {Ctrl Down}{x Down}
+Capslock & s up::SendInput {Ctrl Up}{x Up}
+
+Capslock & d::SendInput {Ctrl Down}{c Down}
+Capslock & d up::SendInput {Ctrl Up}{c Up}
+
+Capslock & f::SendInput {Ctrl Down}{v Down}
+Capslock & f up::SendInput {Ctrl Up}{v Up}
+
+
+Capslock & a::SendInput {Ctrl Down}{a Down} 
+Capslock & a up::SendInput {Ctrl Up}{a Up}
+
+Capslock & x::SendInput ^x
+Capslock & c::SendInput ^c
+Capslock & v::SendInput ^v
+
+; Capslock + nm ( backspace, del)
+Capslock & n::SendInput {Blind}{BS Down}
+Capslock & m::SendInput {Blind}{Del Down}
+Capslock & BS::SendInput {Blind}{BS Down}
+
+; Capslock + ,/. (undo/redo)
+Capslock & z::SendInput {Ctrl Down}{z Down}
+Capslock & z up::SendInput {Ctrl Up}{z Up}
+
+Capslock & r::SendInput {Ctrl Down}{y Down}
+Capslock & r up::SendInput {Ctrl Up}{y Up}
+
+
+;Find search as / 
+Capslock & /::SendInput {Ctrl Down}{f Down}
+Capslock & / up::SendInput {Ctrl Up}{f Up}
+
+
 ; Make Capslock + Space -> Ctrl
-Capslock & Space::SendInput {Ctrl Down}
-Capslock & Space Up::SendInput {Ctrl Up}
+Capslock & Space::SendInput {Blind}{Ctrl Down}
+Capslock & Space Up::SendInput {Blind}{Ctrl Up}
 
 ; Make Capslock + Tab -> Shift
 Capslock & Tab::SendInput {Blind}{shift Down}
@@ -223,9 +259,51 @@ Capslock & SC027::send {Enter}
         SetCapsLockState, AlwaysOff
     Else 
         SetCapsLockState, AlwaysOn
+
 Return
 
-;########################## Drag Windows ##################################################################
+
+
+;######################################    Start Shortcuts    #####################################
+
+;Google lookup
+#s::
+    OldClipboard:= Clipboard
+    Clipboard:= ""
+    Send, ^c ;copies selected text
+    ClipWait
+    Run C:\Program Files (x86)\Google\Chrome\Application\chrome.exe http://www.google.com/search?q="%Clipboard%"&num=100&source=lnms&filter=0
+    Sleep 200
+    Clipboard:= OldClipboard
+    Send, ^c ;copies selected text
+Return
+
+#i::
+    OldClipboard:= Clipboard
+    Clipboard:= ""
+    ClipWait
+    Run C:\Program Files (x86)\Google\Chrome\Application\chrome.exe https://www.google.com/search?q="%clipboard%"&num=100&source=lnms&tbm=isch&filter=0
+    Sleep 200
+    Clipboard:= OldClipboard
+Return
+
+#x:: Run Excel
+
+
+
+
+;######################################    End Shortcuts    #####################################
+
+
+
+
+
+
+
+
+
+
+;########################## Start Drag Windows ##################################################################
 
 ; Drag windows anywhere
 ;
@@ -263,30 +341,12 @@ EWD_WatchMouse:
     WinGetPos, EWD_WinX, EWD_WinY,,, ahk_id %EWD_MouseWin%
     SetWinDelay, -1 ; Makes the below move faster/smoother.
     WinMove, ahk_id %EWD_MouseWin%,, EWD_WinX + EWD_MouseX - EWD_MouseStartX, EWD_WinY + EWD_MouseY - EWD_MouseStartY
+    WinActivate, ahk_id %EWD_MouseWin%
     EWD_MouseStartX := EWD_MouseX ; Update for the next timer-call to this subroutine.
-    EWD_MouseStartY := EWD_MouseY
+    EWD_MouseStartY := EWD_MouseY ;bring the window to the front(foreground)
 return
 
-;Google lookup
-#d::
-    OldClipboard:= Clipboard
-    Clipboard:= ""
-    Send, ^c ;copies selected text
-    ClipWait
-    Run C:\Program Files (x86)\Google\Chrome\Application\chrome.exe http://www.google.com/search?q=%Clipboard%&num=100&source=lnms&filter=0
-    Sleep 200
-    Clipboard:= OldClipboard
-Return
 
-#i::
-    OldClipboard:= Clipboard
-    Clipboard:= ""
-    Send, ^c ;copies selected text
-    ClipWait
-    Run C:\Program Files (x86)\Google\Chrome\Application\chrome.exe https://www.google.com/search?q=%clipboard%&num=100&source=lnms&tbm=isch&filter=0
-    Sleep 200
-    Clipboard:= OldClipboard
-Return
+;########################## End Drag Windows ##################################################################
 
->^q::ExitApp
 
