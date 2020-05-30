@@ -1,0 +1,1 @@
+gReplace, NoLineBreak, New_Clipboard, %LineBreak%, `.%A_Space% , All. 	StringReplace, Speak, NoLineBreak, , , All. 	Clipboard:=Old_Clipboard. 	FileDelete, Speak
