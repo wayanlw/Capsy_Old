@@ -1,0 +1,254 @@
+/*
+When Pressing The Middle Mouse Remap Button
+Click It One Then User UP and DOWN Arrow
+Keys
+
+The Arrow Keys Control The Mouse
+
+Up = Mouse Move Up
+Down = Mouse Move Down
+Left = Mouse Move Left
+Right = Mouse Move Right
+
+Home MouseWheel Up
+
+End MouseWheel Down
+
+Delete Left Mouse Button
+
+Page Down Right Mouse Button
+
+Insert Middle Mouse Button
+*/
+
+#Persistent
+SetCapsLockState, AlwaysOff
+SetScrollLockState, AlwaysOff
+
+;Capslock & j::Send {Blind}{Left DownTemp}
+
+SetBatchLines -1 
+#UseHook 
+Increment = 2
+MouseDelay = 0 
+
+6::
+7:: 
+8:: 
+9:: 
+0:: 
+F9::
+
+
+    xVal= 
+    yVal= 
+    If GetKeyState("CapsLock","P")=1 
+    { 
+        IncrementValue := Increment 
+        Loop, 
+        { 
+            If (A_Index > IncrementValue * 15) and (IncrementValue < Increment * 5) 
+                IncrementValue := IncrementValue * 2 
+            If GetKeyState("8", "P") ;DOWN
+                yVal := IncrementValue 
+            Else If GetKeyState("F9", "P") ; UP
+                yVal := -IncrementValue 
+            If !yVal 
+                yVal := 0 
+            If GetKeyState("7", "P") ;LEFT
+                xVal := -IncrementValue 
+            Else If GetKeyState("9", "P") ;RIGHT
+                xVal := IncrementValue 
+            If !xVal 
+                xVal := 0 
+            If GetKeyState(A_ThisHotKey, "P") 
+                MouseMove, %xVal%, %yVal%,%MouseDelay%,R 
+            Else 
+                Break 
+            
+        } 
+        
+    } 
+ 
+    Else 
+    Send % "{" . A_ThisHotKey . "}" 
+   
+    
+    900--098777
+
+return 
+
+Capslock & 0::SendInput {LButton}
+
+
+/*
+Home:: Send {WheelUp}
+End:: Send {WheelDown}
+capslock &:: Send {LButton}
+PgDn:: Send {RButton}
+Insert:: Send {MButton}
+*/
+
+    Capslock & j::Send {Blind}{Left DownTemp}
+    Capslock & j up::Send {Blind}{Left Up}
+    
+    Capslock & h::Send {Blind}{Left DownTemp}
+    Capslock & h up::Send {Blind}{Left Up}
+    
+    Capslock & k::Send {Blind}{Down DownTemp}
+    Capslock & k up::Send {Blind}{Down Up}
+    
+    Capslock & i::Send {Blind}{Up DownTemp}
+    Capslock & i up::Send {Blind}{Up Up}
+    
+    Capslock & l::Send {Blind}{Right DownTemp}
+    Capslock & l up::Send {Blind}{Right Up}
+    
+    
+    ; Capslock + ypuo (home, end, pgup, pgdn) 
+    Capslock & u::SendInput {Blind}{PgUp Down}
+    Capslock & u up::SendInput {Blind}{PgUp Down}
+    
+    Capslock & o::SendInput {Blind}{PgDn Down}
+    Capslock & o up::SendInput {Blind}{PgDn Up}
+    
+    Capslock & y::SendInput {Blind}{Home Down}
+    Capslock & y up::SendInput {Blind}{Home Up}
+    
+    Capslock & P::SendInput {Blind}{End Down}
+    Capslock & p up::SendInput {Blind}{End Up}
+    
+    Capslock & x::SendInput ^x
+    Capslock & c::SendInput ^c
+    Capslock & v::SendInput ^v 
+    
+    ; Make Capslock + Space -> Ctrl
+    Capslock & Space::SendInput {Blind}{Ctrl Down}
+    Capslock & Space Up::SendInput {Blind}{Ctrl Up}
+    
+    ; Make Capslock + Tab -> Shift
+    Capslock & Tab::SendInput {Blind}{shift Down}
+    Capslock & Tab up::SendInput {Blind}{shift up}
+    
+    ; Capslock + nm ( backspace, del)
+    Capslock & n::SendInput {Blind}{Del Down}
+    Capslock & m::SendInput {Blind}{BS Down}
+    Capslock & BS::SendInput {Blind}{BS Down}
+    
+    ;Find search as / 
+    Capslock & /::SendInput {Ctrl Down}{f Down}
+    Capslock & / up::SendInput {Ctrl Up}{f Up}
+    
+    ; Map ; --> Enter key
+    Capslock & SC027::send {Enter}
+
+
+; Numpad using Ctrl+Shift+Alt + m,.jkluio or space
++^!Space:: SendInput {Numpad0}
++^!m:: SendInput {Numpad1}
++^!,:: SendInput {Numpad2}
++^!.:: SendInput {Numpad3}
++^!j:: SendInput {Numpad4}
++^!k:: SendInput {Numpad5}
++^!l:: SendInput {Numpad6}
++^!u:: SendInput {Numpad7}
++^!i:: SendInput {Numpad8}
++^!o:: SendInput {Numpad9}
+
+
+
+
+
+
+
+
+
+
+
+
+;######################################    Start Shortcuts    #####################################
+
+;Google lookup
+#s::
+    OldClipboard:= Clipboard
+    Clipboard:= ""
+    Send, ^c ;copies selected text
+    ClipWait
+    Run C:\Program Files (x86)\Google\Chrome\Application\chrome.exe http://www.google.com/search?q="%Clipboard%"&num=100&source=lnms&filter=0
+    Sleep 200
+    Clipboard:= OldClipboard
+    Send, ^c ;copies selected text
+Return
+
+#i::
+    OldClipboard:= Clipboard
+    Clipboard:= ""
+    ClipWait
+    Run C:\Program Files (x86)\Google\Chrome\Application\chrome.exe https://www.google.com/search?q="%clipboard%"&num=100&source=lnms&tbm=isch&filter=0
+    Sleep 200
+    Clipboard:= OldClipboard
+Return
+
+#x:: Run Excel
+
+;######################################    End Shortcuts    #####################################
+
+
+
+
+
+
+
+
+;########################## Start Drag Windows ##################################################################
+
+; Drag windows anywhere
+
+Capslock & LButton::
+    CoordMode, Mouse ; Switch to screen/absolute coordinates.
+    MouseGetPos, EWD_MouseStartX, EWD_MouseStartY, EWD_MouseWin
+    WinGetPos, EWD_OriginalPosX, EWD_OriginalPosY,,, ahk_id %EWD_MouseWin%
+    WinGet, EWD_WinState, MinMax, ahk_id %EWD_MouseWin% 
+    if EWD_WinState = 0 ; Only if the window isn't maximized 
+        SetTimer, EWD_WatchMouse, 10 ; Track the mouse as the user drags it.
+return
+
+EWD_WatchMouse:
+    GetKeyState, EWD_LButtonState, LButton, P
+    if EWD_LButtonState = U ; Button has been released, so drag is complete.
+    {
+        SetTimer, EWD_WatchMouse, off
+        return
+    }
+    GetKeyState, EWD_EscapeState, Escape, P
+    if EWD_EscapeState = D ; Escape has been pressed, so drag is cancelled.
+    {
+        SetTimer, EWD_WatchMouse, off
+        WinMove, ahk_id %EWD_MouseWin%,, %EWD_OriginalPosX%, %EWD_OriginalPosY%
+        return
+    }
+    ; Otherwise, reposition the window to match the change in mouse coordinates
+    ; caused by the user having dragged the mouse:
+    CoordMode, Mouse
+    MouseGetPos, EWD_MouseX, EWD_MouseY
+    WinGetPos, EWD_WinX, EWD_WinY,,, ahk_id %EWD_MouseWin%
+    SetWinDelay, -1 ; Makes the below move faster/smoother.
+    WinMove, ahk_id %EWD_MouseWin%,, EWD_WinX + EWD_MouseX - EWD_MouseStartX, EWD_WinY + EWD_MouseY - EWD_MouseStartY
+    WinActivate, ahk_id %EWD_MouseWin%
+    EWD_MouseStartX := EWD_MouseX ; Update for the next timer-call to this subroutine.
+    EWD_MouseStartY := EWD_MouseY ;bring the window to the front(foreground)
+return
+
+
+;########################## End Drag Windows ##################################################################
+
+
+
+
+
+
+>^q::
+    MsgBox Exiting the script
+    ExitApp
+    
+    
