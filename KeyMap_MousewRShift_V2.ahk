@@ -11,11 +11,10 @@ SetScrollLockState, AlwaysOff
 
 SetBatchLines -1 
 #UseHook 
-Increment = 1 
+
+
 MouseDelay = 0 
-
-
-F1::
+Increment = 1 
 
 e:: 
 d:: 
@@ -28,58 +27,49 @@ yVal=
 If GetKeyState("rshift","p") = 1
 { 
     IncrementValue := Increment 
+	IncrementValue2 := Increment2 
     Loop, 
-   { 
-       ; lower increment value higher startup speed. Lower increment slower acceleration
-      If (A_Index > IncrementValue * 3) and (IncrementValue < Increment * 30)  
-         IncrementValue := IncrementValue * 2 
-      If GetKeyState("d", "P") 
-         yVal := IncrementValue 
-      Else If GetKeyState("e", "P") 
-         yVal := -IncrementValue 
-      If !yVal 
-         yVal := 0 
-      If GetKeyState("s", "P") 
-         xVal := -IncrementValue 
-      Else If GetKeyState("f", "P") 
-         xVal := IncrementValue 
-      If !xVal 
-         xVal := 0 
-      If GetKeyState(A_ThisHotKey, "P")  
-         MouseMove, %xVal%, %yVal%,%MouseDelay%,R 
-      Else  
-        
-         Break 
-      } 
+    { 
+        ; lower increment value higher startup speed. Lower increment slower acceleration
+        If (A_Index > IncrementValue * 3) and (IncrementValue < Increment * 10  )  
+            IncrementValue := IncrementValue * 2 
+        If GetKeyState("d", "P") 
+            yVal := IncrementValue 
+        Else If GetKeyState("e", "P") 
+            yVal := -IncrementValue 
+        If !yVal 
+            yVal := 0 
+        If GetKeyState("s", "P") 
+            xVal := -IncrementValue 
+        Else If GetKeyState("f", "P") 
+            xVal := IncrementValue 
+        If !xVal 
+            xVal := 0 
+        If GetKeyState(A_ThisHotKey, "P")  
+            MouseMove, %xVal%, %yVal%,%MouseDelay%,R 
+        Else  
+            Break 
+    } 
        send {rshift up}
-   } 
+} 
 Else 
-Send % "{" . A_ThisHotKey . "}" 
- Send, {rshift up}
+    Send % "{" . A_ThisHotKey . "}" 
+    Send, {rshift up}
 return 
 
 #If GetKeyState("rshift","P") = 1
-x:: Send {WheelUp}
-z:: Send {WheelDown}
-space:: Send {LButton}
-q:: Send {RButton}
-Insert:: Send {MButton}
+    x:: Send {WheelUp}
+    z:: Send {WheelDown}
+    space:: Send {LButton}
+    q:: Send {RButton}
+    Insert:: Send {MButton}
 
-
-CoordMode, Screen
-
-r::MouseMove, 0, -A_ScreenHeight*1/200 ,0, R
-v::MouseMove, 0, A_ScreenHeight*1/200 ,0, R
-g::MouseMove, A_ScreenWidth*1/200, 0 ,0, R
-a::MouseMove, -A_ScreenWidth*1/200, 0 ,0, R
+    CoordMode, Screen
+    r::MouseMove, 0, -A_ScreenHeight*1/150 ,0, R
+    v::MouseMove, 0, A_ScreenHeight*1/150 ,0, R
+    g::MouseMove, A_ScreenWidth*1/150, 0 ,0, R
+    a::MouseMove, -A_ScreenWidth*1/150, 0 ,0, R
 #if
-    
-#Capslock::
-    If GetKeyState("CapsLock", "T") = 1
-        SetCapsLockState, AlwaysOff
-    Else 
-        SetCapsLockState, AlwaysOn
-Return
 
 ;---------------------------------------------------------------------------------------------------------
 ;###################################### End Mouse movement        ######################################
@@ -87,6 +77,53 @@ Return
 
 
 
+;---------------------------------------------------------------------------------------------------------
+;###################################### Other generic mouse       ######################################
+;---------------------------------------------------------------------------------------------------------
+
+
+;--------------------------------------------  additional mouse buttons
+XButton2::send {Enter}
+XButton1::send {Delete}
+
+WheelLeft::send ^c
+WheelRight::send ^v
+
+
+
+; --------------------------------------------     Horizontal Scrolling
+;Horizontal Scrolling in Excel 
+#IfWinActive ahk_class XLMAIN
+    +WheelUp:: 
+        SetScrollLockState, On 
+        SendInput {Left} 
+        SetScrollLockState, Off 
+    Return 
+    +WheelDown:: 
+        SetScrollLockState, On 
+        SendInput {Right} 
+        SetScrollLockState, Off 
+    Return 
+
+    Capslock & 2::Send {F2}   
+
+    ; Horizontal scrolling in everything except Excel. 
+    #IfWinNotActive ahk_class XLMAIN 
+        +WheelDown::WheelRight
+        +WheelUp::WheelLeft
+
+#IfWinActive
+;---------------------------------------------------------------------------------------------------------
+;###################################### End of Other generic mouse       ######################################
+;---------------------------------------------------------------------------------------------------------
+
+
+#Capslock::
+If GetKeyState("CapsLock", "T") = 1
+    SetCapsLockState, AlwaysOff
+Else 
+    SetCapsLockState, AlwaysOn
+Return
 
 
 
@@ -115,15 +152,14 @@ Capslock & c::SendInput ^c
 Capslock & v::SendInput ^v 
 Capslock & s::SendInput ^s 
 Capslock & a::SendInput ^a 
-Capslock & 9::Send +9
-Capslock & 0::Send +0
-Capslock & f::^f
 Capslock & w::^w
 
-Capslock & ,::SendInput ^z
-Capslock & .::SendInput ^y
+Capslock & d::SendInput ^z
+Capslock & f::SendInput ^y
 
 
+
+;----------------------spcial keys --------------------------
 Capslock & b::SendInput {Blind}^{BS}
 Capslock & n::SendInput {Blind}{BS Down}
 Capslock & m::SendInput {Blind}{Del Down}
@@ -139,8 +175,30 @@ Capslock & Tab up::SendInput {Blind}{shift up}
 Capslock & '::SendInput {Blind}{Esc}
 Capslock & q::Send {Blind}{AppsKey}
 
-Capslock & 2::Send {F2}
 
+
+;-----------------------Copy and cut words and lines 
+Capslock & e::Send, ^{Left}+^{Right}^c           ; select the current word
+Capslock & r::Send, {HOME}+{END}^c               ; select the current line
+capslock & F2::Sendinput, ^{Left}+^{Right}^x     ; select the current word        
+capslock & F3::Sendinput, {Home}+{End}^x{Home}   ; cut the entire line            
+
+
+;------------------------Numbers ros -------------------------------
+Capslock & 1:: !
+Capslock & 2:: @
+capslock & 3:: #
+Capslock & 4:: $
+Capslock & 5:: SendRaw, `%
+capslock & 6:: ^
+Capslock & 7:: &
+Capslock & 8:: *
+capslock & 9:: (
+capslock & 0:: )
+capslock & -:: _
+capslock & =:: +
+
+;-----------------------Num lock keys -----------------------------
 +^!Space:: SendInput {Numpad0}
 +^!m:: SendInput {Numpad1}
 +^!,:: SendInput {Numpad2}
@@ -153,10 +211,10 @@ Capslock & 2::Send {F2}
 +^!o:: SendInput {Numpad9}
 
 
+
 ;---------------------------------------------------------------------------------------------------------
 ;###################################### end hotkey area        ######################################
 ;---------------------------------------------------------------------------------------------------------
-
 
 
 
@@ -165,34 +223,31 @@ Capslock & 2::Send {F2}
 ;######################################    Start Shortcuts    #####################################
 ;---------------------------------------------------------------------------------------------------------
 
-CapsLock & F2::
-    OldClipboard:= Clipboard
-    Clipboard:= ""
-    Send, ^c ;copies selected text
-    ClipWait, 1 
-    Run C:\Program Files (x86)\Google\Chrome\Application\chrome.exe https://www.google.com/search?q="%clipboard%"&num=100&source=lnms&tbm=isch&filter=0
-    Sleep 200
-    Clipboard:= OldClipboard
-    Send, ^c ;copies selected text
-Return
+#y::
+    InputBox, Search, Google Search, , , 400, 100
+    if not ErrorLevel ; when cancel is not pressed
+    {
+    run C:\Program Files (x86)\Google\Chrome\Application\chrome.exe  https://www.youtube.com/results?search_query="%Search%"
+    }
+return
 
-CapsLock & F3::
+#+y::
     OldClipboard:= Clipboard
     Clipboard:= ""
     Send, ^c ;copies selected text
     ClipWait, 1
-    Run C:\Program Files (x86)\Google\Chrome\Application\chrome.exe https://www.youtube.com/results?search_query=man"%clipboard%"
+    Run C:\Program Files (x86)\Google\Chrome\Application\chrome.exe https://www.youtube.com/results?search_query="%clipboard%"
     Sleep 200
     Clipboard:= OldClipboard
     Send, ^c ;copies selected text
 Return
 
 #i::
-InputBox, Search, Google Search, , , 400, 100
-if not ErrorLevel ; when cancel is not pressed
-{
-run C:\Program Files (x86)\Google\Chrome\Application\chrome.exe http://www.google.com/search?q="%Search%"&num=100&source=lnms&filter=0
-}
+    InputBox, Search, Google Search, , , 400, 100
+    if not ErrorLevel ; when cancel is not pressed
+        {
+        run C:\Program Files (x86)\Google\Chrome\Application\chrome.exe http://www.google.com/search?q="%Search%"&num=100&source=lnms&filter=0
+        }
 return
 
 #+i::
@@ -213,6 +268,23 @@ Return
 ;---------------------------------------------------------------------------------------------------------
 ;######################################    End Shortcuts    #####################################
 ;---------------------------------------------------------------------------------------------------------
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
