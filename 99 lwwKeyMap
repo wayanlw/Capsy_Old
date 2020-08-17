@@ -1,6 +1,7 @@
-#SingleInstance, Force
 
+#SingleInstance, Force
 #Persistent
+
 SetCapsLockState, AlwaysOff
 SetScrollLockState, AlwaysOff
 
@@ -80,31 +81,37 @@ a::MouseMove, -A_ScreenWidth*1/150, 0 ,0, R
 XButton2::send {Enter}
 XButton1::send {Delete}
 
-WheelLeft::send ^c
-WheelRight::send ^v
+
+
+#IfWinActive ahk_class XLMAIN
+    WheelLeft::sendinput, !{PgUp}
+    WheelRight::sendinput, !{PgDn}
+#IfWinNotActive ahk_class XLMAIN 
+    WheelLeft::send ^c
+    WheelRight::send ^v
+#IfWinActive 
+
 
 ; --------------------------------------------     Horizontal Scrolling
-;Horizontal Scrolling in Excel 
-#IfWinActive ahk_class XLMAIN
-    +WheelUp:: 
-    SetScrollLockState, On 
-    SendInput {Left} 
-    SetScrollLockState, Off 
-Return 
-+WheelDown:: 
-SetScrollLockState, On 
-SendInput {Right} 
-SetScrollLockState, Off 
-Return 
+; ;Horizontal Scrolling in Excel 
+; #IfWinActive ahk_class XLMAIN
+;     +WheelUp:: 
+;         SetScrollLockState, On 
+;         SendInput {Left} 
+;         SetScrollLockState, Off 
+;     Return 
+;     +WheelDown:: 
+;         SetScrollLockState, On 
+;         SendInput {Right} 
+;         SetScrollLockState, Off 
+;     Return 
 
-Capslock & 2::Send {F2} 
-
-; Horizontal scrolling in everything except Excel. 
-#IfWinNotActive ahk_class XLMAIN 
-    +WheelDown::WheelRight
-    +WheelUp::WheelLeft
+; ; Horizontal scrolling in everything except Excel. 
+; #IfWinNotActive ahk_class XLMAIN 
+;     +WheelDown::WheelRight
+;     +WheelUp::WheelLeft
     
-#IfWinActive
+; #IfWinActive
 ;---------------------------------------------------------------------------------------------------------
 ;###################################### End of Other generic mouse       ######################################
 ;---------------------------------------------------------------------------------------------------------
@@ -128,8 +135,27 @@ Capslock & l::SendInput {Blind}{Right}
 Capslock & h::SendInput {Blind}^{Left}
 Capslock & SC027::SendInput {Blind}^{right}
 
-Capslock & o::SendInput {Blind}{PgUp}
-Capslock & u::SendInput {Blind}{PgDn}
+#IfWinActive
+capslock & u::
+    While GetKeyState("u", "P")
+    {
+    Send {Wheelup}
+    sleep 100
+    }
+    return
+
+#IfWinActive
+capslock & o::
+    While GetKeyState("o", "P")
+    {
+    Send {WheelDown}
+    sleep 100
+    }
+    return
+
+
+
+
 Capslock & y::SendInput {Blind}{Home}
 Capslock & p::SendInput {Blind}{End}
 
@@ -140,43 +166,54 @@ Capslock & v::SendInput ^v
 
 
 Capslock & s::
-keywait, s
-keywait, s, d ,t 0.15
-if errorlevel 
-   SendInput ^s     ; save
-else
-   IfWinActive, ahk_class XLMAIN
-   {
-      SendInput {f12} ; save as in excel 
-      return
-   }
-   SendInput ^+s  ; save as
-return
+    keywait, s
+    keywait, s, d ,t 0.2
+    if errorlevel
+    {
+        SendInput ^s     ; save
+        
+    }
+    else
+    {
+        IfWinActive, ahk_class XLMAIN
+        {
+            SendInput {f12} ; save as in excel
+            return
+        }
+        SendInput ^+s  ; save as
+    }
+    return
 
 
 Capslock & a::
-keywait, a
-keywait, a, d ,t 0.2
-if errorlevel 
-   SendInput ^a         ; select all 
-else
-   SendInput ^a^c       ; select all and copy
-return
+    keywait, a
+    keywait, a, d ,t 0.2
+    if errorlevel 
+        SendInput ^a         ; select all 
+    else
+        SendInput ^a^c       ; select all and copy
+    return
+
+; Capslock & a::
+;     keywait, a
+;     keywait, a, d ,t 0.2
+;     if errorlevel 
+;         SendInput ^a         ; select all 
+;     else
+;         SendInput ^a^c       ; select all and copy
+;     return
 
 
+Capslock & w::^z     ; close tab
+Capslock & t::SendInput ^y   ; redo
+Capslock & f::SendInput ^f   ; find / go to 
 
-Capslock & w::^w     ; close tab
 
-Capslock & ,::SendInput ^z   ; undo
-Capslock & .::SendInput ^y   ; redo
-Capslock & f::SendInput ^z   ; undo
-Capslock & g::SendInput ^y   ; redo
-Capslock & /::SendInput ^f   ; find / go to 
-
-;----------------------spcial keys --------------------------
+;----------------------special keys --------------------------
 Capslock & b::SendInput {Blind}^{BS}
-Capslock & n::SendInput {Blind}{BS Down}
-Capslock & m::SendInput {Blind}{Del Down}
+Capslock & n::SendInput {Blind}{BS}
+Capslock & ,::SendInput {Blind}{Del}
+Capslock & .::SendInput {Blind}^{Del}
 
 Capslock & Space::SendInput {Blind}{Ctrl Down}
 Capslock & Space Up::SendInput {Blind}{Ctrl Up}
@@ -184,16 +221,25 @@ Capslock & Space Up::SendInput {Blind}{Ctrl Up}
 Capslock & Tab::SendInput {Blind}{shift Down}
 Capslock & Tab up::SendInput {Blind}{shift up}
 
-!+q::SendInput {Alt down}{F4}{Alt up}
+!+q::SendInput !{F4}
+
+!q::
+keywait, q
+keywait, q, d ,t 0.15
+if errorlevel 
+    SendInput !q
+else
+    sendinput !{F4}
+return
+
+!+w::SendInput ^w
+
 
 Capslock & q::SendInput {Blind}{Esc}
 
 Capslock & z::Send {Blind}{AppsKey}
 
-
 ;-----------------------Copy and cut words and lines 
-
-
 
 Capslock & e::
 keywait,e
@@ -201,14 +247,14 @@ keywait, e, d ,t 0.2
 if errorlevel 
    sendinput, ^{Left}+^{Right}^c 
 else
-   sendinput, Capslock & r::Send, {HOME}+{END}^c 
+   Send, ^{Left}+^{Right}^x 
 return
 
 Capslock & d::
 keywait,d
 keywait, d, d ,t 0.2
 if errorlevel 
-   Send, ^{Left}+^{Right}^x 
+   Sendinput, {Home}+{End}^c
 else
    Sendinput, {Home}+{End}^x
 return      
