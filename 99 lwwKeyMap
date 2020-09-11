@@ -31,7 +31,7 @@ Rshift::
         Loop, 
         { 
             ; lower increment value higher startup speed. Lower increment slower acceleration
-            If (A_Index > IncrementValue * 3) and (IncrementValue < Increment * 10 ) 
+            If (A_Index > IncrementValue * 3) and (IncrementValue < Increment * 15 ) 
                 IncrementValue := IncrementValue * 2 
             If GetKeyState("d", "P") 
                 yVal := IncrementValue 
@@ -131,6 +131,7 @@ WheelRight::send ^v
     WheelLeft::sendinput, !{PgUp}
     WheelRight::sendinput, !{PgDn}
     capslock & 2::sendinput {F2}
+    capslock & 3::sendinput {=}
 ;   Capslock & d::sendinput, ^{down}+^{up}^c 
     capslock & [::sendinput ^[
     capslock & ]::sendinput {F5}{Enter}
@@ -149,10 +150,10 @@ Return
 
 
 Capslock & q::Sendinput {Esc}
-;Capslock & w::---------------------------
-;Capslock & e::------------------------- previously select word
-Capslock & r::SendInput ^y   ; redo
-capslock & t::SendInput {Appskey}
+;Capslock & w::Launcher
+Capslock & e::Sendinput ^z
+Capslock & r::SendInput {Enter}   ; redo
+capslock & t::SendInput ^y
 Capslock & y::SendInput {Blind}{Home}
 ;Capslock  u:: scroll up
 Capslock & i::SendInput {Blind}{Up}
@@ -176,11 +177,10 @@ Capslock & SC027::SendInput {Blind}^{right}
 Capslock & '::SendInput "
 
 
-
-Capslock & z::SendInput ^z
+Capslock & z::SendInput {Appskey}
 Capslock & x::SendInput ^x
 Capslock & c::SendInput ^c
-Capslock & v::SendInput ^v
+Capslock & v::SendInput {delete}
 Capslock & b::SendInput {Blind}^{BS}
 Capslock & n::SendInput {Blind}{BS}
 Capslock & m::SendInput {Blind}{BS}
@@ -209,7 +209,7 @@ Capslock & F1:: sendinput {AppsKey}
 ; capslock & F12::--------------
 
 Capslock & 1:: !
-Capslock & 2:: @
+Capslock & 2:: sendinput {F2}
 capslock & 3:: #
 Capslock & 4:: $
 Capslock & 5:: SendRaw, `%
@@ -251,7 +251,7 @@ capslock & o::
 ; ---------------------------- Copy double click cut selection
 Capslock & d::
     keywait,d
-    keywait, d, d ,t 0.15
+    keywait, d, d ,t 0.1
     if errorlevel 
         Sendinput, ^c
     else
@@ -275,8 +275,8 @@ Capslock & g::
         if errorlevel 
         Sendinput, {Home}+{End}^c
         else
-        Sendinput, {Home}+{End}^x
-        return   
+        Sendinput, {Home}+{End}{del}
+        return
 
 ;----------------------------
 
@@ -303,11 +303,34 @@ Capslock & s::
 
 
 
-; alt key mappings----------------------------------------------------
+; #################################################################################################################################
+; #######################################################   alt key mappings     #################################################
+; #################################################################################################################################
+
+;!q::sendinput close on doubleclick (qq)
 !w::sendinput ^w
+!t::sendinput ^t
+!+t::sendinput ^+t
+
+
+!a::sendinput ^a
+;!s::save and save as (ss)
+!d::sendinput {delete}
+
+
+; !x::sendinput ^x
 ; !c::sendinput ^c
 ; !v::sendinput ^v
 
+
+!q::
+    keywait,q
+    keywait, q, d ,t 0.15
+    if errorlevel 
+        return
+    else
+        sendinput !{F4}
+return 
 
 
 ;-----------------------Num lock keys -----------------------------
@@ -322,7 +345,99 @@ Capslock & s::
 ; +^!i:: SendInput {Numpad8}
 ; +^!o:: SendInput {Numpad9}
 
-;----------------------- lock keys -----------------------------
+;----------------------- lock kedwys -----------------------------
+
+;##################################################   Launcher   ########################################
+
+Capslock & w::
+Input Key, T1 ; L3 to limit the input to 3 eys.
+;----------------------Delete Line word all
+if Key=da
+    {
+        sendinput ^a{delete}
+        return
+    }
+else if key=dw
+    {
+        sendinput, ^{right}+^{left}{delete}
+        return
+    }
+else if key=dd
+    {
+        sendinput, {Home}+{End}{delete}
+        return
+    }
+;-----------------------copy commands
+else if key=ca
+    {
+        sendinput, ^a^c
+        return
+    }
+
+else if key=cw
+    {
+        sendinput, ^{right}+^{left}^c
+        return
+    }
+else if key=cc
+    {
+        sendinput, {Home}+{End}^c
+        return
+    }
+
+;----------------------- cut commands 
+
+else if key=xx
+    {
+        sendinput, ^a^x
+        return
+    }
+else if key=xw
+    {
+        sendinput, ^{right}+^{left}^x
+        return
+    }
+else if key=xx
+    {
+        sendinput, {Home}+{End}^x
+        return
+    }
+
+
+
+else if key=sa
+    {
+        sendinput, ^a
+        return
+    }
+
+
+; --------------------- Excel delete row delete column
+else if key=dr
+    {
+        sendinput, +{space}^{-}
+        return
+    }
+    
+else if key=dc
+    {
+        sendinput, ^{space}^{-}
+        return
+    }
+
+;-------------------------  (L)aunching apps 
+
+else if key=lc
+    {
+        run chrome.exe
+    }
+else if key=lx
+    {
+        run excel
+    }
+return
+
+
 
 
 ;---------------------------------------------------------------------------------------------------------
