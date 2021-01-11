@@ -1,15 +1,18 @@
+/* -------------------------------------------------------------------------- */
+/*                                  Version 0                                 */
+/* -------------------------------------------------------------------------- */
+*/
+
+
+
+
+
 
 #SingleInstance, Force
-SendMode Input
-SetWorkingDir, %A_ScriptDir%
 
 #Persistent
 SetCapsLockState, AlwaysOff
 SetScrollLockState, AlwaysOff
-
-;---------------------------------------------------------------------------------------------------------
-;###################################### Start Mouse movement        ######################################
-;---------------------------------------------------------------------------------------------------------
 
 SetBatchLines -1 
 #UseHook 
@@ -17,28 +20,21 @@ SetBatchLines -1
 MouseDelay = 0 
 Increment = 1 
 
-; p:: 
-; l:: 
-; SC027::
-; '::  
-; Ralt::
-
-e::
-s::
+e:: 
 d:: 
-f::
-RShift::
-
+s::
+f:: 
+rshift:: 
     xVal=
-    yVal= 
+    yVal=
     If GetKeyState("RShift","p") = 1
     { 
         IncrementValue := Increment 
         Loop, 
         { 
             ; lower increment value higher startup speed. Lower increment slower acceleration
-            If (A_Index > IncrementValue * 6) and (IncrementValue < Increment * 15 ) 
-                IncrementValue := IncrementValue * 2 
+            If (A_Index > IncrementValue * 8) and (IncrementValue < Increment * 10 ) 
+                IncrementValue := IncrementValue * 3 
             If GetKeyState("d", "P") 
                 yVal := IncrementValue 
             Else If GetKeyState("e", "P") 
@@ -58,118 +54,129 @@ RShift::
                 Break 
         }
         send {RShift up}
-    } 
-    Else 
-    Send % "{" . A_ThisHotKey . "}" 
-Send, {RShift up}
+    }
+    else
+    { 
+        Send % "{" . A_ThisHotKey . "}" 
+        Send, {RSHIFT up}
+        ; Send, {RALT up}
+    }
 return 
 
-#If GetKeyState("RShift","P") = 1
+#If GetKeyState("rShift","P") = 1
 
-    c:: Send {RButton}
-    v:: MouseClick , left, , , 2
-    Insert:: Send {MButton}
-    ':: senDinput ^{LButton}
+/* --------------------------- Mouse Button Clicks -------------------------- 
+*/
 
-    space::
-        SENDINPUT {LBUTTON DOWN}
-        keywait, space, u 
-        SENDINPUT {LButton UP}
-    Return
+l:: Send {RButton} 
+Insert:: Send {MButton} 
+':: senDinput ^{LButton} 
 
-    ; v:: 
-    ;     SENDINPUT {LBUTTON DOWN}
-    ;     keywait, space, u 
-    ;     SENDINPUT {LButton UP}
-    ; Return
+SC027::
+    SENDINPUT {LBUTTON DOWN}
+    keywait, SC027, u 
+    SENDINPUT {LButton UP}
+Return
 
-    
-    r::
-        While GetKeyState("r", "P")
-        {
-            Send {Wheelup}
-            sleep 100
-        }
-    return
+space::
+    SENDINPUT {LBUTTON DOWN}
+    keywait, space, u 
+    SENDINPUT {LButton UP}
+Return
 
-    w::
-        While GetKeyState("w", "P")
-        {
-            Send {WheelDown}
-            sleep 100
-        }
-    return
+/* --------------------------- scroll up and down --------------------------- 
+*/
 
-; #if
+r::
+    While GetKeyState("r", "P")
+    {
+        Send {Wheelup}
+        sleep 100
+    }
+return
+
+w::
+    While GetKeyState("w", "P")
+    {
+        Send {WheelDown}
+        sleep 100
+    }
+return
+
+/* -------------------- move the mouse cursor to corners -------------------- 
+*/
 
 CoordMode,Screen
 q::MouseMove, (A_ScreenWidth / 6 ), (A_ScreenHeight / 6 )
 t::MouseMove, (A_ScreenWidth / 6 * 5), (A_ScreenHeight / 6 * 1)
 a::MouseMove, (A_ScreenWidth / 6 * 1), (A_ScreenHeight / 6 * 3)
-x::MouseMove, (A_ScreenWidth / 2), (A_ScreenHeight / 2)
+c::MouseMove, (A_ScreenWidth / 2), (A_ScreenHeight / 2)
 g::MouseMove, (A_ScreenWidth / 6 * 5), (A_ScreenHeight / 6 * 3)
 z::MouseMove, (A_ScreenWidth / 6 * 1), (A_ScreenHeight / 6 * 5)
-
 b::MouseMove, (A_ScreenWidth / 6 * 5), (A_ScreenHeight / 6 * 5)
-
-
-; ,::MouseMove, 0, A_ScreenHeight*1/3 ,0, R
-; [::MouseMove, A_ScreenWidth*1/3, 0 ,0, R
-; o::MouseMove, -A_ScreenWidth*1/3, 0 ,0, R
-
-; k::MouseMove, 0, -A_ScreenHeight*1/3 ,0, R
-; ,::MouseMove, 0, A_ScreenHeight*1/3 ,0, R
-; [::MouseMove, A_ScreenWidth*1/3, 0 ,0, R
-; o::MouseMove, -A_ScreenWidth*1/3, 0 ,0, R
-; /::MouseMove, (A_ScreenWidth // 2), (A_ScreenHeight // 2)
 
 #if
 
-; Mouse buttons and wheels
+
+/* --------------------- Real Mouse: buttons and wheels --------------------- 
+*/
+
 XButton2::send {Enter}
 XButton1::send {Delete}
 WheelLeft::WheelLeft
 WheelRight::WheelRight
-;---------------------------------------------------------------------------------------------------------
-;###################################### End Mouse movement        ######################################
-;---------------------------------------------------------------------------------------------------------
 
-;---------------------------------------------------------------------------------------------------------
-;###################################### Other generic mouse       ######################################
-;---------------------------------------------------------------------------------------------------------
 
-;--------------------------------------------  additional mouse buttons
 
-; ---------------------------------------------- Excel area -------------------------------------------------------------
+
+
+/* ------------------------------- Excel area ------------------------------- 
+*/
 
 #IfWinActive ahk_class XLMAIN
     WheelLeft::sendinput, !{PgUp}
     WheelRight::sendinput, !{PgDn}
-    
-    ;---------------- dependants ------------
-    capslock & 1::sendinput {F9}
-    capslock & 2::sendinput ^[  
-    capslock & 3::sendinput {=}
-    ;capslock & 4::sendinput 
-    capslock & 5::sendinput {F5}{Enter}
+
+    ;---------------- dependants -------------
+    capslock & 1::sendinput ^[ 
+    capslock & 2::sendinput {F5}{Enter}
+    capslock & 3::sendinput {F2}
+    capslock & 4::sendinput {+}
+    capslock & 5::sendinput {F9}
+
     ;-----------------pasting ----------------
     ^!v::sendinput ^!v{v}{enter}
     ^!f::sendinput ^!v{f}{enter}
     ^!t::sendinput ^!v{t}{enter}
-    ^!l::sendinput ^!v{l}
+    ^!z::sendinput ^!v{l}
+
     ;-----------------------------------------
     Capslock & u::Sendinput ^{up}
     Capslock & o::Sendinput ^{Down}
+
     ;-----------------------------------------
     Capslock & [::Sendinput ^{pgup}
     Capslock & ]::Sendinput ^{pgDn}
+
     ;-----------------------------------------
     Capslock & b::Sendinput ^d
     Capslock & t::Sendinput ^r
     ; Capslock & g::SendInput {Blind}{Control Down}{Shift Down}
     ; Capslock & g up::SendInput {Blind}{Control up}{Shift up}
-    Capslock & g::Sendinput {F2}
+    Capslock & g::Sendinput {=}
+
+    ;-----------------------------------------
+    capslock & F1::sendinput {-}
+    capslock & F2::sendinput {+} 
+    capslock & F3::sendinput {*}
+    capslock & F4::sendinput {/}
+
 #IfWinActive
+
+
+
+/* -------------------- Toggle CapsLock with the win key -------------------- 
+*/
 
 #Capslock::
     If GetKeyState("CapsLock", "T") = 1
@@ -178,37 +185,39 @@ WheelRight::WheelRight
         SetCapsLockState, AlwaysOn
 Return
 
-!+q::SendInput !{F4}    
+
+
+/* -------------------------------- Main Keys ------------------------------- 
+*/
 
 Capslock & q::Sendinput {Esc}
 ;Capslock & w::Launcher
 Capslock & e::Sendinput ^z ; This has repetitive press. Sould be a comfortable place. 
 Capslock & r::SendInput ^y ; redo
-;capslock & t:: --------------------------------
+;capslock & t:: Cut copy word
 Capslock & y::SendInput {Blind}{Home}
-Capslock & u::SendInput {Blind}^{Left} ;SendInput {Blind}{pgUp}
+Capslock & u::SendInput {Blind}{pgUp}
 Capslock & i::SendInput {Blind}{Up}
-Capslock & o::SendInput {Blind}^{right} ;SendInput {Blind}{pgDn}
+Capslock & o::SendInput {Blind}{pgDn}
 Capslock & p::SendInput {Blind}{End}
 Capslock & [::SendInput {
 Capslock & ]::SendInput }
 Capslock & \::SendInput |
 
 ;Capslock & a:: save and save as
-Capslock & s::  SendInput ^x
+Capslock & s:: SendInput ^x
 Capslock & d:: sendinput ^c ;Copy and double click to cut
 Capslock & f:: SendInput ^v
 ;Capslock & g:: selecet & copy / delete line
 Capslock & h::SendInput {Blind}^{Left}
-Capslock & j::SendInput {Blind}{Left} 
+Capslock & j::SendInput {Blind}{Left}
 Capslock & k::SendInput {Blind}{Down}
 Capslock & l::SendInput {Blind}{Right}
 Capslock & SC027::SendInput {Blind}^{right}
 Capslock & '::SendInput {Blind}{Enter}
 
-;Capslock & z::Alttab
-;Capslock & x::control
-;Capslock & c:: ----------------------------------------
+Capslock & x::SendInput {Enter}
+;Capslock & c::copy/cut all
 Capslock & v:: Sendinput {Delete}
 Capslock & b:: SendInput {Blind}{BS}
 Capslock & n::SendInput {Blind}{BS}
@@ -217,18 +226,27 @@ Capslock & ,:: Sendinput {Delete}
 Capslock & .:: Sendinput ^{Delete}
 Capslock & /::SendInput ^f
 
+/* ------------------------------ Special Keys ------------------------------ 
+*/
+
 capslock & alt::SendInput {Blind}{Alt}
 
-Capslock & Space::SendInput {Enter}
-Capslock & x::SendInput {Blind}{Control Down}
-Capslock & x Up::SendInput {Blind}{Control Up}
+Capslock & Space::SendInput {Blind}{Control Down}
+Capslock & Space Up::SendInput {Blind}{Control Up}
 
 Capslock & Tab::SendInput {Blind}{shift Down}
 Capslock & Tab up::SendInput {Blind}{shift up}
 
-Capslock & BS::SendInput {Blind}^{BS}
+Capslock & BS::SendInput {Blind}{BS}
 
-; Capslock & F1:: sendinput {AppsKey}
+!+q::SendInput !{F4} 
+!q::Sendinput ^w
+
+
+/* --------------------------------- F keys --------------------------------- 
+*/
+
+Capslock & F1:: sendinput {AppsKey}
 ; Capslock & F2:: --------------
 ; capslock & F3:: --------------
 ; Capslock & F4:: --------------
@@ -240,6 +258,9 @@ Capslock & BS::SendInput {Blind}^{BS}
 ; capslock & F10:: --------------
 ; capslock & F11:: --------------
 ; capslock & F12::--------------
+
+/* ------------------------------- Number keys ------------------------------ 
+*/
 
 Capslock & 1:: !
 Capslock & 2:: sendinput {F2}
@@ -255,54 +276,28 @@ capslock & -:: _
 capslock & =:: +
 
 
-Capslock & z::
-        sendinput {alt down}{tab down}
-        While GetKeyState("z", "P")
-        {
-            sleep 100
-        }
-        sendinput {alt up}{tab up}
-    return
-;---------------------------- scroll up/down ; replaced with page up and down
 
-; #IfWinActive
-;     capslock & u::
-;         While GetKeyState("u", "P")
-;         {
-;             Send {Wheelup}
-;             sleep 100
-;         }
-;         return
 
-;     #IfWinActive
-;     capslock & o::
-;     While GetKeyState("o", "P")
-;     {
-;         Send {WheelDown}
-;         sleep 100
-;     }
-; return
+/* ---------------------------- Special Functions --------------------------- 
+*/
 
-; ---------------------------- Copy double click cut selection
-; Capslock & d::
-;     keywait,d
-;     keywait, d, d ,t 0.1
-;     if errorlevel 
-;         Sendinput, ^c
-;     else
-;         Sendinput, ^x
-; return
+Capslock & z::AltTab
 
-;---------------------------- select & copy or select & cut word/line/all
 
-; Capslock & t::
-;         keywait,t
-;         keywait, t, d ,t 0.2
-;         if errorlevel 
-;         sendinput, ^{right}+^{left}^c 
-;         else
-;         Send, ^{right}+^{left}^x 
-; return
+/* ----------------------------- word copy , cut ---------------------------- 
+*/
+
+Capslock & t::
+    keywait,t
+    keywait, t, d ,t 0.2
+    if errorlevel 
+        sendinput, ^{Left}+^{Right}^c 
+    else
+        Send, ^{right}+^{left}^x 
+return
+
+/* --------------------------- Line copy , delete --------------------------- 
+*/
 
 Capslock & g::
     keywait,g
@@ -313,6 +308,9 @@ Capslock & g::
         Sendinput, {Home}+{End}{del}
 return
 
+/* ----------------------------- All copy delete ---------------------------- 
+*/
+
 Capslock & c::
     keywait,c
     keywait, c, d ,t 0.1
@@ -322,7 +320,8 @@ Capslock & c::
         Sendinput, ^a{del}
 return
 
-;----------------------------
+/* ---------------------------- Save and save as ---------------------------- 
+*/
 
 Capslock & a::
     keywait, a
@@ -342,35 +341,11 @@ Capslock & a::
     }
 return
 
-;brakets opening closing --------------------------------------------
 
-; #################################################################################################################################
-; #######################################################   alt key mappings     #################################################
-; #################################################################################################################################
 
-;!q::sendinput close on doubleclick (qq)
-; !w::sendinput ^w
-; !t::sendinput ^t
-; !+t::sendinput ^+t
+/* ------------------------------ Num lock keys ----------------------------- 
+*/
 
-; !a::sendinput ^a
-;!s::save and save as (ss)
-; !d::sendinput {delete}
-
-; !x::sendinput ^x
-; !c::sendinput ^c
-; !v::sendinput ^v
-
-!q::
-    keywait,q
-    keywait, q, d ,t 0.15
-    if errorlevel 
-        Sendinput ^w
-    else
-        sendinput !{F4}
-return 
-
-;-----------------------Num lock keys -----------------------------
 +^!Space:: SendInput {Numpad0}
 +^!m:: SendInput {Numpad1}
 +^!,:: SendInput {Numpad2}
@@ -382,35 +357,38 @@ return
 +^!i:: SendInput {Numpad8}
 +^!o:: SendInput {Numpad9}
 
-;----------------------- lock kedwys -----------------------------
 
-;##################################################   Launcher   ########################################
+
+/* -------------------------------------------------------------------------- */
+/*                                  Launcher                                  */
+/* -------------------------------------------------------------------------- */
+*/
 
 Capslock & w::
-    ;SetTimer, Alert, -1000 ; --> WIP
+    
     Input Key, L2 T2 ; L3 to limit the input to 3 eys. T5 , wait for 5 seconds
     ;----------------------Delete Line word all
-    if Key=va
+    if Key=fa
     {
         sendinput ^a{delete}
         return
     }
-    else if key=vw
+    else if key=fw
     {
         sendinput, ^{right}+^{left}{delete}
         return
     }
-    else if key=vd
+    else if key=fv
     {
         sendinput, {Home}+{End}{delete}
         return
     }
-    else if key=vs
+    else if key=fs
     {
         sendinput, +{Home}{delete}
         return
     }
-    else if key=ve
+    else if key=fe
     {
         sendinput, +{End}{delete}
         return
@@ -443,58 +421,43 @@ Capslock & w::
     }
     ;----------------------- cut commands 
 
-    else if key=xa
+    else if key=va
     {
         sendinput, ^a^x
         return
     }
-    else if key=xw
+    else if key=vw
     {
         sendinput, ^{right}+^{left}^x
         return
     }
-    else if key=xx
+    else if key=vx
     {
         sendinput, {Home}+{End}^x
         return
     }
-     else if key=xs
+    else if key=vs
     {
         sendinput, +{Home}^x
         return
-    }else if key=xe
+    }else if key=ve
     {
         sendinput, +{End}^x
         return
     }
     ;----------------------- Select commands
-    else if key=fa
+    else if key=sa
     {
         sendinput, ^a
         return
     }
 
-    else if key=fw
+    else if key=sw
     {
         sendinput, ^{right}+^{left}
         return
     }
 
-    else if key=ff
-    {
-        sendinput, {Home}+{End}
-        return
-    }
-    else if key=fs
-    {
-        sendinput, +{Home}
-        return
-    }
-    else if key=fe
-    {
-        sendinput, +{End}
-        return
-    }
     ; --------------------- Excel delete row delete column
     else if key=dr
     {
@@ -520,47 +483,64 @@ Capslock & w::
     }
 return
 
-;---------------------------------------------------------------------------------------------------------
-;###################################### end hotkey area        ######################################
-;---------------------------------------------------------------------------------------------------------
 
-;---------------------------------------------------------------------------------------------------------
-;######################################    Start Shortcuts    #####################################
-;---------------------------------------------------------------------------------------------------------
+/* -------------------------------------------------------------------------- */
+/*                             Search Functions                               */
+/* -------------------------------------------------------------------------- */
+*/
+
+
+/* ------------------------------ Youtube Search ----------------------------- 
+*/
 
 #y::
-    InputBox, Search, Google Search, , , 400, 100
+    InputBox, Search, Youtube Search, , , 400, 100
     if not ErrorLevel ; when cancel is not pressed
     {
-        run C:\Program Files (x86)\Google\Chrome\Application\chrome.exe https://www.youtube.com/results?search_query="%Search%"
+        ; run C:\Program Files (x86)\Google\Chrome\Application\chrome.exe https://www.youtube.com/results?search_query="%Search%"
+        run https://www.youtube.com/results?search_query=%Search%
     }
 return
+
+/* ---------------------- Youtube Search Selected Words --------------------- 
+*/
 
 #^y::
     OldClipboard:= Clipboard
     Clipboard:= ""
     Send, ^c ;copies selected text
     ClipWait, 1
-    Run C:\Program Files (x86)\Google\Chrome\Application\chrome.exe https://www.youtube.com/results?search_query="%clipboard%"
+    
+    ; Run C:\Program Files (x86)\Google\Chrome\Application\chrome.exe https://www.youtube.com/results?search_query="%clipboard%"
+    Run https://www.youtube.com/results?search_query=%clipboard%
     Sleep 200
     Clipboard:= OldClipboard
     Send, ^c ;copies selected text
 Return
 
+
+/* ------------------------------ Google Search ----------------------------- 
+*/
+
 #s::
     InputBox, Search, Google Search, , , 400, 100
     if not ErrorLevel ; when cancel is not pressed
     {
-        run C:\Program Files (x86)\Google\Chrome\Application\chrome.exe http://www.google.com/search?q="%Search%"&num=100&source=lnms&filter=0
+        ; run C:\Program Files (x86)\Google\Chrome\Application\chrome.exe http://www.google.com/search?q=%Search%&num=100&source=lnms&filter=0
+        run http://www.google.com/search?q=%Search%&num=100&source=lnms&filter=0
     }
 return
+
+/* ----------------------- Google Search Selected Word ---------------------- 
+*/
 
 #^s::
     OldClipboard:= Clipboard
     Clipboard:= ""
     Sendinput, ^c ;copies selected text
     ClipWait, 1
-    Run C:\Program Files (x86)\Google\Chrome\Application\chrome.exe http://www.google.com/search?q="%Clipboard%"&num=100&source=lnms&filter=0
+    ; Run C:\Program Files (x86)\Google\Chrome\Application\chrome.exe http://www.google.com/search?q=%Clipboard%&num=100&source=lnms&filter=0
+    Run http://www.google.com/search?q=%Clipboard%&num=100&source=lnms&filter=0
     Sleep 200
     Clipboard:= OldClipboard
     OldClipboard:=""
@@ -568,15 +548,16 @@ return
     Send, ^c ;copies selected text
 Return
 
-#x:: Run Excel
-;---------------------------------------------------------------------------------------------------------
-;######################################    End Shortcuts    #####################################
-;---------------------------------------------------------------------------------------------------------
+/* -------------------------- Window always on top -------------------------- 
+*/
 
-;---------------------------------------------------------------------------------------------------------
-;########################## Start Drag Windows ##################################################################
-;---------------------------------------------------------------------------------------------------------
-; Drag windows anywhere
+^F12:: Winset, Alwaysontop, , A
+
+
+/* -------------------------------------------------------------------------- */
+/*               Drag Windows with CapsLock + Right Mouse Button              */
+/* -------------------------------------------------------------------------- */
+*/
 
 Capslock & RButton::
     CoordMode, Mouse ; Switch to screen/absolute coordinates.
@@ -613,22 +594,14 @@ EWD_WatchMouse:
     EWD_MouseStartY := EWD_MouseY ;bring the window to the front(foreground)
 return
 
-;---------------------------------------------------------------------------------------------------------
-;########################## End Drag Windows ##################################################################
-;---------------------------------------------------------------------------------------------------------
 
-;---------------------------------------------------------------------------------------------------------
-;######################### A window always on top with ctrl+F12 #############################################
-;---------------------------------------------------------------------------------------------------------
-^F12:: Winset, Alwaysontop, , A
-;---------------------------------------------------------------------------------------------------------
-;######################### End screen clipping always on top #############################################
-;---------------------------------------------------------------------------------------------------------
 
-;---------------------------------------------------------------------------------------------------------
-;######################### Quickly gather text to a notepad #############################################
-;---------------------------------------------------------------------------------------------------------
-; Copying text to Notepad for future reference
+/* -------------------------------------------------------------------------- */
+/*                           Gather text to notepad                           */
+/* -------------------------------------------------------------------------- */
+*/
+
+
 ^!c::
     OldClipboard := ClipboardAll
     Clipboard = ;clears the Clipboard
@@ -639,15 +612,17 @@ return
         MsgBox, No text selected!
     }
 
-    IfWinNotExist, Untitled - Notepad
+    IfWinNotExist, *Untitled - Notepad
     {
         Run, Notepad
         WinWaitActive, Untitled - Notepad
+        Control, EditPaste, % Clipboard . chr(13) . chr(10) . chr(13) . chr(10) , , Untitled - Notepad
+        return
     }
 
     ; Control, EditPaste used rather than ControlSend for much greater speed of execution
 
-    Control, EditPaste, % Clipboard . chr(13) . chr(10) . chr(13) . chr(10) , , Untitled - Notepad
+    Control, EditPaste, % Clipboard . chr(13) . chr(10) . chr(13) . chr(10) , , *Untitled - Notepad
     Clipboard := OldClipboard
 Return
 
