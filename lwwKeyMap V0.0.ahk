@@ -14,77 +14,77 @@
 SetCapsLockState, AlwaysOff
 SetScrollLockState, AlwaysOff
 
-SetBatchLines -1 
-#UseHook 
+SetBatchLines -1
+#UseHook
 
-MouseDelay = 0 
-Increment = 1 
+MouseDelay = 0
+Increment = 1
 
-e:: 
-d:: 
+e::
+d::
 s::
-f:: 
-rshift:: 
+f::
+rshift::
     xVal=
     yVal=
     If GetKeyState("RShift","p") = 1
-    { 
-        IncrementValue := Increment 
-        Loop, 
-        { 
+    {
+        IncrementValue := Increment
+        Loop,
+        {
             ; lower increment value higher startup speed. Lower increment slower acceleration
-            If (A_Index > IncrementValue * 8) and (IncrementValue < Increment * 10 ) 
-                IncrementValue := IncrementValue * 3 
-            If GetKeyState("d", "P") 
-                yVal := IncrementValue 
-            Else If GetKeyState("e", "P") 
-                yVal := -IncrementValue 
-            If !yVal 
-                yVal := 0 
+            If (A_Index > IncrementValue * 2) and (IncrementValue < Increment * 9 )
+                IncrementValue := IncrementValue * 2
+            If GetKeyState("d", "P")
+                yVal := IncrementValue
+            Else If GetKeyState("e", "P")
+                yVal := -IncrementValue
+            If !yVal
+                yVal := 0
 
-            If GetKeyState("s", "P") 
-                xVal := -IncrementValue 
-            Else If GetKeyState("f", "P") 
-                xVal := IncrementValue 
-            If !xVal 
-                xVal := 0 
-            If GetKeyState(A_ThisHotKey, "P") 
-                MouseMove, %xVal%, %yVal%,%MouseDelay%,R 
-            Else 
-                Break 
+            If GetKeyState("s", "P")
+                xVal := -IncrementValue
+            Else If GetKeyState("f", "P")
+                xVal := IncrementValue
+            If !xVal
+                xVal := 0
+            If GetKeyState(A_ThisHotKey, "P")
+                MouseMove, %xVal%, %yVal%,%MouseDelay%,R
+            Else
+                Break
         }
         send {RShift up}
     }
     else
-    { 
-        Send % "{" . A_ThisHotKey . "}" 
+    {
+        Send % "{" . A_ThisHotKey . "}"
         Send, {RSHIFT up}
         ; Send, {RALT up}
     }
-return 
+return
 
 #If GetKeyState("rShift","P") = 1
 
-/* --------------------------- Mouse Button Clicks -------------------------- 
+/* --------------------------- Mouse Button Clicks --------------------------
 */
 
-l:: Send {RButton} 
-Insert:: Send {MButton} 
-':: senDinput ^{LButton} 
+l:: Send {RButton}
+Insert:: Send {MButton}
+':: senDinput ^{LButton}
 
 SC027::
     SENDINPUT {LBUTTON DOWN}
-    keywait, SC027, u 
+    keywait, SC027, u
     SENDINPUT {LButton UP}
 Return
 
 space::
     SENDINPUT {LBUTTON DOWN}
-    keywait, space, u 
+    keywait, space, u
     SENDINPUT {LButton UP}
 Return
 
-/* --------------------------- scroll up and down --------------------------- 
+/* --------------------------- scroll up and down ---------------------------
 */
 
 r::
@@ -103,7 +103,7 @@ w::
     }
 return
 
-/* -------------------- move the mouse cursor to corners -------------------- 
+/* -------------------- move the mouse cursor to corners --------------------
 */
 
 CoordMode,Screen
@@ -118,7 +118,7 @@ b::MouseMove, (A_ScreenWidth / 6 * 5), (A_ScreenHeight / 6 * 5)
 #if
 
 
-/* --------------------- Real Mouse: buttons and wheels --------------------- 
+/* --------------------- Real Mouse: buttons and wheels ---------------------
 */
 
 XButton2::send {Enter}
@@ -130,7 +130,7 @@ WheelRight::WheelRight
 
 
 
-/* ------------------------------- Excel area ------------------------------- 
+/* ------------------------------- Excel area -------------------------------
 */
 
 #IfWinActive ahk_class XLMAIN
@@ -138,7 +138,7 @@ WheelRight::WheelRight
     WheelRight::sendinput, !{PgDn}
 
     ;---------------- dependants -------------
-    capslock & 1::sendinput ^[ 
+    capslock & 1::sendinput ^[
     capslock & 2::sendinput {F5}{Enter}
     capslock & 3::sendinput {F2}
     capslock & 4::sendinput {+}
@@ -167,7 +167,7 @@ WheelRight::WheelRight
 
     ;-----------------------------------------
     capslock & F1::sendinput {-}
-    capslock & F2::sendinput {+} 
+    capslock & F2::sendinput {+}
     capslock & F3::sendinput {*}
     capslock & F4::sendinput {/}
 
@@ -175,7 +175,7 @@ WheelRight::WheelRight
 
 
 
-/* -------------------- Toggle CapsLock with the win key -------------------- 
+/* -------------------- Toggle CapsLock with the win key --------------------
 */
 
 #Capslock::
@@ -187,12 +187,12 @@ Return
 
 
 
-/* -------------------------------- Main Keys ------------------------------- 
+/* -------------------------------- Main Keys -------------------------------
 */
 
 Capslock & q::Sendinput {Esc}
 ;Capslock & w::Launcher
-Capslock & e::Sendinput ^z ; This has repetitive press. Sould be a comfortable place. 
+Capslock & e::Sendinput ^z ; This has repetitive press. Sould be a comfortable place.
 Capslock & r::SendInput ^y ; redo
 ;capslock & t:: Cut copy word
 Capslock & y::SendInput {Blind}{Home}
@@ -226,7 +226,7 @@ Capslock & ,:: Sendinput {Delete}
 Capslock & .:: Sendinput ^{Delete}
 Capslock & /::SendInput ^f
 
-/* ------------------------------ Special Keys ------------------------------ 
+/* ------------------------------ Special Keys ------------------------------
 */
 
 capslock & alt::SendInput {Blind}{Alt}
@@ -239,11 +239,11 @@ Capslock & Tab up::SendInput {Blind}{shift up}
 
 Capslock & BS::SendInput {Blind}{BS}
 
-!+q::SendInput !{F4} 
+!+q::SendInput !{F4}
 !q::Sendinput ^w
 
 
-/* --------------------------------- F keys --------------------------------- 
+/* --------------------------------- F keys ---------------------------------
 */
 
 Capslock & F1:: sendinput {AppsKey}
@@ -259,7 +259,7 @@ Capslock & F1:: sendinput {AppsKey}
 ; capslock & F11:: --------------
 ; capslock & F12::--------------
 
-/* ------------------------------- Number keys ------------------------------ 
+/* ------------------------------- Number keys ------------------------------
 */
 
 Capslock & 1:: !
@@ -278,49 +278,49 @@ capslock & =:: +
 
 
 
-/* ---------------------------- Special Functions --------------------------- 
+/* ---------------------------- Special Functions ---------------------------
 */
 
 Capslock & z::AltTab
 
 
-/* ----------------------------- word copy , cut ---------------------------- 
+/* ----------------------------- word copy , cut ----------------------------
 */
 
 Capslock & t::
     keywait,t
     keywait, t, d ,t 0.2
-    if errorlevel 
-        sendinput, ^{Left}+^{Right}^c 
+    if errorlevel
+        sendinput, ^{Left}+^{Right}^c
     else
-        Send, ^{right}+^{left}^x 
+        Send, ^{right}+^{left}^x
 return
 
-/* --------------------------- Line copy , delete --------------------------- 
+/* --------------------------- Line copy , delete ---------------------------
 */
 
 Capslock & g::
     keywait,g
     keywait, g, d ,t 0.2
-    if errorlevel 
+    if errorlevel
         Sendinput, {Home}+{End}^c
     else
         Sendinput, {Home}+{End}{del}
 return
 
-/* ----------------------------- All copy delete ---------------------------- 
+/* ----------------------------- All copy delete ----------------------------
 */
 
 Capslock & c::
     keywait,c
     keywait, c, d ,t 0.1
-    if errorlevel 
+    if errorlevel
         Sendinput, ^a^c
     else
         Sendinput, ^a{del}
 return
 
-/* ---------------------------- Save and save as ---------------------------- 
+/* ---------------------------- Save and save as ----------------------------
 */
 
 Capslock & a::
@@ -343,7 +343,7 @@ return
 
 
 
-/* ------------------------------ Num lock keys ----------------------------- 
+/* ------------------------------ Num lock keys -----------------------------
 */
 
 +^!Space:: SendInput {Numpad0}
@@ -365,7 +365,7 @@ return
 */
 
 Capslock & w::
-    
+
     Input Key, L2 T2 ; L3 to limit the input to 3 eys. T5 , wait for 5 seconds
     ;----------------------Delete Line word all
     if Key=fa
@@ -419,7 +419,7 @@ Capslock & w::
         sendinput, +{End}^c
         return
     }
-    ;----------------------- cut commands 
+    ;----------------------- cut commands
 
     else if key=va
     {
@@ -471,7 +471,7 @@ Capslock & w::
         return
     }
 
-    ;-------------------------  (L)aunching apps 
+    ;-------------------------  (L)aunching apps
 
     else if key=lc
     {
@@ -490,7 +490,7 @@ return
 */
 
 
-/* ------------------------------ Youtube Search ----------------------------- 
+/* ------------------------------ Youtube Search -----------------------------
 */
 
 #y::
@@ -502,7 +502,7 @@ return
     }
 return
 
-/* ---------------------- Youtube Search Selected Words --------------------- 
+/* ---------------------- Youtube Search Selected Words ---------------------
 */
 
 #^y::
@@ -510,7 +510,7 @@ return
     Clipboard:= ""
     Send, ^c ;copies selected text
     ClipWait, 1
-    
+
     ; Run C:\Program Files (x86)\Google\Chrome\Application\chrome.exe https://www.youtube.com/results?search_query="%clipboard%"
     Run https://www.youtube.com/results?search_query=%clipboard%
     Sleep 200
@@ -519,7 +519,7 @@ return
 Return
 
 
-/* ------------------------------ Google Search ----------------------------- 
+/* ------------------------------ Google Search -----------------------------
 */
 
 #s::
@@ -531,7 +531,7 @@ Return
     }
 return
 
-/* ----------------------- Google Search Selected Word ---------------------- 
+/* ----------------------- Google Search Selected Word ----------------------
 */
 
 #^s::
@@ -548,7 +548,7 @@ return
     Send, ^c ;copies selected text
 Return
 
-/* -------------------------- Window always on top -------------------------- 
+/* -------------------------- Window always on top --------------------------
 */
 
 ^F12:: Winset, Alwaysontop, , A
@@ -563,8 +563,8 @@ Capslock & RButton::
     CoordMode, Mouse ; Switch to screen/absolute coordinates.
     MouseGetPos, EWD_MouseStartX, EWD_MouseStartY, EWD_MouseWin
     WinGetPos, EWD_OriginalPosX, EWD_OriginalPosY,,, ahk_id %EWD_MouseWin%
-    WinGet, EWD_WinState, MinMax, ahk_id %EWD_MouseWin% 
-    if EWD_WinState = 0 ; Only if the window isn't maximized 
+    WinGet, EWD_WinState, MinMax, ahk_id %EWD_MouseWin%
+    if EWD_WinState = 0 ; Only if the window isn't maximized
         SetTimer, EWD_WatchMouse, 10 ; Track the mouse as the user drags it.
 return
 
