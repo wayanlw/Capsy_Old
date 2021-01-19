@@ -140,7 +140,7 @@ WheelRight::WheelRight
     ;---------------- dependants -------------
     capslock & 1::sendinput ^[
     capslock & 2::sendinput {F5}{Enter}
-    capslock & 3::sendinput {F2}
+    capslock & 3::sendinput {=}
     capslock & 4::sendinput {+}
     capslock & 5::sendinput {F9}
 
@@ -168,7 +168,7 @@ WheelRight::WheelRight
     Capslock & t::Sendinput ^r
     ; Capslock & g::SendInput {Blind}{Control Down}{Shift Down}
     ; Capslock & g up::SendInput {Blind}{Control up}{Shift up}
-    Capslock & g::Sendinput {=}
+    Capslock & g::Sendinput {F2}
 
     ;-----------------------------------------
     capslock & F1::sendinput {-}
@@ -293,7 +293,7 @@ capslock & =:: +
 Capslock & z::AltTab
 
 
-/* ----------------------------- word copy , cut ----------------------------
+/* ----------------------------- word select(copy) , delete ----------------------------
 */
 
 Capslock & t::
@@ -302,10 +302,10 @@ Capslock & t::
     if errorlevel
         sendinput, ^{Left}+^{Right}^c
     else
-        Send, ^{right}+^{left}^x
+        Send, ^{Left}+^{Right}{del}
 return
 
-/* --------------------------- Line copy , delete ---------------------------
+/* --------------------------- Line select(copy) , delete ---------------------------
 */
 
 Capslock & g::
@@ -376,84 +376,104 @@ return
 Capslock & w::
 
     Input Key, L2 T2 ; L3 to limit the input to 3 eys. T5 , wait for 5 seconds
-    ;----------------------Delete Line word all
+    ;----------------------Delete all
     if Key=fa
     {
         sendinput ^a{delete}
         return
     }
-    else if key=fw
-    {
-        sendinput, ^{right}+^{left}{delete}
-        return
-    }
-    else if key=fv
-    {
-        sendinput, {Home}+{End}{delete}
-        return
-    }
+    ;----------------------Delete word (implemented by capslock+tt)
+    ; else if key=fw
+    ; {
+    ;     sendinput, ^{right}+^{left}{delete}
+    ;     return
+    ; }
+    ;----------------------Delete Line (implemented by capslock+gg)
+    ; else if key=fv
+    ; {
+    ;     sendinput, {Home}+{End}{delete}
+    ;     return
+    ; }
+    ;----------------------Delete to Start
     else if key=fs
     {
         sendinput, +{Home}{delete}
         return
     }
+    ;----------------------Delete to End
     else if key=fe
     {
         sendinput, +{End}{delete}
         return
     }
-    ;-----------------------copy commands
+
+
+
+    ;-----------------------copy all
     else if key=da
     {
         sendinput, ^a^c
         return
     }
-
-    else if key=dw
-    {
-        sendinput, ^{right}+^{left}^c
-        return
-    }
-    else if key=dd
-    {
-        sendinput, {Home}+{End}^c
-        return
-    }
+    ;-----------------------copy word (implemented by capslock+t)
+    ; else if key=dw
+    ; {
+    ;     sendinput, ^{right}+^{left}^c
+    ;     return
+    ; }
+    ;-----------------------copy word (implemented by capslock+g)
+    ; else if key=dd
+    ; {
+    ;     sendinput, {Home}+{End}^c
+    ;     return
+    ; }
+    ;-----------------------copy to start
     else if key=ds
     {
         sendinput, +{Home}^c
         return
-    }else if key=de
+    }
+    ;-----------------------copy to end
+    else if key=de
     {
         sendinput, +{End}^c
         return
     }
-    ;----------------------- cut commands
 
+
+
+    ;----------------------- cut all
     else if key=va
     {
         sendinput, ^a^x
         return
     }
+    ;----------------------- cut word
     else if key=vw
     {
         sendinput, ^{right}+^{left}^x
         return
     }
-    else if key=vx
+    ;----------------------- cut line
+    else if key=vv
     {
         sendinput, {Home}+{End}^x
         return
     }
+    ;----------------------- cut to start
     else if key=vs
     {
         sendinput, +{Home}^x
         return
-    }else if key=ve
+    }
+    ;----------------------- cut to end
+    else if key=ve
     {
         sendinput, +{End}^x
         return
     }
+
+
     ;----------------------- Select commands
     else if key=sa
     {
@@ -481,15 +501,11 @@ Capslock & w::
     }
 
     ;-------------------------  (L)aunching apps
+    ; else if key=lx
+    ; {
+    ;     run excel
+    ; }
 
-    else if key=lc
-    {
-        run chrome.exe
-    }
-    else if key=lx
-    {
-        run excel
-    }
 return
 
 
