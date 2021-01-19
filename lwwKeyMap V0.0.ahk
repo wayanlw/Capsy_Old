@@ -150,6 +150,11 @@ WheelRight::WheelRight
     ^!t::sendinput ^!v{t}{enter}
     ^!z::sendinput ^!v{l}
 
+    ;--------Conditional formating ------------
+    ^!s::sendinput !H{L}{d}{enter}
+    ^!d::sendinput !H{L}{s}{enter}
+    ^!x::sendinput !H{L}{c}{s}{enter}
+
     ;-----------------------------------------
     Capslock & u::Sendinput ^{up}
     Capslock & o::Sendinput ^{Down}
@@ -170,6 +175,10 @@ WheelRight::WheelRight
     capslock & F2::sendinput {+}
     capslock & F3::sendinput {*}
     capslock & F4::sendinput {/}
+    ;
+
+
+
 
 #IfWinActive
 
