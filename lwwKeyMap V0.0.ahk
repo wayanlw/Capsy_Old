@@ -221,10 +221,10 @@ Capslock & l::SendInput {Blind}{Right}
 Capslock & SC027::SendInput {Blind}^{right}
 Capslock & '::SendInput {Blind}{Enter}
 
-Capslock & x::SendInput {Enter}
+Capslock & x::SendInput {Blind}{BS}
 ;Capslock & c::copy/cut all
 Capslock & v:: Sendinput {Delete}
-Capslock & b:: SendInput {Blind}{BS}
+Capslock & b:: SendInput {Enter}
 Capslock & n::SendInput {Blind}{BS}
 Capslock & m::SendInput {Blind}^{BS}
 Capslock & ,:: Sendinput {Delete}
