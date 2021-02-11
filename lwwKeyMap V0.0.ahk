@@ -195,11 +195,11 @@ Return
 /* -------------------------------- Main Keys -------------------------------
 */
 
-Capslock & q::Sendinput {Esc}
-;Capslock & w::Launcher
+;Capslock & q::Launcher
+Capslock & w::Sendinput {Esc}
 Capslock & e::Sendinput ^z ; This has repetitive press. Sould be a comfortable place.
 Capslock & r::SendInput ^y ; redo
-;capslock & t:: Cut copy word
+;capslock & t:: copy / delete(2) word
 Capslock & y::SendInput {Blind}{Home}
 Capslock & u::SendInput {Blind}{pgUp}
 Capslock & i::SendInput {Blind}{Up}
@@ -219,12 +219,12 @@ Capslock & j::SendInput {Blind}{Left}
 Capslock & k::SendInput {Blind}{Down}
 Capslock & l::SendInput {Blind}{Right}
 Capslock & SC027::SendInput {Blind}^{right}
-Capslock & '::SendInput {Blind}{Enter}
+;-----Capslock & ':: ------------Available
 
-Capslock & x::SendInput {Blind}{BS}
+;-----Capslock & x:: ------------Available
 ;Capslock & c::copy/cut all
 Capslock & v:: Sendinput {Delete}
-Capslock & b:: SendInput {Enter}
+Capslock & b:: SendInput {Blind}{BS}
 Capslock & n::SendInput {Blind}{BS}
 Capslock & m::SendInput {Blind}^{BS}
 Capslock & ,:: Sendinput {Delete}
@@ -236,8 +236,10 @@ Capslock & /::SendInput ^f
 
 capslock & alt::SendInput {Blind}{Alt}
 
-Capslock & Space::SendInput {Blind}{Control Down}
-Capslock & Space Up::SendInput {Blind}{Control Up}
+; Capslock & Space::SendInput {Blind}{Control Down}
+; Capslock & Space Up::SendInput {Blind}{Control Up}
+
+Capslock & Space::SendInput {Blind}{Enter}
 
 Capslock & Tab::SendInput {Blind}{shift Down}
 Capslock & Tab up::SendInput {Blind}{shift up}
@@ -369,7 +371,7 @@ return
 /* -------------------------------------------------------------------------- */
 */
 
-Capslock & w::
+Capslock & q::
 
     Input Key, L2 T2 ; L3 to limit the input to 3 eys. T5 , wait for 5 seconds
     ;----------------------Delete all
