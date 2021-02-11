@@ -195,8 +195,8 @@ Return
 /* -------------------------------- Main Keys -------------------------------
 */
 
-;Capslock & q::Launcher
-Capslock & w::Sendinput {Esc}
+Capslock & q::Sendinput {Esc}
+;Capslock & w::Launcher
 Capslock & e::Sendinput ^z ; This has repetitive press. Sould be a comfortable place.
 Capslock & r::SendInput ^y ; redo
 ;capslock & t:: copy / delete(2) word
@@ -238,8 +238,20 @@ capslock & alt::SendInput {Blind}{Alt}
 
 ; Capslock & Space::SendInput {Blind}{Control Down}
 ; Capslock & Space Up::SendInput {Blind}{Control Up}
+; Capslock & Space::SendInput {Blind}{Enter}
 
-Capslock & Space::SendInput {Blind}{Enter}
+#space::Send,{space}{left}
+CapsLock & space::
+    KeyWait, space, T0.2
+    If (ErrorLevel = 1)
+    {
+        Send {Control Down}
+        KeyWait, space
+        Send {Control Up}
+    }
+    Else
+        Send {Enter}
+Return
 
 Capslock & Tab::SendInput {Blind}{shift Down}
 Capslock & Tab up::SendInput {Blind}{shift up}
@@ -249,9 +261,67 @@ Capslock & BS::SendInput {Blind}{BS}
 !+q::SendInput !{F4}
 !q::Sendinput ^w
 
+^enter::Send,{End}{enter} ; enter a line above
++enter::Send,{Home}{enter}{Up} ; enter a line below
+^#Down::SendInput,{Home}{Home}+{End}+{End}^c{End}{Enter}+{Home}^v
 
-/* --------------------------------- F keys ---------------------------------
-*/
+
+
+; ----------------------------- Sorrounding Text -------------------------------
+
+#+[::
+    OldClipboard := Clipboard
+    Clipboard := ""
+    Send ^c
+    ClipWait, 1
+    Clipboard = {%Clipboard%}
+    Send ^v
+    Sleep 200
+    Clipboard := OldClipboard
+    OldClipboard := ""
+    ; Send, ^c
+return
+
+capslock & 9::
+    OldClipboard := Clipboard
+    Clipboard := ""
+    Send ^c
+    ClipWait, 1
+    Clipboard = (%Clipboard%)
+    Send ^v
+    Sleep 200
+    Clipboard := OldClipboard
+    OldClipboard := ""
+    ; Send, ^c
+return
+
+capslock & "::
+    OldClipboard := Clipboard
+    Clipboard := ""
+    Send ^c
+    ClipWait, 1
+    Clipboard = "%Clipboard%"
+    Send ^v
+    Sleep 200
+    Clipboard := OldClipboard
+    OldClipboard := ""
+    ; Send, ^c
+return
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/* --------------------------------- F keys ---------------------------------*/
 
 Capslock & F1:: sendinput {AppsKey}
 ; Capslock & F2:: --------------
@@ -277,7 +347,7 @@ Capslock & 5:: SendRaw, `%
 capslock & 6:: ^
 Capslock & 7:: &
 Capslock & 8:: *
-capslock & 9:: (
+; capslock & 9:: Sorround with paranthesis
 capslock & 0:: )
 capslock & -:: _
 capslock & =:: +
@@ -371,7 +441,7 @@ return
 /* -------------------------------------------------------------------------- */
 */
 
-Capslock & q::
+Capslock & w::
 
     Input Key, L2 T2 ; L3 to limit the input to 3 eys. T5 , wait for 5 seconds
     ;----------------------Delete all
