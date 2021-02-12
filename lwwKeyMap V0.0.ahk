@@ -219,8 +219,9 @@ Capslock & j::SendInput {Blind}{Left}
 Capslock & k::SendInput {Blind}{Down}
 Capslock & l::SendInput {Blind}{Right}
 Capslock & SC027::SendInput {Blind}^{right}
-;-----Capslock & ':: ------------Available
+;Capslock & ':: Sorround with ''
 
+;Capslock & z::alt tab
 ;-----Capslock & x:: ------------Available
 ;Capslock & c::copy/cut all
 Capslock & v:: Sendinput {Delete}
@@ -261,11 +262,9 @@ Capslock & BS::SendInput {Blind}{BS}
 !+q::SendInput !{F4}
 !q::Sendinput ^w
 
-^enter::Send,{End}{enter} ; enter a line above
-+enter::Send,{Home}{enter}{Up} ; enter a line below
+capslock & enter::Send,{End}{enter} ; enter a line above
+#enter::Send,{Home}{enter}{Up} ; enter a line below
 ^#Down::SendInput,{Home}{Home}+{End}+{End}^c{End}{Enter}+{Home}^v
-
-
 
 ; ----------------------------- Sorrounding Text -------------------------------
 
@@ -283,29 +282,68 @@ Capslock & BS::SendInput {Blind}{BS}
 return
 
 capslock & 9::
-    OldClipboard := Clipboard
-    Clipboard := ""
-    Send ^c
-    ClipWait, 1
-    Clipboard = (%Clipboard%)
-    Send ^v
-    Sleep 200
-    Clipboard := OldClipboard
-    OldClipboard := ""
-    ; Send, ^c
+    If GetKeyState("Tab","p") = 1
+    {
+        send {ShiftUp}
+        OldClipboard := Clipboard
+        Clipboard := ""
+        Send ^c
+        ClipWait, 1
+        Clipboard = {%Clipboard%}
+        Send ^v
+        Sleep 200
+        Clipboard := OldClipboard
+        OldClipboard := ""
+        ; Send, ^c
+        return
+    }
+    Else
+    {
+        OldClipboard := Clipboard
+        Clipboard := ""
+        Send ^c
+        ClipWait, 1
+        Clipboard = (%Clipboard%)
+        Send ^v
+        Sleep 200
+        Clipboard := OldClipboard
+        OldClipboard := ""
+        ; Send, ^c
+        return
+    }
 return
 
+
 capslock & "::
-    OldClipboard := Clipboard
-    Clipboard := ""
-    Send ^c
-    ClipWait, 1
-    Clipboard = "%Clipboard%"
-    Send ^v
-    Sleep 200
-    Clipboard := OldClipboard
-    OldClipboard := ""
-    ; Send, ^c
+    If GetKeyState("Tab","p") = 1
+        {
+            send {ShiftUp}
+            OldClipboard := Clipboard
+            Clipboard := ""
+            Send ^c
+            ClipWait, 1
+            Clipboard = "%Clipboard%"
+            Send ^v
+            Sleep 200
+            Clipboard := OldClipboard
+            OldClipboard := ""
+            Send, ^c
+            return
+        }
+        else
+        {
+            OldClipboard := Clipboard
+            Clipboard := ""
+            Send ^c
+            ClipWait, 1
+            Clipboard = '%Clipboard%'
+            Send ^v
+            Sleep 200
+            Clipboard := OldClipboard
+            OldClipboard := ""
+            ; Send, ^c
+            return
+        }
 return
 
 
