@@ -26,45 +26,44 @@ Gustavo Duarte: http://duartes.org/gustavo/blog/post/home-row-computing
 ## Mouse Functionality
 #### Normal mouse with the keyboard (8 shortcuts)
 Whilst holding the Right Shift key movve use qwerasdfzxcv keys for mouse functionality
+| Function              | Hotkey                        |
+|-----------------------|-------------------------------|
+|  move up              |  RShift + E                   |
+|  move down            |  RShift + D                   |
+|  Move left            |  RShift + S                   |
+|  Move right           |  RShift + F                   |
+|  Scroll down          |  RShift + W                   |
+|  Scroll up            |  RShift + R                   |
+|  Left Button          |  RShift + Space / Rshift + ;  |
+|  Control Left button  |  RShift + '                   |
 
-
-| #   | Shortcut                    | Function            |
-| --- | --------------------------- | ------------------- |
-| 1   | RShift + E                  | move up             |
-| 2   | RShift + D                  | move down           |
-| 3   | RShift + S                  | Move left           |
-| 4   | RShift + F                  | Move right          |
-| 5   | RShift + W                  | Scroll down         |
-| 6   | RShift + R                  | Scroll up           |
-| 7   | RShift + Space / Rshift + ; | Left Button         |
-| 8   | RShift + '                  | Control Left button |
 
 #### Quickly move mouse cursor in the screen (7 shortcuts)
 
-| #   | Shortcut   | Function      |
-| --- | ---------- | ------------- |
-| 1   | RShift + q | Top Left      |
-| 2   | RShift + t | Top Right     |
-| 3   | RShift + a | Middle Left   |
-| 4   | RShift + c | Middle Center |
-| 5   | RShift + g | Middle Right  |
-| 6   | RShift + z | Bottom Left   |
-| 7   | RShift + b | Bottom Right  |
+| Function        | Hotkey       |
+|-----------------|--------------|
+|  Top Left       |  RShift + q  |
+|  Top Right      |  RShift + t  |
+|  Middle Left    |  RShift + a  |
+|  Middle Center  |  RShift + c  |
+|  Middle Right   |  RShift + g  |
+|  Bottom Left    |  RShift + z  |
+|  Bottom Right   |  RShift + b  |
 
 #### Mapping the Real mouse buttons (4 shortcuts)
 These button's are helpful when you're using the keyboard from your lefthand and mouse from your right hand. Enter and Delete keys are used very often in this situation.
 
 
-| #   | Shortcut          | Function    |
-| --- | ----------------- | ----------- |
-| 1   | Side Button Up    | Enter       |
-| 2   | Side Button Down  | Delete      |
-| 3   | Mouse wheel left  | Scroll Left |
-| 4   | Mouse wheel Right | Sroll right |
+| Function      |  Shortcut           |
+|---------------|---------------------|
+|  Enter        |  Side Button Up     |
+|  Delete       |  Side Button Down   |
+|  Scroll Left  |  Mouse wheel left   |
+|  Sroll right  |  Mouse wheel Right  |
 
 #### Hotkeys to be used in Microsoft Excel
 
-| Excel Function                              | Shortcut           | Simulated Keys         |
+| Excel Function                              | Hotkey           | Simulated Keys         |
 | ------------------------------------------- | ------------------ | ---------------------- |
 | Trace Precedents                            | capslock + 1       | {Ctrl}[                |
 | Trace Dependants                            | capslock + 2       | {F5}{Enter}            |
@@ -101,54 +100,60 @@ These button's are helpful when you're using the keyboard from your lefthand and
 
 
 #### Toggle Caps lock
-| #    |  Function           |  Shortcut      |
-|------|---------------------|----------------|
-|      | Toggle Capslock key | win + capslock |
+| #   | Function            | Hotkey         |
+| --- | ------------------- | -------------- |
+|     | Toggle Capslock key | win + capslock |
 
 
 #### Letter keybindings in order of the place in the keyboard
-
-| Shift (Can be used in combinations)  | Capslock & Tab               | Shift                                   |
+| Function                             | Hotkey                       | Simulated Keys                          |
 |--------------------------------------|------------------------------|-----------------------------------------|
+| Escape                               | Capslock + q                 | {Esc}                                   |
+| Launcher Functionality Covered later | Capslock + w                 | Launcher                                |
+| Undo                                 | Capslock + e                 | {Ctrl}z  This has repetiti              |
+| Redo                                 | Capslock + r                 | {Ctrl}y  redo                           |
+| Select and Copy proceding word       | capslock + t                 | {Ctrl}{Left}{Shift}{Ctrl}{Right}{Ctrl}c |
+| Delete proceding word                | capslock + t (pressed twice) | {Ctrl}{Left}{Shift}{Ctrl}{Right}{del}   |
+| Home                                 | Capslock + y                 | {Home}                                  |
+| Page Up                              | Capslock + u                 | {pgUp}                                  |
+| Up Arrow                             | Capslock + i                 | {Up}                                    |
+| Page Down                            | Capslock + o                 | {pgDn}                                  |
+| End Arrow                            | Capslock + p                 | {End}                                   |
+| {                                    | Capslock + [                 | {                                       |
+| }                                    | Capslock + ]                 | }                                       |
+| |                                    | Capslock + \                 | |                                       |
 |                                      |                              |                                         |
-| Escape                               | Capslock & q                 | {Esc}                                   |
-| Launcher Functionality Covered later | Capslock & w                 | Launcher                                |
-| Undo                                 | Capslock & e                 | {Ctrl}z  This has repetiti              |
-| Redo                                 | Capslock & r                 | {Ctrl}y  redo                           |
-| Select and Copy proceding word       | capslock & t                 | {Ctrl}{Left}{Shift}{Ctrl}{Right}{Ctrl}c |
-| Delete proceding word                | capslock & t (pressed twice) | {Ctrl}{Left}{Shift}{Ctrl}{Right}{del}   |
-| Home                                 | Capslock & y                 | {Home}                                  |
-| Page Up                              | Capslock & u                 | {pgUp}                                  |
-| Up Arrow                             | Capslock & i                 | {Up}                                    |
-| Page Down                            | Capslock & o                 | {pgDn}                                  |
-| End Arrow                            | Capslock & p                 | {End}                                   |
-| {                                    | Capslock & [                 | {                                       |
-| }                                    | Capslock & ]                 | }                                       |
-| |                                    | Capslock & \                 | |                                       |
+| Save                                 | Capslock + a                 | {Ctrl}s                                 |
+| Save as                              | Capslock + a (pressed twice) | {Ctrl}{Shift}s                          |
+| Cut                                  | Capslock + s                 | {Ctrl}x                                 |
+| Copy                                 | Capslock + d                 | {Ctrl}c                                 |
+| Paste                                | Capslock + f                 | {Ctrl}v                                 |
+| Copy Line                            | Capslock + g                 | {Home}{Shift}{End}{Ctrl}c               |
+| Delete Line                          | Capslock + g (pressed twice) | {Home}{Shift}{End}{del}                 |
+| Ctrl + Left Arrow                    | Capslock + h                 | {Ctrl}{Left}                            |
+| Left Arrow                           | Capslock + j                 | {Left}                                  |
+| Down Arrow                           | Capslock + k                 | {Down}                                  |
+| Right Arrow                          | Capslock + l                 | {Right}                                 |
+| Ctrl + Rigth Arrow                   | Capslock + S                 | {Ctrl}{Right}                           |
 |                                      |                              |                                         |
-| Save                                 | Capslock & a                 | {Ctrl}s                                 |
-| Save as                              | Capslock & a (pressed twice) | {Ctrl}{Shift}s                          |
-| Cut                                  | Capslock & s                 | {Ctrl}x                                 |
-| Copy                                 | Capslock & d                 | {Ctrl}c                                 |
-| Paste                                | Capslock & f                 | {Ctrl}v                                 |
-| Copy Line                            | Capslock & g                 | {Home}{Shift}{End}{Ctrl}c               |
-| Delete Line                          | Capslock & g (pressed twice) | {Home}{Shift}{End}{del}                 |
-| Ctrl + Left Arrow                    | Capslock & h                 | {Ctrl}{Left}                            |
-| Left Arrow                           | Capslock & j                 | {Left}                                  |
-| Down Arrow                           | Capslock & k                 | {Down}                                  |
-| Right Arrow                          | Capslock & l                 | {Right}                                 |
-| Ctrl + Rigth Arrow                   | Capslock & S                 | {Ctrl}{Right}                           |
-|                                      |                              |                                         |
-| Cycle open applications              | Capslock & z                 | {Alt}{Tab}                              |
-| Select all                           | Capslock & c                 | {Ctrl}a{Ctrl}c                          |
-| Delete all                           | Capslock & c (Pressed Twice) | {Ctrl}a{del}                            |
-| Delete                               | Capslock & v                 | {Delete}                                |
-| BackSpace                            | Capslock & b                 | {BS}                                    |
-| BackSpace                            | Capslock & n                 | {BS}                                    |
-| Backspace preceding word             | Capslock & m                 | {Ctrl}{BS}                              |
-| Delete                               | Capslock & ,                 | {Delete}                                |
-| Delete the next word                 | Capslock & .                 | {Ctrl}{Delete}                          |
-| Find                                 | Capslock & /                 | {Ctrl}f                                 |
+| Cycle open applications              | Capslock + z                 | {Alt}{Tab}                              |
+| Select all                           | Capslock + c                 | {Ctrl}a{Ctrl}c                          |
+| Delete all                           | Capslock + c (Pressed Twice) | {Ctrl}a{del}                            |
+| Delete                               | Capslock + v                 | {Delete}                                |
+| BackSpace                            | Capslock + b                 | {BS}                                    |
+| BackSpace                            | Capslock + n                 | {BS}                                    |
+| Backspace preceding word             | Capslock + m                 | {Ctrl}{BS}                              |
+| Delete                               | Capslock + ,                 | {Delete}                                |
+| Delete the next word                 | Capslock + .                 | {Ctrl}{Delete}                          |
+| Find                                 | Capslock + /                 | {Ctrl}f                                 |
 
-
-####
+#### Special key combinations
+| Function                                            | Hotkey                  | Simulated Keys                                                              |
+|-----------------------------------------------------|-------------------------|-----------------------------------------------------------------------------|
+| Enter                                               | CapsLock + space        | {Enter}                                                                     |
+| Control (Holding)                                   | CapsLock + Tab + Space  | {Ctrl (Hold)}                                                               |
+| Shift (Can be used in combinations with other keys) | Capslock + Tab          | {Shift}                                                                     |
+|                                                     |                         |                                                                             |
+| Enter Blank line above                              | capslock & enter        | {End}{enter}                                                                |
+| Enter Blank line below                              | Win + enter             | {Home}{enter}{Up}                                                           |
+| Duplicate the current line                          | Ctrl + Win + Down       | {Home}{Home}{Shift}{End}{Shift}{End}{Ctrl}c{End}{Enter}{Shift}{Home}{Ctrl}v |
