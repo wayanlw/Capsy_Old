@@ -5,13 +5,13 @@
 
 
 #SingleInstance, Force
-
 #Persistent
+; SendMode Input ; with this the launcher keys will not work (q)
 SetCapsLockState, AlwaysOff
 SetScrollLockState, AlwaysOff
 
 SetBatchLines -1
-#UseHook
+#UseHook ; without this the mouse movement will not work
 
 MouseDelay = 0
 Increment = 1
@@ -303,7 +303,6 @@ return
 capslock & 9::
     If GetKeyState("Tab","p") = 1
     {
-        send {ShiftUp}
         OldClipboard := Clipboard
         Clipboard := ""
         Send ^c

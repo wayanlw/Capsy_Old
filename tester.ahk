@@ -1,10 +1,13 @@
+#SingleInstance, Force
+; SendMode Input
+SetWorkingDir, %A_ScriptDir%
+
 /* -------------------------------------------------------------------------- */
 /*                                  Version 0                                 */
 /* -------------------------------------------------------------------------- */
 */
 
 
-#SingleInstance, Force
 
 #Persistent
 SetCapsLockState, AlwaysOff
@@ -172,9 +175,9 @@ WheelRight::WheelRight
     capslock & F3::sendinput {*}
     capslock & F4::sendinput {/}
 
-        ; ---------------------------- alt enter in excel ------------------------------
-     capslock & enter::
-    If GetKeyState("space","p") = 1
+    ; ---------------------------- alt enter in excel ------------------------------
+    capslock & enter::
+    If GetKeyState("Tab","p") = 1
         {
             Send,{Home}!{enter}{up}
         }
@@ -260,11 +263,11 @@ capslock & alt::SendInput {Blind}{Alt}
 ;         Send {Enter}
 ; Return
 
-Capslock & space::Return
+Capslock & Tab:: Return
 
 
-Capslock & Tab::SendInput {Blind}{shift Down}
-Capslock & Tab up::SendInput {Blind}{shift up}
+Capslock & space::SendInput {Blind}{shift Down}
+Capslock & space up::SendInput {Blind}{shift up}
 
 Capslock & BS::SendInput {Blind}{BS}
 
@@ -272,7 +275,7 @@ Capslock & BS::SendInput {Blind}{BS}
 !q::Sendinput ^w
 
 capslock & enter::
-    If GetKeyState("space","p") = 1
+    If GetKeyState("Tab","p") = 1
         {
             Send,{Home}{enter}{up}
         }
@@ -301,7 +304,7 @@ capslock & Down::SendInput,{Home}{Home}+{End}+{End}^c{End}{Enter}+{Home}^v
 return
 
 capslock & 9::
-    If GetKeyState("Space","p") = 1
+    If GetKeyState("Tab","p") = 1
     {
         OldClipboard := Clipboard
         Clipboard := ""
@@ -318,11 +321,11 @@ capslock & 9::
     {
         send (){left}
     }
-    return
+return
 
 
 capslock & "::
-    If GetKeyState("Space","p") = 1
+    If GetKeyState("Tab","p") = 1
         {
             OldClipboard := Clipboard
             Clipboard := ""
@@ -468,137 +471,21 @@ return
 
 
 
-/* -------------------------------------------------------------------------- */
-/*                                  Launcher                                  */
-/* -------------------------------------------------------------------------- */
-*/
-
 Capslock & q::
-
+    ; mdsgbox "test"
     Input Key, L2 T2 ; L3 to limit the input to 3 eys. T5 , wait for 5 seconds
     ;----------------------Delete all
     if Key=fa
     {
-        sendinput ^a{delete}
+        SendEvent, ^a{delete}
         return
     }
-    ;----------------------Delete word (implemented by capslock+tt)
-    ; else if key=fw
-    ; {
-    ;     sendinput, ^{right}+^{left}{delete}
-    ;     return
-    ; }
-    ;----------------------Delete Line (implemented by capslock+gg)
-    ; else if key=fv
-    ; {
-    ;     sendinput, {Home}+{End}{delete}
-    ;     return
-    ; }
-    ;----------------------Delete to Start
-    else if key=fs
-    {
-        sendinput, +{Home}{delete}
-        return
-    }
-    ;----------------------Delete to End
-    else if key=fe
-    {
-        sendinput, +{End}{delete}
-        return
-    }
-
-
-
-    ;-----------------------copy all
-    else if key=da
+     else if key=da
     {
         sendinput, ^a^c
         return
     }
-    ;-----------------------copy word (implemented by capslock+t)
-    ; else if key=dw
-    ; {
-    ;     sendinput, ^{right}+^{left}^c
-    ;     return
-    ; }
-    ;-----------------------copy word (implemented by capslock+g)
-    ; else if key=dd
-    ; {
-    ;     sendinput, {Home}+{End}^c
-    ;     return
-    ; }
-    ;-----------------------copy to start
-    else if key=ds
-    {
-        sendinput, +{Home}^c
-        return
-    }
-    ;-----------------------copy to end
-    else if key=df
-    {
-        sendinput, +{End}^c
-        return
-    }
 
-
-
-    ;----------------------- cut all
-    else if key=va
-    {
-        sendinput, ^a^x
-        return
-    }
-    ;----------------------- cut word
-    else if key=vw
-    {
-        sendinput, ^{right}+^{left}^x
-        return
-    }
-    ;----------------------- cut line
-    else if key=vv
-    {
-        sendinput, {Home}+{End}^x
-        return
-    }
-    ;----------------------- cut to start
-    else if key=vs
-    {
-        sendinput, +{Home}^x
-        return
-    }
-    ;----------------------- cut to end
-    else if key=ve
-    {
-        sendinput, +{End}^x
-        return
-    }
-
-
-    ;----------------------- Select commands
-    else if key=sa
-    {
-        sendinput, ^a
-        return
-    }
-
-    else if key=sw
-    {
-        sendinput, ^{right}+^{left}
-        return
-    }
-
-    ; --------------------- Excel delete row delete column
-    else if key=dr
-    {
-        sendinput, +{space}^{-}
-        return
-    }
-
-    else if key=dc
-    {
-        sendinput, ^{space}^{-}
-        return
-    }
 
     ;-------------------------  (L)aunching apps
     ; else if key=lx
@@ -607,156 +494,3 @@ Capslock & q::
     ; }
 
 return
-
-
-/* -------------------------------------------------------------------------- */
-/*                             Search Functions                               */
-/* -------------------------------------------------------------------------- */
-*/
-
-
-/* ------------------------------ Youtube Search -----------------------------
-*/
-
-#y::
-    InputBox, Search, Youtube Search, , , 400, 100
-    if not ErrorLevel ; when cancel is not pressed
-    {
-        ; run C:\Program Files (x86)\Google\Chrome\Application\chrome.exe https://www.youtube.com/results?search_query="%Search%"
-        run https://www.youtube.com/results?search_query=%Search%
-    }
-return
-
-/* ---------------------- Youtube Search Selected Words ---------------------
-*/
-
-#^y::
-    OldClipboard:= Clipboard
-    Clipboard:= ""
-    Send, ^c ;copies selected text
-    ClipWait, 1
-
-    ; Run C:\Program Files (x86)\Google\Chrome\Application\chrome.exe https://www.youtube.com/results?search_query="%clipboard%"
-    Run https://www.youtube.com/results?search_query=%clipboard%
-    Sleep 200
-    Clipboard:= OldClipboard
-    Send, ^c ;copies selected text
-Return
-
-
-/* ------------------------------ Google Search -----------------------------
-*/
-
-#s::
-    InputBox, Search, Google Search, , , 400, 100
-    if not ErrorLevel ; when cancel is not pressed
-    {
-        ; run C:\Program Files (x86)\Google\Chrome\Application\chrome.exe http://www.google.com/search?q=%Search%&num=100&source=lnms&filter=0
-        run http://www.google.com/search?q=%Search%&num=100&source=lnms&filter=0
-    }
-return
-
-/* ----------------------- Google Search Selected Word ----------------------
-*/
-
-#^s::
-    OldClipboard:= Clipboard
-    Clipboard:= ""
-    Sendinput, ^c ;copies selected text
-    ClipWait, 1
-    ; Run C:\Program Files (x86)\Google\Chrome\Application\chrome.exe http://www.google.com/search?q=%Clipboard%&num=100&source=lnms&filter=0
-    Run http://www.google.com/search?q=%Clipboard%&num=100&source=lnms&filter=0
-    Sleep 200
-    Clipboard:= OldClipboard
-    OldClipboard:=""
-    ;    MsgBox %OldClipboard%
-    Send, ^c ;copies selected text
-Return
-
-/* -------------------------- Window always on top --------------------------
-*/
-
-^F12:: Winset, Alwaysontop, , A
-
-
-/* -------------------------------------------------------------------------- */
-/*               Drag Windows with CapsLock + Right Mouse Button              */
-/* -------------------------------------------------------------------------- */
-*/
-
-Capslock & RButton::
-    CoordMode, Mouse ; Switch to screen/absolute coordinates.
-    MouseGetPos, EWD_MouseStartX, EWD_MouseStartY, EWD_MouseWin
-    WinGetPos, EWD_OriginalPosX, EWD_OriginalPosY,,, ahk_id %EWD_MouseWin%
-    WinGet, EWD_WinState, MinMax, ahk_id %EWD_MouseWin%
-    if EWD_WinState = 0 ; Only if the window isn't maximized
-        SetTimer, EWD_WatchMouse, 10 ; Track the mouse as the user drags it.
-return
-
-EWD_WatchMouse:
-    GetKeyState, EWD_LButtonState, RButton, P
-    if EWD_LButtonState = U ; Button has been released, so drag is complete.
-    {
-        SetTimer, EWD_WatchMouse, off
-        return
-    }
-    GetKeyState, EWD_EscapeState, Escape, P
-    if EWD_EscapeState = D ; Escape has been pressed, so drag is cancelled.
-    {
-        SetTimer, EWD_WatchMouse, off
-        WinMove, ahk_id %EWD_MouseWin%,, %EWD_OriginalPosX%, %EWD_OriginalPosY%
-        return
-    }
-    ; Otherwise, reposition the window to match the change in mouse coordinates
-    ; caused by the user having dragged the mouse:
-    CoordMode, Mouse
-    MouseGetPos, EWD_MouseX, EWD_MouseY
-    WinGetPos, EWD_WinX, EWD_WinY,,, ahk_id %EWD_MouseWin%
-    SetWinDelay, -1 ; Makes the below move faster/smoother.
-    WinMove, ahk_id %EWD_MouseWin%,, EWD_WinX + EWD_MouseX - EWD_MouseStartX, EWD_WinY + EWD_MouseY - EWD_MouseStartY
-    WinActivate, ahk_id %EWD_MouseWin%
-    EWD_MouseStartX := EWD_MouseX ; Update for the next timer-call to this subroutine.
-    EWD_MouseStartY := EWD_MouseY ;bring the window to the front(foreground)
-return
-
-
-
-/* -------------------------------------------------------------------------- */
-/*                           Gather text to notepad                           */
-/* -------------------------------------------------------------------------- */
-*/
-
-
-^!c::
-    OldClipboard := ClipboardAll
-    Clipboard = ;clears the Clipboard
-    Send, ^c
-    ClipWait 0 ;pause for Clipboard data
-    If ErrorLevel
-    {
-        MsgBox, No text selected!
-    }
-
-    IfWinNotExist, *Untitled - Notepad
-    {
-        Run, Notepad
-        WinWaitActive, Untitled - Notepad
-        Control, EditPaste, % Clipboard . chr(13) . chr(10) . chr(13) . chr(10) , , Untitled - Notepad
-        return
-    }
-
-    ; Control, EditPaste used rather than ControlSend for much greater speed of execution
-
-    Control, EditPaste, % Clipboard . chr(13) . chr(10) . chr(13) . chr(10) , , *Untitled - Notepad
-    Clipboard := OldClipboard
-Return
-
-;---------------------------------------------------------------------------------------------------------
-;######################### End quickly gather text to a notepad ##########################################
-;---------------------------------------------------------------------------------------------------------
-
-; >!q::Suspend
-
->^q::
-    MsgBox Exiting the script Y
-ExitApp
