@@ -171,9 +171,10 @@ WheelRight::WheelRight
     capslock & F2::sendinput {+}
     capslock & F3::sendinput {*}
     capslock & F4::sendinput {/}
+
     ; ---------------------------- alt enter in excel ------------------------------
-     capslock & enter::
-    If GetKeyState("space","p") = 1
+    capslock & enter::
+    If GetKeyState("Tab","p") = 1
         {
             Send,{Home}!{enter}{up}
         }
@@ -259,18 +260,19 @@ capslock & alt::SendInput {Blind}{Alt}
 ;         Send {Enter}
 ; Return
 
-Capslock & space::Return
+Capslock & Tab:: Return
 
 
-Capslock & Tab::SendInput {Blind}{shift Down}
-Capslock & Tab up::SendInput {Blind}{shift up}
+Capslock & space::SendInput {Blind}{shift Down}
+Capslock & space up::SendInput {Blind}{shift up}
+
 Capslock & BS::SendInput {Blind}{BS}
 
 !+q::SendInput !{F4}
 !q::Sendinput ^w
 
 capslock & enter::
-    If GetKeyState("space","p") = 1
+    If GetKeyState("Tab","p") = 1
         {
             Send,{Home}{enter}{up}
         }
@@ -299,7 +301,7 @@ capslock & Down::SendInput,{Home}{Home}+{End}+{End}^c{End}{Enter}+{Home}^v
 return
 
 capslock & 9::
-    If GetKeyState("Space","p") = 1
+    If GetKeyState("Tab","p") = 1
     {
         send {ShiftUp}
         OldClipboard := Clipboard
@@ -317,11 +319,11 @@ capslock & 9::
     {
         send (){left}
     }
-    return
+return
 
 
 capslock & "::
-    If GetKeyState("Space","p") = 1
+    If GetKeyState("Tab","p") = 1
         {
             OldClipboard := Clipboard
             Clipboard := ""
