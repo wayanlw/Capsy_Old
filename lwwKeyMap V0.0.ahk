@@ -7,11 +7,12 @@
 #SingleInstance, Force
 
 #Persistent
+; SendMode Input ; with this the launcher keys will not work (q)
 SetCapsLockState, AlwaysOff
 SetScrollLockState, AlwaysOff
 
 SetBatchLines -1
-#UseHook
+#UseHook ; without this the mouse movement will not work
 
 MouseDelay = 0
 Increment = 1
@@ -113,7 +114,6 @@ b::MouseMove, (A_ScreenWidth / 6 * 5), (A_ScreenHeight / 6 * 5)
 
 #if
 
-
 /* --------------------- Real Mouse: buttons and wheels ---------------------
 */
 
@@ -121,10 +121,6 @@ XButton2::send {Enter}
 XButton1::send {Delete}
 WheelLeft::WheelLeft
 WheelRight::WheelRight
-
-
-
-
 
 /* ------------------------------- Excel area -------------------------------
 */
@@ -172,22 +168,47 @@ WheelRight::WheelRight
     capslock & F3::sendinput {*}
     capslock & F4::sendinput {/}
 
-        ; ---------------------------- alt enter in excel ------------------------------
-     capslock & enter::
+    ; ---------------------------- alt enter in excel ------------------------------
+capslock & enter::
     If GetKeyState("space","p") = 1
-        {
-            Send,{Home}!{enter}{up}
-        }
+    {
+        Sendinput,{Home}!{enter}{up}
+    }
     Else
-        {
-            Send,{End}!{enter}
-        }
-    Return
+    {
+        Sendinput,{End}!{enter}
+    }
+Return
 
+; --------------------- Enter and delete rows and columns ----------------------
+
+capslock & up::
+    If GetKeyState("SPACE","p") = 1
+    {
+        SendInput {up}+{space}^{-}{up}{down}
+        RETURN
+    }
+    Else
+    {
+        SendInput +{space}^+{=}{down}
+        RETURN
+    }
+return
+
+capslock & left::
+    If GetKeyState("SPACE","p") = 1
+    {
+        SendInput {left}^{space}^{-}{left}{right}
+        RETURN
+    }
+    Else
+    {
+        SendInput ^{space}^+{=}{right}
+        RETURN
+    }
+return
 
 #IfWinActive
-
-
 
 /* -------------------- Toggle CapsLock with the win key --------------------
 */
@@ -198,8 +219,6 @@ WheelRight::WheelRight
     Else
         SetCapsLockState, AlwaysOn
 Return
-
-
 
 /* -------------------------------- Main Keys -------------------------------
 */
@@ -214,8 +233,10 @@ Capslock & u::SendInput {Blind}{pgUp}
 Capslock & i::SendInput {Blind}{Up}
 Capslock & o::SendInput {Blind}{pgDn}
 Capslock & p::SendInput {Blind}{End}
-Capslock & [::SendInput {
-Capslock & ]::SendInput }
+Capslock & [::SendInput {}
+[::SendInput []{Left}
++[::sendinput {{}{}}{left}
+Capslock & ]::SendInput []
 Capslock & \::SendInput |
 
 ;Capslock & a:: save and save as
@@ -229,6 +250,7 @@ Capslock & k::SendInput {Blind}{Down}
 Capslock & l::SendInput {Blind}{Right}
 Capslock & SC027::SendInput {Blind}^{right}
 ;Capslock & ':: Sorround with ''
++'::sendinput ""{left}
 
 ;Capslock & z::alt tab
 ;-----Capslock & x:: ------------Available
@@ -246,7 +268,6 @@ Capslock & /::SendInput {enter}
 
 capslock & alt::SendInput {Blind}{Alt}
 
-
 #space::Send,{space}{left}
 ; CapsLock & space::
 ;     KeyWait, space, T0.2
@@ -262,30 +283,33 @@ capslock & alt::SendInput {Blind}{Alt}
 
 Capslock & space::Return
 
-
 Capslock & Tab::SendInput {Blind}{shift Down}
 Capslock & Tab up::SendInput {Blind}{shift up}
 
 Capslock & BS::SendInput {Blind}{BS}
+
+; ----------------------------- Copy or move line ------------------------------
+
+capslock & up::SendInput {Home}{Home}+{End}+{End}^c{End}{Enter}+{Home}^v{up}{End}
+capslock & Down:: SendInput {Home}{Home}+{End}+{End}^c{End}{Enter}+{Home}^v
 
 !+q::SendInput !{F4}
 !q::Sendinput ^w
 
 capslock & enter::
     If GetKeyState("space","p") = 1
-        {
-            Send,{Home}{enter}{up}
-        }
+    {
+        Send,{Home}{enter}{up}
+    }
     Else
-        {
-            Send,{End}{enter}
-        }
+    {
+        Send,{End}{enter}
+    }
 Return
 
 
-capslock & Down::SendInput,{Home}{Home}+{End}+{End}^c{End}{Enter}+{Home}^v
 
-; ----------------------------- Sorrounding Text -------------------------------
+    ; ----------------------------- Sorrounding Text -------------------------------
 
 #+[::
     OldClipboard := Clipboard
@@ -318,39 +342,32 @@ capslock & 9::
     {
         send (){left}
     }
-    return
-
-
-capslock & "::
-    If GetKeyState("Space","p") = 1
-        {
-            OldClipboard := Clipboard
-            Clipboard := ""
-            Send ^c
-            ClipWait, 1
-            Clipboard = "%Clipboard%"
-            Send ^v
-            Sleep 200
-            Clipboard := OldClipboard
-            OldClipboard := ""
-            Send, ^c
-            return
-        }
-        else
-        {
-            OldClipboard := Clipboard
-            Clipboard := ""
-            Send ^c
-            ClipWait, 1
-            Clipboard = '%Clipboard%'
-            Send ^v
-            Sleep 200
-            Clipboard := OldClipboard
-            OldClipboard := ""
-            ; Send, ^c
-            return
-        }
 return
+
+capslock & '::
+    If GetKeyState("Space","p") = 1
+    {
+        OldClipboard := Clipboard
+        Clipboard := ""
+        Send ^c
+        ClipWait, 1
+        Clipboard = "%Clipboard%"
+        Send ^v
+        Sleep 200
+        Clipboard := OldClipboard
+        OldClipboard := ""
+        ; Send, ^c
+        return
+    }
+    else
+    {
+        sendinput ""{left}
+        return
+    }
+return
+
+
+
 
 
 /* --------------------------------- F keys ---------------------------------*/
@@ -380,21 +397,18 @@ capslock & 6:: ^
 Capslock & 7:: &
 Capslock & 8:: *
 ; capslock & 9:: Sorround with paranthesis
++9::sendinput (){left}
 capslock & 0:: )
 capslock & -:: _
 capslock & =:: +
 
-
-
-
-/* ---------------------------- Special Functions ---------------------------
-*/
+; ------------------------------------------------------------------------------
+;                               Special Functions
+; ------------------------------------------------------------------------------
 
 Capslock & z::AltTab
 
-
-/* ----------------------------- word select(copy) , delete ----------------------------
-*/
+; ------------------------ word select(copy) , delete --------------------------
 
 Capslock & t::
     keywait,t
@@ -405,20 +419,19 @@ Capslock & t::
         Send, ^{Left}+^{Right}{del}
 return
 
-/* --------------------------- Line select(copy) , delete ---------------------------
-*/
+; ------------------------ Line select(copy) , delete --------------------------
 
 Capslock & g::
     keywait,g
     keywait, g, d ,t 0.2
     if errorlevel
-        Sendinput, {Home}+{End}^c
+        Sendinput, {Home}{Home}+{End}+{End}^c
     else
-        Sendinput, {Home}+{End}{del}
+        Sendinput, {Home}{Home}+{End}+{End}{del}
 return
 
-/* ----------------------------- All copy delete (Too dagerous) ----------------------------
-*/
+; ------------ All copy delete (Too dagerous. replaced with enter) -------------
+
 
 ; Capslock & c::
 ;     keywait,c
@@ -429,8 +442,8 @@ return
 ;         Sendinput, ^a{del}
 ; return
 
-/* ---------------------------- Save and save as ----------------------------
-*/
+; ----------------------------- Save and save as -------------------------------
+
 
 Capslock & a::
     keywait, a
@@ -450,8 +463,6 @@ Capslock & a::
     }
 return
 
-
-
 /* ------------------------------ Num lock keys -----------------------------
 */
 
@@ -466,12 +477,9 @@ return
 +^!i:: SendInput {Numpad8}
 +^!o:: SendInput {Numpad9}
 
-
-
-/* -------------------------------------------------------------------------- */
-/*                                  Launcher                                  */
-/* -------------------------------------------------------------------------- */
-*/
+; ------------------------------------------------------------------------------
+;                                   Launcher
+; ------------------------------------------------------------------------------
 
 Capslock & q::
 
@@ -482,20 +490,8 @@ Capslock & q::
         sendinput ^a{delete}
         return
     }
-    ;----------------------Delete word (implemented by capslock+tt)
-    ; else if key=fw
-    ; {
-    ;     sendinput, ^{right}+^{left}{delete}
-    ;     return
-    ; }
-    ;----------------------Delete Line (implemented by capslock+gg)
-    ; else if key=fv
-    ; {
-    ;     sendinput, {Home}+{End}{delete}
-    ;     return
-    ; }
     ;----------------------Delete to Start
-    else if key=fs
+    else if key=fd
     {
         sendinput, +{Home}{delete}
         return
@@ -507,26 +503,12 @@ Capslock & q::
         return
     }
 
-
-
     ;-----------------------copy all
     else if key=da
     {
         sendinput, ^a^c
         return
     }
-    ;-----------------------copy word (implemented by capslock+t)
-    ; else if key=dw
-    ; {
-    ;     sendinput, ^{right}+^{left}^c
-    ;     return
-    ; }
-    ;-----------------------copy word (implemented by capslock+g)
-    ; else if key=dd
-    ; {
-    ;     sendinput, {Home}+{End}^c
-    ;     return
-    ; }
     ;-----------------------copy to start
     else if key=ds
     {
@@ -539,8 +521,6 @@ Capslock & q::
         sendinput, +{End}^c
         return
     }
-
-
 
     ;----------------------- cut all
     else if key=va
@@ -573,11 +553,16 @@ Capslock & q::
         return
     }
 
-
     ;----------------------- Select commands
     else if key=sa
     {
         sendinput, ^a
+        return
+    }
+
+    else if key=ss
+    {
+        sendinput, {Home}{home}+{End}+{End}
         return
     }
 
@@ -608,12 +593,10 @@ Capslock & q::
 
 return
 
-
 /* -------------------------------------------------------------------------- */
-/*                             Search Functions                               */
+/* Search Functions */
 /* -------------------------------------------------------------------------- */
 */
-
 
 /* ------------------------------ Youtube Search -----------------------------
 */
@@ -642,7 +625,6 @@ return
     Clipboard:= OldClipboard
     Send, ^c ;copies selected text
 Return
-
 
 /* ------------------------------ Google Search -----------------------------
 */
@@ -678,9 +660,8 @@ Return
 
 ^F12:: Winset, Alwaysontop, , A
 
-
 /* -------------------------------------------------------------------------- */
-/*               Drag Windows with CapsLock + Right Mouse Button              */
+/* Drag Windows with CapsLock + Right Mouse Button */
 /* -------------------------------------------------------------------------- */
 */
 
@@ -719,13 +700,10 @@ EWD_WatchMouse:
     EWD_MouseStartY := EWD_MouseY ;bring the window to the front(foreground)
 return
 
-
-
 /* -------------------------------------------------------------------------- */
-/*                           Gather text to notepad                           */
+/* Gather text to notepad */
 /* -------------------------------------------------------------------------- */
 */
-
 
 ^!c::
     OldClipboard := ClipboardAll
