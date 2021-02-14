@@ -233,15 +233,13 @@ Capslock & u::SendInput {Blind}{pgUp}
 Capslock & i::SendInput {Blind}{Up}
 Capslock & o::SendInput {Blind}{pgDn}
 Capslock & p::SendInput {Blind}{End}
-Capslock & [::SendInput {}
-[::SendInput []{Left}
-+[::sendinput {{}{}}{left}
-Capslock & ]::SendInput []
+Capslock & [::SendInput {{}{}}{Left}
+Capslock & ]::SendInput []{Left}
 Capslock & \::SendInput |
 
 ;Capslock & a:: save and save as
 Capslock & s:: SendInput ^x
-Capslock & d:: sendinput ^c ;Copy and double click to cut
+Capslock & d:: sendinput ^c
 Capslock & f:: SendInput ^v
 ;Capslock & g:: selecet & copy / delete line
 Capslock & h::SendInput {Blind}^{Left}
@@ -249,8 +247,7 @@ Capslock & j::SendInput {Blind}{Left}
 Capslock & k::SendInput {Blind}{Down}
 Capslock & l::SendInput {Blind}{Right}
 Capslock & SC027::SendInput {Blind}^{right}
-;Capslock & ':: Sorround with ''
-+'::sendinput ""{left}
+;Capslock & ':: Sorround with ""
 
 ;Capslock & z::alt tab
 ;-----Capslock & x:: ------------Available
@@ -268,19 +265,6 @@ Capslock & /::SendInput {enter}
 
 capslock & alt::SendInput {Blind}{Alt}
 
-#space::Send,{space}{left}
-; CapsLock & space::
-;     KeyWait, space, T0.2
-;     If (ErrorLevel = 1)
-;     {
-;         Send {Control Down}
-;         KeyWait, space
-;         Send {Control Up}
-;     }
-;     Else
-;         Send {Enter}
-; Return
-
 Capslock & Tab:: Return
 
 Capslock & space::SendInput {Blind}{shift Down}
@@ -288,13 +272,21 @@ Capslock & space up::SendInput {Blind}{shift up}
 
 Capslock & BS::SendInput {Blind}{BS}
 
-; ----------------------------- Copy or move line ------------------------------
+#space::Send,{space}{left}
+
+
+
+; -------------------------- copy lines up and down ----------------------------
 
 capslock & up::SendInput {Home}{Home}+{End}+{End}^c{End}{Enter}+{Home}^v{up}{End}
 capslock & Down:: SendInput {Home}{Home}+{End}+{End}^c{End}{Enter}+{Home}^v
 
+; --------------------------- Close windows and tab ----------------------------
+
 !+q::SendInput !{F4}
 !q::Sendinput ^w
+
+; ------------------------- enter line below or above --------------------------
 
 capslock & enter::
     If GetKeyState("Tab","p") = 1
@@ -308,21 +300,7 @@ capslock & enter::
 Return
 
 
-
-; ----------------------------- Sorrounding Text -------------------------------
-
-#+[::
-    OldClipboard := Clipboard
-    Clipboard := ""
-    Send ^c
-    ClipWait, 1
-    Clipboard = {%Clipboard%}
-    Send ^v
-    Sleep 200
-    Clipboard := OldClipboard
-    OldClipboard := ""
-    ; Send, ^c
-return
+; ---------------------------- Sorrounding in ( ) ------------------------------
 
 capslock & 9::
     If GetKeyState("Tab","p") = 1
@@ -343,6 +321,8 @@ capslock & 9::
         send (){left}
     }
 return
+
+; ---------------------------- Sorrounding in " " ------------------------------
 
 capslock & '::
     If GetKeyState("Tab","p") = 1
@@ -365,8 +345,6 @@ capslock & '::
         return
     }
 return
-
-
 
 
 
@@ -497,7 +475,7 @@ Capslock & q::
         return
     }
     ;----------------------Delete to End
-    else if key=fe
+    else if key=ff
     {
         sendinput, +{End}{delete}
         return
@@ -516,7 +494,7 @@ Capslock & q::
         return
     }
     ;-----------------------copy to end
-    else if key=df
+    else if key=dd
     {
         sendinput, +{End}^c
         return
@@ -553,12 +531,14 @@ Capslock & q::
         return
     }
 
-    ;----------------------- Select commands
+    ;----------------------- Select all
     else if key=sa
     {
         sendinput, ^a
         return
     }
+
+; -------------------------------- select line ---------------------------------
 
     else if key=ss
     {
@@ -566,30 +546,14 @@ Capslock & q::
         return
     }
 
+; -------------------------------- select word ---------------------------------
+
     else if key=sw
     {
         sendinput, ^{right}+^{left}
         return
     }
 
-    ; --------------------- Excel delete row delete column
-    else if key=dr
-    {
-        sendinput, +{space}^{-}
-        return
-    }
-
-    else if key=dc
-    {
-        sendinput, ^{space}^{-}
-        return
-    }
-
-    ;-------------------------  (L)aunching apps
-    ; else if key=lx
-    ; {
-    ;     run excel
-    ; }
 
 return
 
