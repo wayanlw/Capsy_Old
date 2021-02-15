@@ -126,63 +126,63 @@ WheelRight::WheelRight
 */
 
 #IfWinActive ahk_class XLMAIN
-    WheelLeft::sendinput, !{PgUp}
-    WheelRight::sendinput, !{PgDn}
+    WheelLeft::SendInput, !{PgUp}
+    WheelRight::SendInput, !{PgDn}
 
     ;---------------- dependants -------------
-    capslock & 1::sendinput ^[
-    capslock & 2::sendinput {F5}{Enter}
-    capslock & 3::sendinput {=}
-    capslock & 4::sendinput {+}
-    capslock & 5::sendinput {F9}
+    Capslock & 1::SendInput ^[
+    Capslock & 2::SendInput {F5}{Enter}
+    Capslock & 3::SendInput {=}
+    Capslock & 4::SendInput {+}
+    Capslock & 5::SendInput {F9}
 
     ;-----------------pasting ----------------
-    ^!v::sendinput ^!v{v}{enter}
-    ^!f::sendinput ^!v{f}{enter}
-    ^!t::sendinput ^!v{t}{enter}
-    ^!z::sendinput ^!v{l}
+    ^!v::SendInput ^!v{v}{enter}
+    ^!f::SendInput ^!v{f}{enter}
+    ^!t::SendInput ^!v{t}{enter}
+    ^!z::SendInput ^!v{l}
 
     ;--------Conditional formating ------------
-    ^!s::sendinput !H{L}{d}{enter}
-    ^!d::sendinput !H{L}{s}{enter}
-    ^!x::sendinput !H{L}{c}{s}{enter}
+    ^!s::SendInput !H{L}{d}{enter}
+    ^!d::SendInput !H{L}{s}{enter}
+    ^!x::SendInput !H{L}{c}{s}{enter}
 
     ;-----------------------------------------
-    Capslock & u::Sendinput ^{up}
-    Capslock & o::Sendinput ^{Down}
+    Capslock & u::SendInput ^{up}
+    Capslock & o::SendInput ^{Down}
 
     ;-----------------------------------------
-    Capslock & [::Sendinput ^{pgup}
-    Capslock & ]::Sendinput ^{pgDn}
+    Capslock & [::SendInput ^{pgup}
+    Capslock & ]::SendInput ^{pgDn}
 
     ;-----------------------------------------
-    Capslock & b::Sendinput ^d
-    Capslock & t::Sendinput ^r
+    Capslock & b::SendInput ^d
+    Capslock & t::SendInput ^r
     ; Capslock & g::SendInput {Blind}{Control Down}{Shift Down}
     ; Capslock & g up::SendInput {Blind}{Control up}{Shift up}
-    Capslock & g::Sendinput {F2}
+    Capslock & g::SendInput {F2}
 
     ;-----------------------------------------
-    capslock & F1::sendinput {-}
-    capslock & F2::sendinput {+}
-    capslock & F3::sendinput {*}
-    capslock & F4::sendinput {/}
+    Capslock & F1::SendInput {-}
+    Capslock & F2::SendInput {+}
+    Capslock & F3::SendInput {*}
+    Capslock & F4::SendInput {/}
 
     ; ---------------------------- alt enter in excel ------------------------------
-capslock & enter::
+Capslock & enter::
     If GetKeyState("Tab","p") = 1
     {
-        Sendinput,{Home}!{enter}{up}
+        SendInput,{Home}!{enter}{up}
     }
     Else
     {
-        Sendinput,{End}!{enter}
+        SendInput,{End}!{enter}
     }
 Return
 
 ; --------------------- Enter and delete rows and columns ----------------------
 
-capslock & up::
+Capslock & up::
     If GetKeyState("SPACE","p") = 1
     {
         SendInput {up}+{space}^{-}{up}{down}
@@ -195,7 +195,7 @@ capslock & up::
     }
 return
 
-capslock & left::
+Capslock & left::
     If GetKeyState("SPACE","p") = 1
     {
         SendInput {left}^{space}^{-}{left}{right}
@@ -224,10 +224,10 @@ Return
 */
 
 ;Capslock & q::Launcher
-Capslock & w::Sendinput {Esc}
-Capslock & e::Sendinput ^z ; This has repetitive press. Sould be a comfortable place.
+Capslock & w::SendInput {Esc}
+Capslock & e::SendInput ^z ; This has repetitive press. Sould be a comfortable place.
 Capslock & r::SendInput ^y ; redo
-;capslock & t:: copy / delete(2) word
+;Capslock & t:: copy / delete(2) word
 Capslock & y::SendInput {Blind}{Home}
 Capslock & u::SendInput {Blind}{pgUp}
 Capslock & i::SendInput {Blind}{Up}
@@ -239,7 +239,7 @@ Capslock & \::SendInput |
 
 ;Capslock & a:: save and save as
 Capslock & s:: SendInput ^x
-Capslock & d:: sendinput ^c
+Capslock & d:: SendInput ^c
 Capslock & f:: SendInput ^v
 ;Capslock & g:: selecet & copy / delete line
 Capslock & h::SendInput {Blind}^{Left}
@@ -251,19 +251,19 @@ Capslock & SC027::SendInput {Blind}^{right}
 
 ;Capslock & z::alt tab
 ;-----Capslock & x:: ------------Available
-Capslock & c:: sendinput {Enter}
-Capslock & v:: Sendinput {Delete}
+Capslock & c:: SendInput {Enter}
+Capslock & v:: SendInput {Delete}
 Capslock & b:: SendInput {Blind}{BS}
 Capslock & n::SendInput {Blind}{BS}
 Capslock & m::SendInput {Blind}^{BS}
-Capslock & ,:: Sendinput {Delete}
-Capslock & .:: Sendinput ^{Delete}
+Capslock & ,:: SendInput {Delete}
+Capslock & .:: SendInput ^{Delete}
 Capslock & /::SendInput {enter}
 
 /* ------------------------------ Special Keys ------------------------------
 */
 
-capslock & alt::SendInput {Blind}{Alt}
+Capslock & alt::SendInput {Blind}{Alt}
 
 Capslock & Tab:: Return
 
@@ -278,17 +278,17 @@ Capslock & BS::SendInput {Blind}{BS}
 
 ; -------------------------- copy lines up and down ----------------------------
 
-capslock & up::SendInput {Home}{Home}+{End}+{End}^c{End}{Enter}+{Home}^v{up}{End}
-capslock & Down:: SendInput {Home}{Home}+{End}+{End}^c{End}{Enter}+{Home}^v
+Capslock & up::SendInput {Home}{Home}+{End}+{End}^c{End}{Enter}+{Home}^v{up}{End}
+Capslock & Down:: SendInput {Home}{Home}+{End}+{End}^c{End}{Enter}+{Home}^v
 
 ; --------------------------- Close windows and tab ----------------------------
 
 !+q::SendInput !{F4}
-!q::Sendinput ^w
+!q::SendInput ^w
 
 ; ------------------------- enter line below or above --------------------------
 
-capslock & enter::
+Capslock & enter::
     If GetKeyState("Tab","p") = 1
     {
         Send,{Home}{enter}{up}
@@ -302,7 +302,7 @@ Return
 
 ; ---------------------------- Sorrounding in ( ) ------------------------------
 
-capslock & 9::
+Capslock & 9::
     If GetKeyState("Tab","p") = 1
     {
         OldClipboard := Clipboard
@@ -324,7 +324,7 @@ return
 
 ; ---------------------------- Sorrounding in " " ------------------------------
 
-capslock & '::
+Capslock & '::
     If GetKeyState("Tab","p") = 1
     {
         OldClipboard := Clipboard
@@ -341,44 +341,44 @@ capslock & '::
     }
     else
     {
-        sendinput ""{left}
+        SendInput ""{left}
         return
     }
 return
 
 
 
-/* --------------------------------- F keys ---------------------------------*/
+; --------------------------------- F keys ---------------------------------*/
 
-Capslock & F1:: sendinput {AppsKey}
+
+Capslock & F1:: SendInput {AppsKey}
 ; Capslock & F2:: --------------
-; capslock & F3:: --------------
+; Capslock & F3:: --------------
 ; Capslock & F4:: --------------
 ; Capslock & F5:: --------------
-; capslock & F6:: --------------
+; Capslock & F6:: --------------
 ; Capslock & F7:: --------------
 ; Capslock & F8:: --------------
-; capslock & F9:: --------------
-; capslock & F10:: --------------
-; capslock & F11:: --------------
-; capslock & F12::--------------
+; Capslock & F9:: --------------
+; Capslock & F10:: --------------
+; Capslock & F11:: --------------
+; Capslock & F12::--------------
 
 /* ------------------------------- Number keys ------------------------------
 */
 
 Capslock & 1:: !
-Capslock & 2:: sendinput {F2}
-capslock & 3:: #
+Capslock & 2:: SendInput {F2}
+Capslock & 3:: #
 Capslock & 4:: $
 Capslock & 5:: SendRaw, `%
-capslock & 6:: ^
+Capslock & 6:: ^
 Capslock & 7:: &
 Capslock & 8:: *
-; capslock & 9:: Sorround with paranthesis
-+9::sendinput (){left}
-capslock & 0:: )
-capslock & -:: _
-capslock & =:: +
+; Capslock & 9:: Sorround with paranthesis or (A
+Capslock & 0:: )
+Capslock & -:: _
+Capslock & =:: +
 
 ; ------------------------------------------------------------------------------
 ;                               Special Functions
@@ -392,7 +392,7 @@ Capslock & t::
     keywait,t
     keywait, t, d ,t 0.2
     if errorlevel
-        sendinput, ^{Left}+^{Right}^c
+        SendInput, ^{Left}+^{Right}^c
     else
         Send, ^{Left}+^{Right}{del}
 return
@@ -403,9 +403,9 @@ Capslock & g::
     keywait,g
     keywait, g, d ,t 0.2
     if errorlevel
-        Sendinput, {Home}{Home}+{End}+{End}^c
+        SendInput, {Home}{Home}+{End}+{End}^c
     else
-        Sendinput, {Home}{Home}+{End}+{End}{del}
+        SendInput, {Home}{Home}+{End}+{End}{del}
 return
 
 ; ------------ All copy delete (Too dagerous. replaced with enter) -------------
@@ -415,9 +415,9 @@ return
 ;     keywait,c
 ;     keywait, c, d ,t 0.1
 ;     if errorlevel
-;         Sendinput, ^a^c
+;         SendInput, ^a^c
 ;     else
-;         Sendinput, ^a{del}
+;         SendInput, ^a{del}
 ; return
 
 ; ----------------------------- Save and save as -------------------------------
@@ -465,76 +465,76 @@ Capslock & q::
     ;----------------------Delete all
     if Key=fa
     {
-        sendinput ^a{delete}
+        SendInput ^a{delete}
         return
     }
     ;----------------------Delete to Start
     else if key=fd
     {
-        sendinput, +{Home}{delete}
+        SendInput, +{Home}{delete}
         return
     }
     ;----------------------Delete to End
     else if key=ff
     {
-        sendinput, +{End}{delete}
+        SendInput, +{End}{delete}
         return
     }
 
     ;-----------------------copy all
     else if key=da
     {
-        sendinput, ^a^c
+        SendInput, ^a^c
         return
     }
     ;-----------------------copy to start
     else if key=ds
     {
-        sendinput, +{Home}^c
+        SendInput, +{Home}^c
         return
     }
     ;-----------------------copy to end
     else if key=dd
     {
-        sendinput, +{End}^c
+        SendInput, +{End}^c
         return
     }
 
     ;----------------------- cut all
     else if key=va
     {
-        sendinput, ^a^x
+        SendInput, ^a^x
         return
     }
     ;----------------------- cut word
     else if key=vw
     {
-        sendinput, ^{right}+^{left}^x
+        SendInput, ^{right}+^{left}^x
         return
     }
     ;----------------------- cut line
     else if key=vv
     {
-        sendinput, {Home}+{End}^x
+        SendInput, {Home}+{End}^x
         return
     }
     ;----------------------- cut to start
     else if key=vs
     {
-        sendinput, +{Home}^x
+        SendInput, +{Home}^x
         return
     }
     ;----------------------- cut to end
     else if key=ve
     {
-        sendinput, +{End}^x
+        SendInput, +{End}^x
         return
     }
 
     ;----------------------- Select all
     else if key=sa
     {
-        sendinput, ^a
+        SendInput, ^a
         return
     }
 
@@ -542,7 +542,7 @@ Capslock & q::
 
     else if key=ss
     {
-        sendinput, {Home}{home}+{End}+{End}
+        SendInput, {Home}{home}+{End}+{End}
         return
     }
 
@@ -550,7 +550,7 @@ Capslock & q::
 
     else if key=sw
     {
-        sendinput, ^{right}+^{left}
+        SendInput, ^{right}+^{left}
         return
     }
 
@@ -608,7 +608,7 @@ return
 #^s::
     OldClipboard:= Clipboard
     Clipboard:= ""
-    Sendinput, ^c ;copies selected text
+    SendInput, ^c ;copies selected text
     ClipWait, 1
     ; Run C:\Program Files (x86)\Google\Chrome\Application\chrome.exe http://www.google.com/search?q=%Clipboard%&num=100&source=lnms&filter=0
     Run http://www.google.com/search?q=%Clipboard%&num=100&source=lnms&filter=0
