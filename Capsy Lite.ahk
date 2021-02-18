@@ -1,15 +1,14 @@
 #SingleInstance, Force
 #Persistent
-
-run "capsy 0.0.ahk"
-
 SendMode Input
 SetWorkingDir, %A_ScriptDir%
-
 
 SetCapsLockState, AlwaysOff
 SetScrollLockState, AlwaysOff
 
+
+/* --------------------- Real Mouse: buttons and wheels ---------------------
+*/
 
 XButton2::send {Enter}
 XButton1::send {Delete}
@@ -29,23 +28,23 @@ Return
 /* -------------------------------- Main Keys -------------------------------
 */
 
-Capslock & q::Sendinput ^a
-Capslock & w::Sendinput {Esc}
-Capslock & e::Sendinput ^z ; This has repetitive press. Sould be a comfortable place.
+Capslock & q::SendInput ^a
+Capslock & w::SendInput {Esc}
+Capslock & e::SendInput ^z ; This has repetitive press. Sould be a comfortable place.
 Capslock & r::SendInput ^y ; redo
-;capslock & t:: copy / delete(2) word
+;Capslock & t:: copy / delete(2) word
 Capslock & y::SendInput {Blind}{Home}
 Capslock & u::SendInput {Blind}{pgUp}
 Capslock & i::SendInput {Blind}{Up}
 Capslock & o::SendInput {Blind}{pgDn}
 Capslock & p::SendInput {Blind}{End}
-Capslock & [::SendInput {{}{}}{left}
-Capslock & ]::sendinput {[}{]}{left}
+Capslock & [::SendInput {{}{}}{Left}
+Capslock & ]::SendInput {[}{]}{Left}
 Capslock & \::SendInput |
 
 ;Capslock & a:: save and save as
 Capslock & s:: SendInput ^x
-Capslock & d:: sendinput ^c ;Copy and double click to cut
+Capslock & d:: SendInput ^c ;Copy and double click to cut
 Capslock & f:: SendInput ^v
 ;Capslock & g:: selecet & copy / delete line
 Capslock & h::SendInput {Blind}^{Left}
@@ -56,22 +55,20 @@ Capslock & SC027::SendInput {Blind}^{right}
 Capslock & '::SendInput ""{left}
 
 ;Capslock & z::alt tab
-;-----Capslock & x:: ------------Available
-Capslock & c:: sendinput {Enter}
-Capslock & v:: Sendinput {Delete}
+Capslock & x:: SendInput {AppsKey}
+Capslock & c:: SendInput {Enter}
+Capslock & v:: SendInput {Delete}
 Capslock & b:: SendInput {Blind}{BS}
 Capslock & n::SendInput {Blind}{BS}
 Capslock & m::SendInput {Blind}^{BS}
-Capslock & ,:: Sendinput {Delete}
-Capslock & .:: Sendinput ^{Delete}
+Capslock & ,:: SendInput {Delete}
+Capslock & .:: SendInput ^{Delete}
 Capslock & /::SendInput {enter}
 
 /* ------------------------------ Special Keys ------------------------------
 */
 
-capslock & alt::SendInput {Blind}{Alt}
-
-#space::Send,{space}{left}
+Capslock & alt::SendInput {Blind}{Alt}
 
 Capslock & space::return
 
@@ -80,47 +77,65 @@ Capslock & Tab up::SendInput {Blind}{shift up}
 
 Capslock & BS::SendInput {Blind}{BS}
 
-; +[::sendinput {{}{}}{left}
+#space::Send,{space}{left}
 
-; ----------------------------- Copy or move line ------------------------------
 
-capslock & up::SendInput {Home}{Home}+{End}+{End}^c{End}{Enter}+{Home}^v{up}{End}
-capslock & Down:: SendInput {Home}{Home}+{End}+{End}^c{End}{Enter}+{Home}^v
+
+; -------------------------- copy lines up and down ----------------------------
+
+Capslock & up::SendInput {Home}{Home}+{End}+{End}^c{End}{Enter}+{Home}^v{up}{End}
+Capslock & Down:: SendInput {Home}{Home}+{End}+{End}^c{End}{Enter}+{Home}^v
+
+; --------------------------- Close windows and tab ----------------------------
 
 !+q::SendInput !{F4}
-!q::Sendinput ^w
+!q::SendInput ^w
+
+; ------------------------- enter line below or above --------------------------
+
+Capslock & enter::
+    If GetKeyState("space","p") = 1
+    {
+        Send,{End}{enter}
+    }
+    Else
+    {
+        Send,{Home}{enter}{up}
+    }
+Return
 
 
 /* --------------------------------- F keys ---------------------------------*/
+*/
 
-Capslock & F1:: sendinput {AppsKey}
+Capslock & F1:: SendInput {AppsKey}
 ; Capslock & F2:: --------------
-; capslock & F3:: --------------
+; Capslock & F3:: --------------
 ; Capslock & F4:: --------------
 ; Capslock & F5:: --------------
-; capslock & F6:: --------------
+; Capslock & F6:: --------------
 ; Capslock & F7:: --------------
 ; Capslock & F8:: --------------
-; capslock & F9:: --------------
-; capslock & F10:: --------------
-; capslock & F11:: --------------
-; capslock & F12::--------------
+; Capslock & F9:: --------------
+; Capslock & F10:: --------------
+; Capslock & F11:: --------------
+; Capslock & F12::--------------
 
 /* ------------------------------- Number keys ------------------------------
 */
 
 Capslock & 1:: !
-Capslock & 2:: sendinput {F2}
-capslock & 3:: #
+Capslock & 2:: SendInput {F2}
+Capslock & 3:: #
 Capslock & 4:: $
 Capslock & 5:: SendRaw, `%
-capslock & 6:: ^
+Capslock & 6:: ^
 Capslock & 7:: &
 Capslock & 8:: *
-capslock & 9:: sendinput (){left}
-capslock & 0:: )
-capslock & -:: _
-capslock & =:: +
+; Capslock & 9:: Sorround with paranthesis or (
+Capslock & 0:: )
+Capslock & -:: _
+Capslock & =:: +
 
 ; ------------------------------------------------------------------------------
 ;                               Special Functions
@@ -134,7 +149,7 @@ Capslock & t::
     keywait,t
     keywait, t, d ,t 0.2
     if errorlevel
-        sendinput, ^{Left}+^{Right}^c
+        SendInput, ^{Left}+^{Right}^c
     else
         Send, ^{Left}+^{Right}{del}
 return
@@ -145,9 +160,9 @@ Capslock & g::
     keywait,g
     keywait, g, d ,t 0.2
     if errorlevel
-        Sendinput, {Home}{Home}+{End}+{End}^c
+        SendInput, {Home}{Home}+{End}+{End}^c
     else
-        Sendinput, {Home}{Home}+{End}+{End}{del}
+        SendInput, {Home}{Home}+{End}+{End}{del}
 return
 
 ; ----------------------------- Save and save as -------------------------------
@@ -221,7 +236,7 @@ return
 #^s::
     OldClipboard:= Clipboard
     Clipboard:= ""
-    Sendinput, ^c ;copies selected text
+    SendInput, ^c ;copies selected text
     ClipWait, 1
     ; Run C:\Program Files (x86)\Google\Chrome\Application\chrome.exe http://www.google.com/search?q=%Clipboard%&num=100&source=lnms&filter=0
     Run http://www.google.com/search?q=%Clipboard%&num=100&source=lnms&filter=0

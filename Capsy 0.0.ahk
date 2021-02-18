@@ -172,11 +172,11 @@ WheelRight::WheelRight
 Capslock & enter::
     If GetKeyState("Tab","p") = 1
     {
-        SendInput,{Home}!{enter}{up}
+        SendInput,{End}!{enter}
     }
     Else
     {
-        SendInput,{End}!{enter}
+        SendInput,{Home}!{enter}{up}
     }
 Return
 
@@ -223,8 +223,9 @@ Return
 /* -------------------------------- Main Keys -------------------------------
 */
 
-;Capslock & q::Launcher
-Capslock & w::SendInput {Esc}
+
+Capslock & q::SendInput {Esc}
+;Capslock & w::Launcher
 Capslock & e::SendInput ^z ; This has repetitive press. Sould be a comfortable place.
 Capslock & r::SendInput ^y ; redo
 ;Capslock & t:: copy / delete(2) word
@@ -459,7 +460,7 @@ return
 ;                                   Launcher
 ; ------------------------------------------------------------------------------
 
-Capslock & q::
+Capslock & w::
 
     Input Key, L2 T2 ; L3 to limit the input to 3 eys. T5 , wait for 5 seconds
     ;----------------------Delete all
