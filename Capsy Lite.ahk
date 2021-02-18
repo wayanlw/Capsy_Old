@@ -28,8 +28,8 @@ Return
 /* -------------------------------- Main Keys -------------------------------
 */
 
-Capslock & q::SendInput ^a
-Capslock & w::SendInput {Esc}
+Capslock & q::SendInput {Esc}
+Capslock & w::SendInput ^a
 Capslock & e::SendInput ^z ; This has repetitive press. Sould be a comfortable place.
 Capslock & r::SendInput ^y ; redo
 ;Capslock & t:: copy / delete(2) word
