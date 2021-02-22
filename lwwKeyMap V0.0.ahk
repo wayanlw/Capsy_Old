@@ -229,11 +229,11 @@ Capslock & q::SendInput {Esc}
 Capslock & e::SendInput ^z ; This has repetitive press. Sould be a comfortable place.
 Capslock & r::SendInput ^y ; redo
 ;Capslock & t:: copy / delete(2) word
-Capslock & y::SendInput {Blind}{Home}
+; Capslock & y::SendInput {Blind}{Home}  ;with space for contrl+end
 Capslock & u::SendInput {Blind}{pgUp}
 Capslock & i::SendInput {Blind}{Up}
 Capslock & o::SendInput {Blind}{pgDn}
-Capslock & p::SendInput {Blind}{End}
+; Capslock & p::SendInput {Blind}{End} ;with space for contrl+end
 Capslock & [::SendInput {{}{}}{Left}
 Capslock & ]::SendInput []{Left}
 Capslock & \::SendInput |
@@ -299,6 +299,31 @@ Capslock & enter::
         Send,{Home}{enter}{up}
     }
 Return
+
+
+Capslock & y::
+    If GetKeyState("space","p") = 1
+    {
+        Send,^{Home}
+    }
+    Else
+    {
+        Send,{Home}
+    }
+Return
+
+
+Capslock & p::
+    If GetKeyState("space","p") = 1
+    {
+        Send,^{End}
+    }
+    Else
+    {
+        Send,{End}
+    }
+Return
+
 
 
 ; ---------------------------- Sorrounding in ( ) ------------------------------
@@ -368,6 +393,8 @@ Capslock & F1:: SendInput {AppsKey}
 /* ------------------------------- Number keys ------------------------------
 */
 
+
+Capslock & `:: SendInput {AppsKey}
 Capslock & 1:: !
 Capslock & 2:: SendInput {F2}
 Capslock & 3:: #
@@ -654,7 +681,7 @@ EWD_WatchMouse:
         return
     }
     ; Otherwise, reposition the window to match the change in mouse coordinates
-    ; caused by the user having dragged the mouse:
+    ; caused by the user having dragged the mouse:A
     CoordMode, Mouse
     MouseGetPos, EWD_MouseX, EWD_MouseY
     WinGetPos, EWD_WinX, EWD_WinY,,, ahk_id %EWD_MouseWin%
