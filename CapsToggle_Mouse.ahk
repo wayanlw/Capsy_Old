@@ -23,12 +23,12 @@ Insert Middle Mouse Button
  Functionality:
  - Deactivates capslock for normal (accidental) use.
  - Hold Capslock and drag anywhere in a window to move it (not just the title bar).
- - Access the following functions when pressing Capslock: 
+ - Access the following functions when pressing Capslock:
  Cursor keys - J, K, L, I (Normal mode) or HJKL (vim Mode)
  Enter - ;
  Home, PgDn, PgUp, End - Y, O, U, P (Normal mode) or O,U,I,O (VimMode)
- 
- 
+
+
        Select all - A
        Cut, copy, paste - S, D, F / X, C, V
        Close tab, window - W, E
@@ -36,7 +36,7 @@ Insert Middle Mouse Button
        Ctrl - LAlt
        Shift - Tab or Space
        Backspace and Del - N, M
-       F2 (For Excel) - B 
+       F2 (For Excel) - B
        Undo, redo - , and .
        Numpad at the right hand resting position when holding Ctrl+Shift+Alt (using keys m,.jkluio and spacebar)
        To use capslock as you normally would, you can press WinKey + Capslock
@@ -54,49 +54,49 @@ SetScrollLockState, AlwaysOff
 ;###################################### Start Mouse movement        ######################################
 ;---------------------------------------------------------------------------------------------------------
 
-SetBatchLines -1 
-#UseHook 
-Increment = 1 
-MouseDelay = 0 
+SetBatchLines -1
+#UseHook
+Increment = 1
+MouseDelay = 0
 
 j::
 k::
 l::
 i::
 
-xVal= 
-yVal= 
-If GetKeyState("Capslock","T") = 1 
-{ 
-    IncrementValue := Increment 
-    Loop, 
-    { 
-        If (A_Index > IncrementValue * 5) and (IncrementValue < Increment * 50) 
+xVal=
+yVal=
+If GetKeyState("Capslock","T") = 1
+{
+    IncrementValue := Increment
+    Loop,
+    {
+        If (A_Index > IncrementValue * 5) and (IncrementValue < Increment * 50)
             IncrementValue := IncrementValue * 2 ; how fast the cursor acclerates
-        If GetKeyState("k", "P") 
-            yVal := IncrementValue 
-        Else If GetKeyState("i", "P") 
-            yVal := -IncrementValue 
-        If !yVal 
-            yVal := 0 
-        If GetKeyState("j", "P") 
-            xVal := -IncrementValue 
-        Else If GetKeyState("l", "P") 
-            xVal := IncrementValue 
-        If !xVal 
-            xVal := 0 
-        If GetKeyState(A_ThisHotKey, "P") 
+        If GetKeyState("k", "P")
+            yVal := IncrementValue
+        Else If GetKeyState("i", "P")
+            yVal := -IncrementValue
+        If !yVal
+            yVal := 0
+        If GetKeyState("j", "P")
+            xVal := -IncrementValue
+        Else If GetKeyState("l", "P")
+            xVal := IncrementValue
+        If !xVal
+            xVal := 0
+        If GetKeyState(A_ThisHotKey, "P")
             MouseMove, %xVal%, %yVal%,%MouseDelay%,R C
-        Else 
-            
-        Break 
-    } 
-    
-} 
-Else 
-Send % "{" . A_ThisHotKey . "}" 
+        Else
 
-return 
+        Break
+    }
+
+}
+Else
+Send % "{" . A_ThisHotKey . "}"
+
+return
 
 #If GetKeyState("Capslock","T") = 1
     u:: Send {WheelUp}
@@ -113,11 +113,11 @@ SC027::MouseMove, A_ScreenWidth*1/4, 0 ,0, R
 h::MouseMove, -A_ScreenWidth*1/4, 0 ,0, R
 
 #if
-    
+
 #Capslock::
     If GetKeyState("CapsLock", "T") = 1
         SetCapsLockState, AlwaysOff
-    Else 
+    Else
         SetCapsLockState, AlwaysOn
 Return
 
@@ -150,7 +150,7 @@ Capslock & h up::Send {Blind}{Ctrl up}{Left Up}
 Capslock & SC027::Send {Blind}{Ctrl Down}{right DownTemp}
 Capslock & SC027 up::Send {Blind}{Ctrl up}{right Up}
 
-; Capslock + ypuo (home, end, pgup, pgdn) 
+; Capslock + ypuo (home, end, pgup, pgdn)
 Capslock & u::SendInput {Blind}{PgUp Down}
 Capslock & u up::SendInput {Blind}{PgUp Up}
 
@@ -167,9 +167,9 @@ Capslock & p up::SendInput {Blind}{End Up}
 ;############### Same as Ctrl + key
 Capslock & x::SendInput ^x
 Capslock & c::SendInput ^c
-Capslock & v::SendInput ^v 
-Capslock & s::SendInput ^s 
-Capslock & a::SendInput ^a 
+Capslock & v::SendInput ^v
+Capslock & s::SendInput ^s
+Capslock & a::SendInput ^a
 Capslock & 9::Send +9
 Capslock & 0::Send +0
 Capslock & f::SendInput {Ctrl Down}{f Down}
@@ -187,14 +187,14 @@ Capslock & q::Send {AppsKey}
 ; Make Capslock + Tab -> Shift
 Capslock & Tab::SendInput {Blind}{shift Down}
 Capslock & Tab up::SendInput {Blind}{shift up}
-; alt+shift+q (simillar to i3 wm) to close 
+; alt+shift+q (simillar to i3 wm) to close
 !+q::SendInput {Alt down}{F4}{Alt up}
-; Escape Key 
+; Escape Key
 Capslock & '::SendInput {Blind}{Esc Down}
 Capslock & ' up::SendInput {Blind}{Esc Up}
 
 
-;############Delete Keys -- Ctrl+Backspace, Backspace, Delete,  
+;############Delete Keys -- Ctrl+Backspace, Backspace, Delete,
 Capslock & b::SendInput {Blind}{ctrl down}{BS Down}{ctrl up}
 Capslock & n::SendInput {Blind}{BS Down}
 Capslock & m::SendInput {Blind}{Del Down}
@@ -315,8 +315,8 @@ Capslock & LButton::
     CoordMode, Mouse ; Switch to screen/absolute coordinates.
     MouseGetPos, EWD_MouseStartX, EWD_MouseStartY, EWD_MouseWin
     WinGetPos, EWD_OriginalPosX, EWD_OriginalPosY,,, ahk_id %EWD_MouseWin%
-    WinGet, EWD_WinState, MinMax, ahk_id %EWD_MouseWin% 
-    if EWD_WinState = 0 ; Only if the window isn't maximized 
+    WinGet, EWD_WinState, MinMax, ahk_id %EWD_MouseWin%
+    if EWD_WinState = 0 ; Only if the window isn't maximized
         SetTimer, EWD_WatchMouse, 10 ; Track the mouse as the user drags it.
 return
 
@@ -354,26 +354,26 @@ return
 ;############################  start screen clipping always on top   ################################################
 ;---------------------------------------------------------------------------------------------------------
 Ins::
-    
-    
+
+
     ;Written By: Hellbent
     ;Date Started: Dec 6th, 2019
     ;Name: Screen Clipper.
     ;Inspired by the screen clipping tool by Joe Glines.
-    
+
     ;User Defined Values
     ;************************************************
-    Hotkey, Ins , CreateCapWindow , On ;<------------------    Adjust the hotkey value to suit your needs / wants 
+    Hotkey, Ins , CreateCapWindow , On ;<------------------    Adjust the hotkey value to suit your needs / wants
     ;************************************************
     SaveToFile := 1 		 		 		;<------------------    Set this to 1 to save all clips with a unique name , Set it to 0 to overwrite the saved clip every time a new clip is made.
     ;************************************************
     ShowCloseButton := 1 			 		;<------------------    Set this to 1 to show a small close button in the top right corner of the clip. Set this to 0 to keep the close button, but not show it.
     ;************************************************
-    
+
     ;#SingleInstance, Force  ; Force the script to close any other instances of this script. (Run one copy at a time)
     ;SetBatchLines, -1 ;Set the script to run at top speed.
     CoordMode, Mouse , Screen ;Use the screen as the refrence to get positions from.
-    
+
     IfNotExist, %A_ScriptDir%\Saved Clips ; if there is no folder for saved clips
         FileCreateDir, %A_ScriptDir%\Saved Clips ; create the folder.
     SetWorkingDir, %A_ScriptDir%\Saved Clips ;Set the saved clips folder as the working dir.
@@ -392,14 +392,14 @@ hwnd := WinActive() ;Get the handle to the active window
 Gui, % Handles[hwnd] ": Destroy" ;Destroy the gui with the name stored in the Handles array at position hwnd.
 return
 
-MoveWindow: 
+MoveWindow:
 PostMessage, 0xA1 , 2 ;Move the active window
 return
 
 CreateCapWindow: ;Create a gui to used for setting the screen cap area and to display the resulting screen shot.
 Index++ ;Increment the current index. (the gui's name)
 Gui, %Index% : New , +AlwaysOnTop -Caption -DPIScale +ToolWindow +LastFound +Border hwndHwnd ;Create a new gui and set its options.
-Handles[hwnd] := Index ;Use the windows handle (hwnd) as the index for the the value of the windows name. 
+Handles[hwnd] := Index ;Use the windows handle (hwnd) as the index for the the value of the windows name.
 Gui, %Index% : Color , 123456 ;Set the color of the gui (This color will be made transparent in the next step)
 WinSet, TransColor , 123456 ;Set only this color as transparent
 Gui, %Index% : Font, cMaroon s10 Bold Q5 , Segoe UI ;Set this gui's font. (Used for the close button)
@@ -440,7 +440,7 @@ TakeScreenShot:
 return
 
 #If (Active) ;Context sen Hotkeys.
-    
+
 LButton::
     WinPos := "" ;Clear this object.
     FirstPosition := 0 ;Variable used to determin if the starting point has been set yet.
@@ -459,7 +459,7 @@ LButton Up::
     Gui, %Index% : -Border ;Remove the border before taking the screen clip
     gosub, TakeScreenShot ;Take a screen shot of the cap area.
     Gui, %Index% : +Border ;Add the border again.
-    
+
     Gui, %Index% : Add , Text , % ( ( ShowCloseButton ) ? ( " Center 0x200 Border " ) : ( "" ) ) " x" WinPos.W - 20 " y0 w20 h20 BackgroundTrans gCloseClip" , % ( ( ShowCloseButton ) ? ( "X" ) : ( "" ) ) ;Create a trigger used for closing this window.
     Gui, %Index% : Add , Text , % "x0 y0 w" WinPos.W " h" WinPos.H " BackgroundTrans gMoveWindow" ;Create a trigger used for moving the window around.
     Gui, %Index% : Add , Picture , % "x0 y0 w" WinPos.W " h" WinPos.H ,% ClipName ".png" ;Add the Screen clip image
@@ -474,7 +474,7 @@ Gui, %Index% : Destroy ;Destroy the current gui
 return
 
 #If
-    
+
 ;******************************************************************************************************************************************
 ;******************************************************************************************************************************************
 ;***************************************************      GDIP Functions      *************************************************************
@@ -491,7 +491,7 @@ return pToken
 Gdip_BitmapFromScreen(Screen=0, Raster=""){
     if (Screen = 0){
         Sysget, x, 76
-        Sysget, y, 77	
+        Sysget, y, 77
         Sysget, w, 78
         Sysget, h, 79
     }else if (SubStr(Screen, 1, 5) = "hwnd:"){
@@ -565,7 +565,7 @@ Gdip_SaveBitmapToFile(pBitmap, sOutput, Quality=75){
                     NumPut(Quality, NumGet(NumPut(4, NumPut(1, p+0)+20, "UInt")), "UInt")
                     break
                 }
-            } 
+            }
         }
     }
     if (!A_IsUnicode){
