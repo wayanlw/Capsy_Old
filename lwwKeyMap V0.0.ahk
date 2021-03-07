@@ -1,8 +1,7 @@
 /* -------------------------------------------------------------------------- */
-/*                                  Version 0                                 */
+/* Version 0 */
 /* -------------------------------------------------------------------------- */
 */
-
 
 #SingleInstance, Force
 
@@ -10,7 +9,6 @@
 ; SendMode Input ; with this the launcher keys will not work (q)
 SetCapsLockState, AlwaysOff
 SetScrollLockState, AlwaysOff
-
 
 SetBatchLines -1
 #UseHook ; without this the mouse movement will not work
@@ -69,12 +67,17 @@ return
 l:: Send {RButton}
 Insert:: Send {MButton}
 ':: senDinput ^{LButton}
-
 SC027::
     SENDINPUT {LBUTTON DOWN}
     keywait, SC027, u
     SENDINPUT {LButton UP}
 Return
+
+
+
+
+; ------ Left side --------
+v:: Click, 2
 
 space::
     SENDINPUT {LBUTTON DOWN}
@@ -275,8 +278,6 @@ Capslock & BS::SendInput {Blind}{BS}
 
 #space::Send,{space}{left}
 
-
-
 ; -------------------------- copy lines up and down ----------------------------
 
 Capslock & up::SendInput {Home}{Home}+{End}+{End}^c{End}{Enter}+{Home}^v{up}{End}
@@ -292,14 +293,13 @@ Capslock & Down:: SendInput {Home}{Home}+{End}+{End}^c{End}{Enter}+{Home}^v
 Capslock & enter::
     If GetKeyState("space","p") = 1
     {
-        Send,{End}{enter}
+        Send,{Home}{enter}{up}
     }
     Else
     {
-        Send,{Home}{enter}{up}
+        Send,{End}{enter}
     }
 Return
-
 
 Capslock & y::
     If GetKeyState("space","p") = 1
@@ -312,7 +312,6 @@ Capslock & y::
     }
 Return
 
-
 Capslock & p::
     If GetKeyState("space","p") = 1
     {
@@ -323,8 +322,6 @@ Capslock & p::
         Send,{End}
     }
 Return
-
-
 
 ; ---------------------------- Sorrounding in ( ) ------------------------------
 
@@ -372,8 +369,6 @@ Capslock & '::
     }
 return
 
-
-
 /* --------------------------------- F keys ---------------------------------*/
 */
 
@@ -392,7 +387,6 @@ Capslock & F1:: SendInput {AppsKey}
 
 /* ------------------------------- Number keys ------------------------------
 */
-
 
 Capslock & `:: SendInput {AppsKey}
 Capslock & 1:: !
@@ -438,7 +432,6 @@ return
 
 ; ------------ All copy delete (Too dagerous. replaced with enter) -------------
 
-
 ; Capslock & c::
 ;     keywait,c
 ;     keywait, c, d ,t 0.1
@@ -449,7 +442,6 @@ return
 ; return
 
 ; ----------------------------- Save and save as -------------------------------
-
 
 Capslock & a::
     keywait, a
@@ -566,7 +558,7 @@ Capslock & w::
         return
     }
 
-; -------------------------------- select line ---------------------------------
+    ; -------------------------------- select line ---------------------------------
 
     else if key=ss
     {
@@ -574,14 +566,13 @@ Capslock & w::
         return
     }
 
-; -------------------------------- select word ---------------------------------
+    ; -------------------------------- select word ---------------------------------
 
     else if key=sw
     {
         SendInput, ^{right}+^{left}
         return
     }
-
 
 return
 
@@ -718,15 +709,16 @@ return
     ; Control, EditPaste used rather than ControlSend for much greater speed of execution
 
     Control, EditPaste, % Clipboard . chr(13) . chr(10) . chr(13) . chr(10) , , *Untitled - Notepad
-    Clipboard := OldClipboard
+    Clipboard := OldClipboardA
 Return
 
 ;---------------------------------------------------------------------------------------------------------
 ;######################### End quickly gather text to a notepad ##########################################
-;---------------------------------------------------------------------------------------------------------
 
-; >!q::Suspend
+
+>!q::Suspend
+
 
 >^q::
-    MsgBox Exiting the script Y
+    MsgBox Exiting the script
 ExitApp

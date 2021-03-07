@@ -22,10 +22,10 @@ Daniel Kvarfordt - https://gist.github.com/Danik/5808330
 ThatOneCoder - https://github.com/ThatOneCoder/ahk/blob/master/Wynshaft.ahk.txt
 Gustavo Duarte: http://duartes.org/gustavo/blog/post/home-row-computing
 
-
 ## Mouse Functionality
+
 #### Normal mouse with the keyboard (8 shortcuts)
-Whilst holding the Right Shift key movve use qwerasdfzxcv keys for mouse functionality
+Whilst holding the Right Shift key move use qwerasdfzxcv keys for mouse functionality
 | Function              | Hotkey                        |
 |-----------------------|-------------------------------|
 |  move up              |  RShift + E                   |
@@ -63,7 +63,7 @@ These button's are helpful when you're using the keyboard from your lefthand and
 
 #### Hotkeys to be used in Microsoft Excel
 
-| Excel Function                              | Hotkey           | Simulated Keys         |
+| Excel Function                              | Hotkey             | Simulated Keys         |
 | ------------------------------------------- | ------------------ | ---------------------- |
 | Trace Precedents                            | capslock + 1       | {Ctrl}[                |
 | Trace Dependants                            | capslock + 2       | {F5}{Enter}            |
@@ -100,9 +100,9 @@ These button's are helpful when you're using the keyboard from your lefthand and
 
 
 #### Toggle Caps lock
-| #   | Function            | Hotkey         |
-| --- | ------------------- | -------------- |
-|     | Toggle Capslock key | win + capslock |
+| Function            | Hotkey         |
+| ------------------- | -------------- |
+| Toggle Capslock key | win + capslock |
 
 
 #### Letter keybindings in order of the place in the keyboard
@@ -121,24 +121,24 @@ These button's are helpful when you're using the keyboard from your lefthand and
 | End Arrow                            | Capslock + p                 | {End}                                   |
 | {                                    | Capslock + [                 | {                                       |
 | }                                    | Capslock + ]                 | }                                       |
-| |                                    | Capslock + \                 | |                                       |
+| \ | Capslock + \ | \                                       |
 |                                      |                              |                                         |
 | Save                                 | Capslock + a                 | {Ctrl}s                                 |
 | Save as                              | Capslock + a (pressed twice) | {Ctrl}{Shift}s                          |
 | Cut                                  | Capslock + s                 | {Ctrl}x                                 |
 | Copy                                 | Capslock + d                 | {Ctrl}c                                 |
 | Paste                                | Capslock + f                 | {Ctrl}v                                 |
-| Copy Line                            | Capslock + g                 | {Home}{Shift}{End}{Ctrl}c               |
-| Delete Line                          | Capslock + g (pressed twice) | {Home}{Shift}{End}{del}                 |
-| Ctrl + Left Arrow                    | Capslock + h                 | {Ctrl}{Left}                            |
+| Copy Line                            | Capslock + g                 | {Home} {Shift}+{End}{Ctrl}c             |
+| Delete Line                          | Capslock + g (pressed twice) | {Home} {Shift}+{End}{del}               |
+| Ctrl + Left Arrow                    | Capslock + h                 | {Ctrl}+{Left}                           |
 | Left Arrow                           | Capslock + j                 | {Left}                                  |
 | Down Arrow                           | Capslock + k                 | {Down}                                  |
 | Right Arrow                          | Capslock + l                 | {Right}                                 |
 | Ctrl + Rigth Arrow                   | Capslock + S                 | {Ctrl}{Right}                           |
 |                                      |                              |                                         |
 | Cycle open applications              | Capslock + z                 | {Alt}{Tab}                              |
-| Select all                           | Capslock + c                 | {Ctrl}a{Ctrl}c                          |
-| Delete all                           | Capslock + c (Pressed Twice) | {Ctrl}a{del}                            |
+| Select all                           | Capslock + c                 | {Ctrl}+a {Ctrl}+c                      |
+| Delete all                           | Capslock + c (Pressed Twice) | {Ctrl}+a {del}                         |
 | Delete                               | Capslock + v                 | {Delete}                                |
 | BackSpace                            | Capslock + b                 | {BS}                                    |
 | BackSpace                            | Capslock + n                 | {BS}                                    |
@@ -148,12 +148,12 @@ These button's are helpful when you're using the keyboard from your lefthand and
 | Find                                 | Capslock + /                 | {Ctrl}f                                 |
 
 #### Special key combinations
-| Function                                            | Hotkey                  | Simulated Keys                                                              |
-|-----------------------------------------------------|-------------------------|-----------------------------------------------------------------------------|
-| Enter                                               | CapsLock + space        | {Enter}                                                                     |
-| Control (Holding)                                   | CapsLock + Tab + Space  | {Ctrl (Hold)}                                                               |
-| Shift (Can be used in combinations with other keys) | Capslock + Tab          | {Shift}                                                                     |
-|                                                     |                         |                                                                             |
-| Enter Blank line above                              | capslock & enter        | {End}{enter}                                                                |
-| Enter Blank line below                              | Win + enter             | {Home}{enter}{Up}                                                           |
-| Duplicate the current line                          | Ctrl + Win + Down       | {Home}{Home}{Shift}{End}{Shift}{End}{Ctrl}c{End}{Enter}{Shift}{Home}{Ctrl}v |
+| Function                                            | Hotkey                 | Simulated Keys                                               |
+| --------------------------------------------------- | ---------------------- | ------------------------------------------------------------ |
+| Enter                                               | CapsLock + space+y     | Ctrl+{Home}                                                  |
+| Control (Holding)                                   | CapsLock + Tab + Space | {Ctrl (Hold)}                                                |
+| Shift (Can be used in combinations with other keys) | Capslock + Tab         | {Shift}                                                      |
+|                                                     |                        |                                                              |
+| Enter Blank line above                              | capslock & enter       | {End}{enter}                                                 |
+| Enter Blank line below                              | Win + enter            | {Home}{enter}{Up}                                            |
+| Duplicate the current line                          | Ctrl + Win + Down      | {Home}{Home}{Shift}{End}{Shift}{End}{Ctrl}c{End}{Enter}{Shift}{Home}{Ctrl}v |
