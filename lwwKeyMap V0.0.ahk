@@ -709,7 +709,7 @@ return
     ; Control, EditPaste used rather than ControlSend for much greater speed of execution
 
     Control, EditPaste, % Clipboard . chr(13) . chr(10) . chr(13) . chr(10) , , *Untitled - Notepad
-    Clipboard := OldClipboardA
+    Clipboard := OldClipboard
 Return
 
 ;---------------------------------------------------------------------------------------------------------
