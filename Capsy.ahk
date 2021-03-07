@@ -77,7 +77,8 @@ Return
 
 
 ; ------ Left side --------
-v:: Click, 2
+v::Click, 1
+x:: Click, 2
 
 space::
     SENDINPUT {LBUTTON DOWN}
@@ -216,6 +217,7 @@ return
 
 /* -------------------- Toggle CapsLock with the win key --------------------
 */
+CapsLock::send {ESC}
 
 #Capslock::
     If GetKeyState("CapsLock", "T") = 1
@@ -423,7 +425,7 @@ return
 
 Capslock & g::
     keywait,g
-    keywait, g, d ,t 0.2
+    keywait, g, d ,t 0.15
     if errorlevel
         SendInput, {Home}{Home}+{End}+{End}^c
     else
@@ -434,7 +436,7 @@ return
 
 ; Capslock & c::
 ;     keywait,c
-;     keywait, c, d ,t 0.1
+;     keywait, c, d ,t 0.15
 ;     if errorlevel
 ;         SendInput, ^a^c
 ;     else
