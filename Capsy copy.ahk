@@ -1,5 +1,5 @@
 /* -------------------------------------------------------------------------- */
-/* Version 0 */
+/*                                  Version 0                                 */
 /* -------------------------------------------------------------------------- */
 */
 
@@ -67,13 +67,12 @@ return
 l:: Send {RButton}
 Insert:: Send {MButton}
 ':: senDinput ^{LButton}
+
 SC027::
     SENDINPUT {LBUTTON DOWN}
     keywait, SC027, u
     SENDINPUT {LButton UP}
 Return
-
-
 
 ; ------ Left side --------
 v::Click, 1
@@ -216,7 +215,6 @@ return
 
 /* -------------------- Toggle CapsLock with the win key --------------------
 */
-CapsLock::send {ESC}
 
 #Capslock::
     If GetKeyState("CapsLock", "T") = 1
@@ -232,8 +230,8 @@ Capslock & q::SendInput {Esc}
 ;Capslock & w::Launcher
 Capslock & e::SendInput ^z ; This has repetitive press. Sould be a comfortable place.
 Capslock & r::SendInput ^y ; redo
-;Capslock & t:: copy / delete(2) word
-; Capslock & y::SendInput {Blind}{Home}  ;with space for contrl+end
+;Capslock & t:: The Word Key --> single press = select word | double press = copy word | long press = cut word
+; Capslock & y::SendInput {Blind}{Home} ;with space for contrl+end
 Capslock & u::SendInput {Blind}{pgUp}
 Capslock & i::SendInput {Blind}{Up}
 Capslock & o::SendInput {Blind}{pgDn}
@@ -242,9 +240,9 @@ Capslock & [::SendInput {{}{}}{Left}
 Capslock & ]::SendInput []{Left}
 Capslock & \::SendInput |
 
-; Capslock & a:: save and save as
-; Capslock & s:: SendInput ^x
-; Capslock & d:: single press = copy | long press = Copy line
+;Capslock & a:: single press = Save | Double press = Save as
+;Capslock & s:: SendInput ^x ; single press = cut | long press = cut line
+;Capslock & d:: SendInput ^c ; single press = copy | long press = Copy line
 Capslock & f:: SendInput ^v
 ;Capslock & g:: selecet & copy / delete line
 Capslock & h::SendInput {Blind}^{Left}
@@ -255,14 +253,14 @@ Capslock & SC027::SendInput {Blind}^{right}
 ;Capslock & ':: Sorround with ""
 
 ;Capslock & z::alt tab
-Capslock & x:: SendInput {AppsKey}
-Capslock & c:: SendInput {Enter}
-Capslock & v:: SendInput {Delete}
-Capslock & b:: SendInput {Blind}{BS}
+Capslock & x::SendInput {AppsKey}
+Capslock & c::SendInput {Enter}
+; Capslock & v:: SendInput {Delete} ; Single press = delete | long press = delete line
+; Capslock & b:: SendInput {Blind}{BS} ; Single press = backspace | long press = delete word
 Capslock & n::SendInput {Blind}{BS}
 Capslock & m::SendInput {Blind}^{BS}
-Capslock & ,:: SendInput {Delete}
-Capslock & .:: SendInput ^{Delete}
+Capslock & ,::SendInput {Delete}
+Capslock & .::SendInput ^{Delete}
 Capslock & /::SendInput {enter}
 
 /* ------------------------------ Special Keys ------------------------------
@@ -282,14 +280,14 @@ Capslock & BS::SendInput {Blind}{BS}
 ; -------------------------- copy lines up and down ----------------------------
 
 Capslock & up::SendInput {Home}{Home}+{End}+{End}^c{End}{Enter}+{Home}^v{up}{End}
-Capslock & Down:: SendInput {Home}{Home}+{End}+{End}^c{End}{Enter}+{Home}^v
+Capslock & Down::SendInput {Home}{Home}+{End}+{End}^c{End}{Enter}+{Home}^v
 
 ; --------------------------- Close windows and tab ----------------------------
 
 !+q::SendInput !{F4}
 !q::SendInput ^w
 
-; ------------------------- enter line below or above --------------------------
+; ------------------------- Enter line below or above --------------------------
 
 Capslock & enter::
     If GetKeyState("space","p") = 1
@@ -302,8 +300,10 @@ Capslock & enter::
     }
 Return
 
+; ------------------------ Control Home | Control End --------------------------
+
 Capslock & y::
-    If GetKeyState("space","p") = 1
+    If GetKeyState("Tab","p") = 1
     {
         Send,^{Home}
     }
@@ -314,7 +314,7 @@ Capslock & y::
 Return
 
 Capslock & p::
-    If GetKeyState("space","p") = 1
+    If GetKeyState("Tab","p") = 1
     {
         Send,^{End}
     }
@@ -370,8 +370,7 @@ Capslock & '::
     }
 return
 
-/* --------------------------------- F keys ---------------------------------*/
-*/
+; --------------------------------- F keys ---------------------------------*/
 
 Capslock & F1:: SendInput {AppsKey}
 ; Capslock & F2:: --------------
@@ -388,8 +387,7 @@ Capslock & F1:: SendInput {AppsKey}
 
 /* ------------------------------- Number keys ------------------------------
 */
-
-Capslock & `:: SendInput {AppsKey}
+Capslock & `:: `
 Capslock & 1:: !
 Capslock & 2:: SendInput {F2}
 Capslock & 3:: #
@@ -409,7 +407,7 @@ Capslock & =:: +
 
 Capslock & z::AltTab
 
-; ------------------------ word select(copy) , delete --------------------------
+; ------------------------ copy | hold to copy line --------------------------
 capslock & d::
     keywait, d, t 0.2
     if errorlevel{
@@ -424,6 +422,7 @@ capslock & d::
     keywait,d
 return
 
+; ------------------------ copy | hold to cut line --------------------------
 Capslock & s::
     keywait, s, t 0.2
     if errorlevel{
@@ -438,36 +437,80 @@ Capslock & s::
     keywait,s
 return
 
-Capslock & t::
-    keywait,t
-    keywait, t, d ,t 0.15
-    if errorlevel
-        SendInput, ^{Left}+^{Right}^c
-    else
-        Send, ^{Left}+^{Right}{del}
+; ------------------------ Delete | hold to delete line --------------------------
+Capslock & v::
+    keywait, v, t 0.2
+    if errorlevel{
+        ;long press to delete line
+        SendInput, {Home}{Home}+{End}+{End}{Del}
+    }
+    else{
+        ;short press to delete
+        SendInput, {Del}
+        return
+    }
+    keywait,v
 return
 
-; ------------------------ Line select(copy) , delete --------------------------
+; ------------------------ backspace  | hold to backspace word --------------------------
+Capslock & b::
+    keywait, b, t 0.2
+    if errorlevel{
+        ;long press to delete word
+        Send, ^{Left}+^{Right}{del}
+    }
+    else{
+        ;short press to backspace
+        SendInput, {Blind}{BS}
+        return
+    }
+    keywait,b
+return
+
+Capslock & t::
+    keywait, t, t 0.2
+    if errorlevel{
+        ; long press to cut word
+        SendInput, ^{Left}+^{Right}
+
+    }
+    else{
+        keywait,t
+        keywait, t, d ,t 0.15
+        if errorlevel
+            ; single press to select word
+        SendInput, ^{Left}+^{Right}^c
+        else{
+            ; double press to copy word
+            SendInput, ^{Right}+^{Left}{Del}
+            return
+        }
+    }
+    keywait,t
+return
+
+; ------------------------ single press = copy Line | double press = delete Line | hold = Select Line--------------------------
 
 Capslock & g::
+    keywait, g, t 0.2
+    if errorlevel{
+        ;long press to copy line
+        SendInput, {Home}{Home}+{End}+{End}
+    }
+    else{
+        keywait,g
+        keywait, g, d ,t 0.15
+        if errorlevel
+            ; single press to select line
+        Send, {Home}{Home}+{End}+{End}^c
+        else{
+            ; double press to delete line
+            Send, {Home}{Home}+{End}+{End}{Del}
+            return
+        }
+    }
     keywait,g
-    keywait, g, d ,t 0.15
-    if errorlevel
-        SendInput, {Home}{Home}+{End}+{End}^c
-    else
-        SendInput, {Home}{Home}+{End}+{End}{del}
 return
-
-; ------------ All copy delete (Too dagerous. replaced with enter) -------------
-
-; Capslock & c::
-;     keywait,c
-;     keywait, c, d ,t 0.15
-;     if errorlevel
-;         SendInput, ^a^c
-;     else
-;         SendInput, ^a{del}
-; return
 
 ; ----------------------------- Save and save as -------------------------------
 
@@ -523,7 +566,7 @@ Capslock & w::
         return
     }
     ;----------------------Delete to End
-    else if key=ff
+    else if key=fe
     {
         SendInput, +{End}{delete}
         return
@@ -542,7 +585,7 @@ Capslock & w::
         return
     }
     ;-----------------------copy to end
-    else if key=dd
+    else if key=de
     {
         SendInput, +{End}^c
         return
@@ -563,7 +606,7 @@ Capslock & w::
     ;----------------------- cut line
     else if key=vv
     {
-        SendInput, {+{End}{delete}
+        SendInput, {Home}+{End}^x
         return
     }
     ;----------------------- cut to start
@@ -579,6 +622,8 @@ Capslock & w::
         return
     }
 
+
+
     ;----------------------- Select all
     else if key=sa
     {
@@ -586,15 +631,21 @@ Capslock & w::
         return
     }
 
-    ; -------------------------------- select line ---------------------------------
+    ;----------------------- Select to start
 
     else if key=ss
     {
-        SendInput, {Home}{home}+{End}+{End}
+        SendInput, +{home}+{home}
+        return
+    }
+    ;----------------------- Select to end
+    else if key=se
+    {
+        SendInput, +{End}+{End}
         return
     }
 
-    ; -------------------------------- select word ---------------------------------
+    ;----------------------- Select word
 
     else if key=sw
     {
@@ -700,7 +751,7 @@ EWD_WatchMouse:
         return
     }
     ; Otherwise, reposition the window to match the change in mouse coordinates
-    ; caused by the user having dragged the mouse:A
+    ; caused by the user having dragged the mouse:
     CoordMode, Mouse
     MouseGetPos, EWD_MouseX, EWD_MouseY
     WinGetPos, EWD_WinX, EWD_WinY,,, ahk_id %EWD_MouseWin%
@@ -742,10 +793,9 @@ Return
 
 ;---------------------------------------------------------------------------------------------------------
 ;######################### End quickly gather text to a notepad ##########################################
-
+;---------------------------------------------------------------------------------------------------------
 
 >!q::Suspend
-
 
 >^q::
     MsgBox Exiting the script
