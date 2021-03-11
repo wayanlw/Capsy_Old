@@ -1,26 +1,28 @@
 # Capsy
 ### Using the underutilized CapsLock key for an efficient keyboard workflow.
 
-I believe the design of the qwerty keyboard is not efficient. This is a humble attempt to optimize the keyboard workflow with the amazing autohotkey tool. The main inspiration for this came
+I believe the design of the qwerty keyboard is not efficient. This is a humble attempt to optimize the keyboard workflow with the amazing autohotkey tool. I got inspired to create this by using the VIM editor, whose phylosophy is minimizing handmovements.
 
+Also I borrowed certain components from below users as well.
 
-1. Minimize hand movements when using keyboard.
-2. Enhance **Keyboard-Mouse** parallel use. (Using keyboard with the left hand and mouse with the right)
-3. Using keyboard to move the cursor for quick small cursor movements
-
-Functionality:
-- Deactivates capslock for normal (accidental) use.
-- Use CapsLock and Right-Shift keys as modifier keys
-- Hold the Capslock and drag any window with the right mouse button (not just the title bar).
-- Access the following functions when pressing Capslock:
-
-This is created with a combination of keybindings adopted from different users.
-
-Credits
 - Daniel Kvarfordt - https://gist.github.com/Danik/5808330
 - ThatOneCoder - https://github.com/ThatOneCoder/ahk/blob/master/Wynshaft.ahk.txt
 - Gustavo Duarte: http://duartes.org/gustavo/blog/post/home-row-computing
 
+This script has saved me a ton of time. I run this on every computer that I use. The size of the program is less than 1 MB and it doesnt require admin priviledges.
+
+**Disclaimer -  the script becomes very addictive after you use it for sometime.**
+
+#### Benefits of the script
+1. Minimize hand movements when using keyboard.
+2. Enhance **Keyboard-Mouse** parallel use. (Using keyboard with the left hand and mouse with the right)
+3. Using keyboard to move the cursor for quick small cursor movements
+
+#### Functionality:
+- Deactivates capslock for normal (accidental) use.
+- Use CapsLock and Right-Shift keys as modifier keys
+- Hold the Capslock and drag any window with the right mouse button (not just the title bar).
+- Access the following functions when pressing Capslock:
 
 ## Installation Instructions
 1. Donwnload `Capsy.exe` to your computer
@@ -262,5 +264,5 @@ These button's are helpful when you're using the keyboard from your lefthand and
 |  Sroll right  |  Mouse wheel Right  |
 
 #### Exit Capsy
-| Exit Script | ` Right Ctrl + q` |
+| Exit Script | ` RightCtrl + q` |
 | ----------- | ----------------- |
