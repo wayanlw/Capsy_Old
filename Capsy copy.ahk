@@ -74,6 +74,8 @@ SC027::
     SENDINPUT {LButton UP}
 Return
 
+
+
 ; ------ Left side --------
 v::Click, 1
 x:: Click, 2
@@ -303,7 +305,7 @@ Return
 ; ------------------------ Control Home | Control End --------------------------
 
 Capslock & y::
-    If GetKeyState("Tab","p") = 1
+    If GetKeyState("space","p") = 1
     {
         Send,^{Home}
     }
@@ -314,7 +316,7 @@ Capslock & y::
 Return
 
 Capslock & p::
-    If GetKeyState("Tab","p") = 1
+    If GetKeyState("space","p") = 1
     {
         Send,^{End}
     }
@@ -512,7 +514,7 @@ Capslock & g::
     keywait,g
 return
 
-; ----------------------------- Save and save as -------------------------------
+; ----------------------------- Single Press = Save| Double Press = Save As -------------------------------
 
 Capslock & a::
     keywait, a
