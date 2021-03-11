@@ -39,75 +39,76 @@ CapsLock is deactivated by default. However, if one wants to activate it, can us
 
 #### Main Keybindings
 
-| Function                                                        | Hotkey                           | Simulated Keys                                  |
-| --------------------------------------------------------------- | -------------------------------- | ----------------------------------------------- |
-| Escape                                                          | ` Capslock + q `                 | {Esc}                                           |
-| Launcher Functionality Covered later                            | ` Capslock + w `                 | Launcher                                        |
-| --------------------------------------------------------------- | -------------------------------- | ----------------------------------------------- |
-| Up Arrow                                                        | ` Capslock + i `                 | {Up}                                            |
-| Left Arrow                                                      | ` Capslock + j `                 | {Left}                                          |
-| Down Arrow                                                      | ` Capslock + k `                 | {Down}                                          |
-| Right Arrow                                                     | ` Capslock + l `                 | {Right}                                         |
-| --------------------------------------------------------------- | -------------------------------- | ----------------------------------------------- |
-| Ctrl + Left Arrow                                               | ` Capslock + h `                 | {Ctrl}+{Left}                                   |
-| Ctrl + Rigth Arrow                                              | ` Capslock + ; `                 | {Ctrl}+{Right}                                  |
-| --------------------------------------------------------------- | -------------------------------- | ----------------------------------------------- |
-| Page Up                                                         | ` Capslock + u `                 | {pgUp}                                          |
-| Page Down                                                       | ` Capslock + o `                 | {pgDn}                                          |
-| --------------------------------------------------------------- | -------------------------------- | ----------------------------------------------- |
-| Home (Go to the beginning of a line)                            | ` Capslock + y `                 | {Home}                                          |
-| End (Go to the end of a line)                                   | ` Capslock + p `                 | {End}                                           |
-| Go to the beginning of the page                                 | ` Capslock + Space + y `         | {Ctrl}+{Home}                                   |
-| Go to the beginning of the page                                 | ` Capslock + Space + p `         | {Ctrl}+{End}                                    |
-| --------------------------------------------------------------- | -------------------------------- | ----------------------------------------------- |
-| Undo                                                            | ` Capslock + e `                 | {Ctrl}+z                                        |
-| Redo                                                            | ` Capslock + r `                 | {Ctrl}+y                                        |
-| --------------------------------------------------------------- | -------------------------------- | ----------------------------------------------- |
-| Cut                                                             | ` Capslock + s `                 | {Ctrl}+x                                        |
-| Copy                                                            | ` Capslock + d `                 | {Ctrl}+c                                        |
-| Paste                                                           | ` Capslock + f `                 | {Ctrl}+v                                        |
-| --------------------------------------------------------------- | -------------------------------- | ----------------------------------------------- |
-| Select and Copy proceding word                                  | ` capslock + t `                 | {Ctrl}+{Left}  {Shift}+{Ctrl}+{Right}  {Ctrl}+c |
-| Delete proceding word                                           | ` capslock + t (pressed twice) ` | {Ctrl}+{Left}  {Shift}+{Ctrl}+{Right}  {del}+   |
-| --------------------------------------------------------------- | -------------------------------- | ----------------------------------------------- |
-| Copy Line                                                       | ` Capslock + g `                 | {Home}  {Shift}+{End}  {Ctrl}+c                 |
-| Delete Line                                                     | ` Capslock + g (pressed twice) ` | {Home}  {Shift}+{End}  {del}                    |
-| Select Line                                                     | ` Capslock + g (hold) `          | {Home}  {Shift}+{End}                           |
-| --------------------------------------------------------------- | -------------------------------- | ----------------------------------------------- |
-| Sorround the selection with curly braces                        | ` Capslock + space + [ `         | Converts xxx in to {xxx}                        |
-| Sorround with Parnthesis                                        | ` Capslock + space + ( `         | Converts xxx in to (xxx)                        |
-| Sorround with Quotation Marks                                   | ` Capslock + space + ' `         | Converts xxx in to "xxx"                        |
-| --------------------------------------------------------------- | -------------------------------- | ----------------------------------------------- |
-| Save                                                            | ` Capslock + a `                 | {Ctrl}+s                                        |
-| Save as                                                         | ` Capslock + a (pressed twice) ` | {Ctrl}+{Shift}+s                                |
-| --------------------------------------------------------------- | -------------------------------- | ----------------------------------------------- |
-| Backspace preceding word                                        | ` Capslock + m `                 | {Ctrl}+{BS}                                     |
-| Delete                                                          | ` Capslock + , `                 | {Delete}                                        |
-| Delete the next word                                            | ` Capslock + . `                 | {Ctrl}+{Delete}                                 |
-| --------------------------------------------------------------- | -------------------------------- | ----------------------------------------------- |
-| Enter                                                           | ` Capslock + c `                 | {Enter}                                         |
-| Delete                                                          | ` Capslock + v `                 | {Delete}                                        |
-| BackSpace                                                       | ` Capslock + b `                 | {BS}                                            |
-| --------------------------------------------------------------- | -------------------------------- | ----------------------------------------------- |
-| Cycle open applications                                         | ` Capslock + z `                    | {Alt}+{Tab}                                     |
-| --------------------------------------------------------------- | ` -------------`------------------- | ----------------------------------------------- |
-| Find                                                            | ` Capslock + x `                    | {Ctrl}+f                                        |
-| Find selection (pastes the current selection to the search box) | ` Capslock + x (Long press) `       | {Ctrl}+c {Ctrl}+f                               |
+| Function                                                        | Hotkey                               | Simulated Keys                                  |
+| --------------------------------------------------------------- | ------------------------------------ | ----------------------------------------------- |
+| Escape                                                          | ` Capslock + q `                     | {Esc}                                           |
+| Launcher Functionality Covered later                            | ` Capslock + w `                     | Launcher                                        |
+| ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~                            | ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ | ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~            |
+| Up Arrow                                                        | ` Capslock + i `                     | {Up}                                            |
+| Left Arrow                                                      | ` Capslock + j `                     | {Left}                                          |
+| Down Arrow                                                      | ` Capslock + k `                     | {Down}                                          |
+| Right Arrow                                                     | ` Capslock + l `                     | {Right}                                         |
+| ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~                            | ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ | ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~            |
+| Ctrl + Left Arrow                                               | ` Capslock + h `                     | {Ctrl}+{Left}                                   |
+| Ctrl + Rigth Arrow                                              | ` Capslock + ; `                     | {Ctrl}+{Right}                                  |
+| ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~                            | ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ | ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~            |
+| Page Up                                                         | ` Capslock + u `                     | {pgUp}                                          |
+| Page Down                                                       | ` Capslock + o `                     | {pgDn}                                          |
+| ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~                            | ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ | ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~            |
+| Home (Go to the beginning of a line)                            | ` Capslock + y `                     | {Home}                                          |
+| End (Go to the end of a line)                                   | ` Capslock + p `                     | {End}                                           |
+| Go to the beginning of the page                                 | ` Capslock + Space + y `             | {Ctrl}+{Home}                                   |
+| Go to the beginning of the page                                 | ` Capslock + Space + p `             | {Ctrl}+{End}                                    |
+| ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~                            | ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ | ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~            |
+| Undo                                                            | ` Capslock + e `                     | {Ctrl}+z                                        |
+| Redo                                                            | ` Capslock + r `                     | {Ctrl}+y                                        |
+| ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~                            | ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ | ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~            |
+| Cut                                                             | ` Capslock + s `                     | {Ctrl}+x                                        |
+| Copy                                                            | ` Capslock + d `                     | {Ctrl}+c                                        |
+| Paste                                                           | ` Capslock + f `                     | {Ctrl}+v                                        |
+| ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~                            | ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ | ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~            |
+| Select and Copy proceding word                                  | ` capslock + t `                     | {Ctrl}+{Left}  {Shift}+{Ctrl}+{Right}  {Ctrl}+c |
+| Delete proceding word                                           | ` capslock + t (pressed twice) `     | {Ctrl}+{Left}  {Shift}+{Ctrl}+{Right}  {del}+   |
+| ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~                            | ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ | ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~            |
+| Copy Line                                                       | ` Capslock + g `                     | {Home}  {Shift}+{End}  {Ctrl}+c                 |
+| Delete Line                                                     | ` Capslock + g (pressed twice) `     | {Home}  {Shift}+{End}  {del}                    |
+| Select Line                                                     | ` Capslock + g (hold) `              | {Home}  {Shift}+{End}                           |
+| ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~                            | ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ | ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~            |
+| Sorround the selection with curly braces                        | ` Capslock + space + [ `             | Converts xxx in to {xxx}                        |
+| Sorround with Parnthesis                                        | ` Capslock + space + ( `             | Converts xxx in to (xxx)                        |
+| Sorround with Quotation Marks                                   | ` Capslock + space + ' `             | Converts xxx in to "xxx"                        |
+| ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~                            | ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ | ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~            |
+| Save                                                            | ` Capslock + a `                     | {Ctrl}+s                                        |
+| Save as                                                         | ` Capslock + a (pressed twice) `     | {Ctrl}+{Shift}+s                                |
+| ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~                            | ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ | ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~            |
+| Backspace preceding word                                        | ` Capslock + m `                     | {Ctrl}+{BS}                                     |
+| Delete                                                          | ` Capslock + , `                     | {Delete}                                        |
+| Delete the next word                                            | ` Capslock + . `                     | {Ctrl}+{Delete}                                 |
+| ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~                            | ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ | ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~            |
+| Enter                                                           | ` Capslock + c `                     | {Enter}                                         |
+| Delete                                                          | ` Capslock + v `                     | {Delete}                                        |
+| BackSpace                                                       | ` Capslock + b `                     | {BS}                                            |
+| ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~                            | ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ | ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~            |
+| Cycle open applications                                         | ` Capslock + z `                     | {Alt}+{Tab}                                     |
+| ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~                            | ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ | ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~            |
+| Find                                                            | ` Capslock + x `                     | {Ctrl}+f                                        |
+| Find selection (pastes the current selection to the search box) | ` Capslock + x (Long press) `        | {Ctrl}+c {Ctrl}+f                               |
 
 <br/>
 
 #### Special Key Combinations
 
-| Function                                            | Hotkey                      | Simulated Keys                                                          |
-| --------------------------------------------------- | --------------------------- | ----------------------------------------------------------------------- |
-| Control (Holding)                                   | `CapsLock + Space `         | {Ctrl (Hold)}                                                           |
-| Shift (Can be used in combinations with other keys) | `Capslock + Tab `           | {Shift}                                                                 |
-| --------------------------------------------------- | --------------------------- | ----------------------------------------------------------------------- |
-| Enter Blank line below                              | `capslock + enter `         | {End}{enter}                                                            |
-| Enter Blank line above                              | `capslock + space + enter ` | {Home}{enter}{Up}                                                       |
-| --------------------------------------------------- | --------------------------- | ----------------------------------------------------------------------- |
-| Duplicate the current line                          | `capslock + Up `            | {Home}   {Shift}+{End}  {Ctrl}+c  {End}  {Enter}  {Ctrl}+v  {up}  {End} |
-| Duplicate the current line Down                     | `capslock + Down `          | {Home}   {Shift}+{End}  {Ctrl}+c  {End}  {Enter} {Ctrl}+v               |
+| Function                                            | Hotkey                               | Simulated Keys                                                          |
+| --------------------------------------------------- | ------------------------------------ | ----------------------------------------------------------------------- |
+| Control (Holding)                                   | `CapsLock + Space `                  | {Ctrl (Hold)}                                                           |
+| Shift (Can be used in combinations with other keys) | `Capslock + Tab `                    | {Shift}                                                                 |
+| ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~                | ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ | ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~                                    |
+| Enter Blank line below                              | `capslock + enter `                  | {End}{enter}                                                            |
+| Enter Blank line above                              | `capslock + space + enter `          | {Home}{enter}{Up}                                                       |
+| ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~                | ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ | ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~                                    |
+| Duplicate the current line                          | `capslock + Up `                     | {Home}   {Shift}+{End}  {Ctrl}+c  {End}  {Enter}  {Ctrl}+v  {up}  {End} |
+| Duplicate the current line Down                     | `capslock + Down `                   | {Home}   {Shift}+{End}  {Ctrl}+c  {End}  {Enter} {Ctrl}+v               |
+|                                                     |                                      |                                                                         |
 
 
 <br>
@@ -177,44 +178,44 @@ Insert numbers without reaching the number pad. This becomes more useful if you'
 | Copy selection to a notepad file | ` Ctrl + Alt + c ` |
 
 #### Microsoft Excel Hotkeys
-| Excel Function                              | Hotkey                 | Simulated Keys               |
-| ------------------------------------------- | ---------------------- | ---------------------------- |
-| Trace Precedents                            | ` Capslock + 1 `        | {Ctrl}[                      |
-| Trace Dependants                            | ` Capslock + 2 `        | {F5}{Enter}                  |
-| Equals                                      | ` Capslock + 3 `        | {=}                          |
-| Plus                                        | ` Capslock + 4 `        | {+}                          |
-| Calculate formulat inside the cell          | ` Capslock + 5 `        | {F9}                         |
-| ------------------------------------------- | ---------------------- | ---------------------------- |
-| Paste as values                             | ` {Ctrl}+{Alt}+v `      | {Ctrl}+{Alt}+v  {v}  {enter} |
-| Paste forumulas                             | ` {Ctrl}+{Alt}+f `      | {Ctrl}+{Alt}+v  {f}  {enter} |
-| Paste formatting                            | ` {Ctrl}+{Alt}+t `      | {Ctrl}+{Alt}+v  {t}  {enter} |
-| Paste Links                                 | ` {Ctrl}+{Alt}+z `      | {Ctrl}+{Alt}+v  {l}          |
-| ------------------------------------------- | ---------------------- | ---------------------------- |
-| Conditional formatting data bars            | ` {Ctrl}+{Alt}+s `     | {Alt}+H {L} {d} {enter}      |
-| Conditional formatting color scales         | ` {Ctrl}+{Alt}+d `     | {Alt}+H {L} {s} {enter}      |
-| Clear conditional formatting from selection | ` {Ctrl}+{Alt}+x `     | {Alt}+H {L} {c} {s} {enter}  |
-| ------------------------------------------- | ---------------------- | ---------------------------- |
-| Move to the top cell in range               | ` Capslock + u `       | {Ctrl}+{up}                  |
-| Select to the top cell in range             | ` Capslock + Tab + u ` | {Ctrl}+{Shift}+{up}          |
-| Move to the bottom cell in Range            | ` Capslock + o `       | {Ctrl}+{Down}                |
-| Select to the bottom cell in range          | ` Capslock + Tab + o ` | {Ctrl}+{Shift}+{Down}        |
-| Move to the left most cell in range         | ` Capslock + h `       | {Ctrl}+{left}                |
-| Select to the left most cell in range       | ` Capslock + Tab + h ` | {Ctrl}+{Shift}+{left}        |
-| Move to the right most cell in Range        | ` Capslock + ; `       | {Ctrl}+{right}               |
-| Select to the right most cell in range      | ` Capslock + Tab + ; ` | {Ctrl}+{Shift}+{right}       |
-| ------------------------------------------- | ---------------------- | ---------------------------- |
-| Go to previous sheet                        | ` Capslock + [ `       | {Ctrl}+{pgup}                |
-| Go to next sheet                            | ` Capslock + ] `       | {Ctrl}+{pgDn}                |
-| ------------------------------------------- | ---------------------- | ---------------------------- |
-| Copy vertically                             | ` Capslock + b `       | {Ctrl}+d                     |
-| Copy horizontally                           | ` Capslock + t `       | {Ctrl}+r                     |
-| ------------------------------------------- | ---------------------- | ---------------------------- |
-| Edit in cell                                | ` Capslock + g: `      | {F2}                         |
-| ------------------------------------------- | ---------------------- | ---------------------------- |
-| Minus                                       | ` Capslock + F1 `      | {-}                          |
-| Plus                                        | ` Capslock + F2 `      | {+}                          |
-| Mulitply                                    | ` Capslock + F3 `      | {*}                          |
-| Divide                                      | ` Capslock + F4 `      | {/}                          |
+| Excel Function                              | Hotkey                               | Simulated Keys                       |
+| ------------------------------------------- | ------------------------------------ | ------------------------------------ |
+| Trace Precedents                            | ` Capslock + 1 `                     | {Ctrl}[                              |
+| Trace Dependants                            | ` Capslock + 2 `                     | {F5}{Enter}                          |
+| Equals                                      | ` Capslock + 3 `                     | {=}                                  |
+| Plus                                        | ` Capslock + 4 `                     | {+}                                  |
+| Calculate formulat inside the cell          | ` Capslock + 5 `                     | {F9}                                 |
+| ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~        | ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ | ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ |
+| Paste as values                             | ` {Ctrl}+{Alt}+v `                   | {Ctrl}+{Alt}+v  {v}  {enter}         |
+| Paste forumulas                             | ` {Ctrl}+{Alt}+f `                   | {Ctrl}+{Alt}+v  {f}  {enter}         |
+| Paste formatting                            | ` {Ctrl}+{Alt}+t `                   | {Ctrl}+{Alt}+v  {t}  {enter}         |
+| Paste Links                                 | ` {Ctrl}+{Alt}+z `                   | {Ctrl}+{Alt}+v  {l}                  |
+| ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~        | ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ | ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ |
+| Conditional formatting data bars            | ` {Ctrl}+{Alt}+s `                   | {Alt}+H {L} {d} {enter}              |
+| Conditional formatting color scales         | ` {Ctrl}+{Alt}+d `                   | {Alt}+H {L} {s} {enter}              |
+| Clear conditional formatting from selection | ` {Ctrl}+{Alt}+x `                   | {Alt}+H {L} {c} {s} {enter}          |
+| ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~        | ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ | ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ |
+| Move to the top cell in range               | ` Capslock + u `                     | {Ctrl}+{up}                          |
+| Select to the top cell in range             | ` Capslock + Tab + u `               | {Ctrl}+{Shift}+{up}                  |
+| Move to the bottom cell in Range            | ` Capslock + o `                     | {Ctrl}+{Down}                        |
+| Select to the bottom cell in range          | ` Capslock + Tab + o `               | {Ctrl}+{Shift}+{Down}                |
+| Move to the left most cell in range         | ` Capslock + h `                     | {Ctrl}+{left}                        |
+| Select to the left most cell in range       | ` Capslock + Tab + h `               | {Ctrl}+{Shift}+{left}                |
+| Move to the right most cell in Range        | ` Capslock + ; `                     | {Ctrl}+{right}                       |
+| Select to the right most cell in range      | ` Capslock + Tab + ; `               | {Ctrl}+{Shift}+{right}               |
+| ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~        | ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ | ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ |
+| Go to previous sheet                        | ` Capslock + [ `                     | {Ctrl}+{pgup}                        |
+| Go to next sheet                            | ` Capslock + ] `                     | {Ctrl}+{pgDn}                        |
+| ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~        | ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ | ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ |
+| Copy vertically                             | ` Capslock + b `                     | {Ctrl}+d                             |
+| Copy horizontally                           | ` Capslock + t `                     | {Ctrl}+r                             |
+| ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~        | ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ | ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ |
+| Edit in cell                                | ` Capslock + g: `                    | {F2}                                 |
+| ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~        | ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ | ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ |
+| Minus                                       | ` Capslock + F1 `                    | {-}                                  |
+| Plus                                        | ` Capslock + F2 `                    | {+}                                  |
+| Mulitply                                    | ` Capslock + F3 `                    | {*}                                  |
+| Divide                                      | ` Capslock + F4 `                    | {/}                                  |
 
 <br>
 
