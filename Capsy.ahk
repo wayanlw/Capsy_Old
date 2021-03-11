@@ -252,10 +252,10 @@ Capslock & j::SendInput {Blind}{Left}
 Capslock & k::SendInput {Blind}{Down}
 Capslock & l::SendInput {Blind}{Right}
 Capslock & SC027::SendInput {Blind}^{right}
-;Capslock & ':: Sorround with ""
+;Capslock & ':: --> Sorround with ""
 
-;Capslock & z::alt tab
-Capslock & x::SendInput {AppsKey}
+;Capslock & z:: --> alt tab
+;Capslock & x:: --> single press = find | long press = find selection
 Capslock & c::SendInput {Enter}
 Capslock & v::SendInput {Delete}
 Capslock & b::SendInput {Blind}{BS}
@@ -281,8 +281,8 @@ Capslock & BS::SendInput {Blind}{BS}
 
 ; -------------------------- copy lines up and down ----------------------------
 
-Capslock & up::SendInput {Home}{Home}+{End}+{End}^c{End}{Enter}+{Home}^v{up}{End}
-Capslock & Down::SendInput {Home}{Home}+{End}+{End}^c{End}{Enter}+{Home}^v
+Capslock & up::SendInput {Home}{Home}+{End}+{End}^c{End}{Enter}^v{up}{End}
+Capslock & Down::SendInput {Home}{Home}+{End}+{End}^c{End}{Enter}^v
 
 ; --------------------------- Close windows and tab ----------------------------
 
@@ -344,7 +344,7 @@ Capslock & 9::
     }
     Else
     {
-        send (){left}
+        send (
     }
 return
 
@@ -389,7 +389,7 @@ Capslock & F1:: SendInput {AppsKey}
 
 /* ------------------------------- Number keys ------------------------------
 */
-Capslock & `:: `
+Capslock & `:: SendInput {AppsKey}
 Capslock & 1:: !
 Capslock & 2:: SendInput {F2}
 Capslock & 3:: #
@@ -451,6 +451,20 @@ return
 ;     else
 ;         SendInput, {Home}{Home}+{End}+{End}{del}
 ; return
+
+capslock & x::
+    keywait, x, t 0.2
+    if errorlevel{
+        ;long press to copy line
+        sendinput, ^c^f^v
+    }
+    else{
+        ;short press to copy
+        sendinput, ^f
+        return
+    }
+    keywait,x
+return
 
 ; ----------------------------- Single Press = Save| Double Press = Save As -------------------------------
 

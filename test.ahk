@@ -6,7 +6,16 @@ SetWorkingDir, %A_ScriptDir%
 SetCapsLockState, AlwaysOff
 SetScrollLockState, AlwaysOff
 
-SetBatchLines -1
+CapsLock & x::sendinput, ^c^f^v
+
+
+
+
+
+
+
+
+
 ; #UseHook ; without this the mouse movement will not work
 
 ; capslock & z::                                              		; Long press (> 0.5 sec) on * substitutes the dot multiply
@@ -18,78 +27,78 @@ SetBatchLines -1
 ;         MsgBox short
 ; Return
 
-Capslock & g::
+; Capslock & g::
 
-    keywait, g, t 0.2
-    if errorlevel{
-        keywait, g, t 0.2
-        if ErrorLevel{
-            SendInput, ^{Left}+^{Right}^c
-        }
-        Else
-            SendInput, {Home}{Home}+{End}+{End}^c
-    }
-    else
-        SendInput, {Home}{Home}+{End}+{End}{del}
-    keywait,g
-return
+;     keywait, g, t 0.2
+;     if errorlevel{
+;         keywait, g, t 0.2
+;         if ErrorLevel{
+;             SendInput, ^{Left}+^{Right}^c
+;         }
+;         Else
+;             SendInput, {Home}{Home}+{End}+{End}^c
+;     }
+;     else
+;         SendInput, {Home}{Home}+{End}+{End}{del}
+;     keywait,g
+; return
 
-Capslock & d::
-    keywait, d, t 0.2
-    if errorlevel{
-        SendInput, {Home}{Home}+{End}+{End}^c
-    }
-    else{
-        SendInput, ^c
-        return
-    }
-    keywait,d
-return
+; Capslock & d::
+;     keywait, d, t 0.2
+;     if errorlevel{
+;         SendInput, {Home}{Home}+{End}+{End}^c
+;     }
+;     else{
+;         SendInput, ^c
+;         return
+;     }
+;     keywait,d
+; return
 
-$a::
-    aDown:=A_TickCount
-    Keywait a
-    Duration:=(A_TickCount-aDown)
-    If (Duration<300)
-        Send a
-    Else
-        Send A
-Return
+; $a::
+;     aDown:=A_TickCount
+;     Keywait a
+;     Duration:=(A_TickCount-aDown)
+;     If (Duration<300)
+;         Send a
+;     Else
+;         Send A
+; Return
 
-$z::
-    KeyWait, z, T0.1
-    if (ErrorLevel)
-        Send long
+; $z::
+;     KeyWait, z, T0.1
+;     if (ErrorLevel)
+;         Send long
 
-    else {
-        KeyWait, z, D T0.1
+;     else {
+;         KeyWait, z, D T0.1
 
-        if (ErrorLevel)
-            Send single
+;         if (ErrorLevel)
+;             Send single
 
-        else
-            Send double
-    }
+;         else
+;             Send double
+;     }
 
-    KeyWait, z
-return
+;     KeyWait, z
+; return
 
-q::sendinput {q}
-q & j::Left
-q & l::Right
-q & i::Up
-q & k::Down
+; q::sendinput {q}
+; q & j::Left
+; q & l::Right
+; q & i::Up
+; q & k::Down
 
-j::
-    If GetKeyState("space","p") = 1
-    {
-        send {down}
-    }
-    Else
-    {
-        send j
-    }
-Return
+; j::
+;     If GetKeyState("space","p") = 1
+;     {
+;         send {down}
+;     }
+;     Else
+;     {
+;         send j
+;     }
+; Return
 
 ; $space::
 

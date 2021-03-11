@@ -1,6 +1,5 @@
-
 # Capsy
-### Using the Underutilized CapsLock key for efficient keyboard workflow.
+### Using the underutilized CapsLock key for an efficient keyboard workflow.
 
 1. Minimize hand movements when using keyboard.
 2. Enhance **Keyboard-Mouse** parallel use. (Using keyboard with the left hand and mouse with the right)
@@ -12,12 +11,22 @@ Functionality:
 - Hold the Capslock and drag any window with the right mouse button (not just the title bar).
 - Access the following functions when pressing Capslock:
 
-This is created with a combination of keybindings adopted from different users. Credits to
-Daniel Kvarfordt - https://gist.github.com/Danik/5808330
-ThatOneCoder - https://github.com/ThatOneCoder/ahk/blob/master/Wynshaft.ahk.txt
-Gustavo Duarte: http://duartes.org/gustavo/blog/post/home-row-computing
+This is created with a combination of keybindings adopted from different users.
 
-## Hotkeys
+Credits
+- Daniel Kvarfordt - https://gist.github.com/Danik/5808330
+- ThatOneCoder - https://github.com/ThatOneCoder/ahk/blob/master/Wynshaft.ahk.txt
+- Gustavo Duarte: http://duartes.org/gustavo/blog/post/home-row-computing
+
+
+## Installation Instructions
+1. Donwnload `Capsy.exe` to your computer
+2. Simply run the program by double clicking.
+3. Doesn't require admin previledges
+
+
+
+## How to use
 
 #### Toggle Caps lock
 CapsLock is deactivated by default. However, if one wants to activate it, can use the below combination to toggle.
@@ -143,7 +152,7 @@ Insert numbers without reaching the number pad. This becomes more useful if you'
 
 <br>
 
-#### Searching the Web
+#### Searching the WebA
 | Function                     | Hotkey             |
 |------------------------------|--------------------|
 | Search Web                   | ` Win + s `        |
@@ -156,9 +165,9 @@ Insert numbers without reaching the number pad. This becomes more useful if you'
 #### Interact with application windows
 | Function                 | Hotkey                                                                                   | Simulated Keys |
 | ------------------------ | ---------------------------------------------------------------------------------------- | -------------- |
-| Window always on top     | capslock + F1                                                                            |                |
-| Close tab / instance     | `Alt + q `                                                                               | {Ctrl}+{w}     |
-| Exit Current Application | `Alt + Shift + q `                                                                       | {Alt}+{F4}     |
+| Window always on top     | ` capslock + F12 `                                                                       |                |
+| Close tab / instance     | ` Alt + q `                                                                              | {Ctrl}+{w}     |
+| Exit Current Application | ` Alt + Shift + q `                                                                      | {Alt}+{F4}     |
 | Move windows             | Drag the window from anywhere with the right mouse button whilst holding the Capsloc Key |                |
 
 
@@ -248,5 +257,5 @@ These button's are helpful when you're using the keyboard from your lefthand and
 |  Sroll right  |  Mouse wheel Right  |
 
 #### Exit Capsy
-| Exit Script | Right Ctrl + q |
-|-------------|----------------|
+| Exit Script | ` Right Ctrl + q` |
+| ----------- | ----------------- |
