@@ -1,22 +1,33 @@
 # Capsy
-### Using the underutilized CapsLock key for an efficient keyboard workflow.
+### Super efficient keyboard workflow with the underutilized CapsLock key
 
-I believe the design of the qwerty keyboard is not efficient. This is a humble attempt to optimize the keyboard workflow with the amazing autohotkey tool. I got inspired to create this by using the VIM editor, whose phylosophy is minimizing handmovements.
+After using keyboard for so many years and trying to optimize its use in every possible way, I came in to the conclusion that the design of the qwerty keyboard is not as efficient as it could be. I got inspired to look for solution after using the VIM editor, whose phylosophy is minimizing handmovements.
 
-Also I borrowed certain components from below users as well.
+To test my hypothesis, I observed my keyboard usage over a month using a keylogger script. I observed frequently used key-combinations and the corresponding hand movements. And this uncovered the amount of unnecessary hand movements that we do while using the keyboard for day-to-day work. Almost all the frequently used key combinations required significant hand movement.
 
-- Daniel Kvarfordt - https://gist.github.com/Danik/5808330
-- ThatOneCoder - https://github.com/ThatOneCoder/ahk/blob/master/Wynshaft.ahk.txt
-- Gustavo Duarte: http://duartes.org/gustavo/blog/post/home-row-computing
+| Rank | Key Combination | Hand Movement                                                                                     | Capsy Key binding                                                                                        | Capsy Hand Movement                             |
+| ---- | --------------- | ------------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------- | ----------------------------------------------- |
+| 1    | Alt tab         | Left hand Left & down to alt key                                                                  | Capslock + z                                                                                             | No Movement                                     |
+| 2    | Backspace       | Right hand up to BS key. When used with the mouse have to take the right hand away from the mouse | Capslock + b (For left hand) <br> Capslock + n (For right hand)                                          | No Movement. Can use with mouse simultaneously. |
+| 3    | Esc             | Left hand up and right to ESC                                                                     | Capslock + q                                                                                             | No Movement                                     |
+| 5    | Enter           | Minimal                                                                                           | Capslock + c (for left hand) <br> Capslock + / (For right hand) <br> Side Mouse Button (Used with mouse) | No Movement. Can use with mouse simultaneously. |
+| 6    | Arrows          | Right hand right and down to the arrow key area                                                   | Capslock + ijlk                                                                                          | No Movement. Can use with mouse simultaneously. |
+| 7    | c-v             | Left hand down and left. One finger to ctrl and the other to v                                    | Capslock + f                                                                                             | No movement                                     |
+| 8    | Delete          | Right hand right. hen used with the mouse have to take the right hand away from the mouse         | Capslock + v (For left hand) <br> Capslock + , (for right hand)                                          | No movement                                     |
+| 9    | c-c             | Left hand down and left. One finger to ctrl and the other to c                                    | Capslock + d                                                                                             | No movement                                     |
+| 10   | c-z             | Left hand down and left. One finger to ctrl and the other to z                                    | Capslock + e                                                                                             | No movement                                     |
+
+This script tries to
+1. Minimize hand movements while using the keyboard.
+2. Enhance **Keyboard-Mouse** parallel use experience. (Using keyboard with the left hand and mouse with the right)
+
+#### Credits & Inspirations
+- [VIM](https://www.vim.org/)
+- [Daniel Kvarfordt](https://gist.github.com/Danik/5808330)
+- [ThatOneCoder](https://github.com/ThatOneCoder/ahk/blob/master/Wynshaft.ahk.txt)
+- [Gustavo Duarte](http://duartes.org/gustavo/blog/post/home-row-computing)
 
 This script has saved me a ton of time. I run this on every computer that I use. The size of the program is less than 1 MB and it doesnt require admin priviledges.
-
-**Disclaimer -  the script becomes very addictive after you use it for sometime.**
-
-#### Benefits of the script
-1. Minimize hand movements when using keyboard.
-2. Enhance **Keyboard-Mouse** parallel use. (Using keyboard with the left hand and mouse with the right)
-3. Using keyboard to move the cursor for quick small cursor movements
 
 #### Functionality:
 - Deactivates capslock for normal (accidental) use.
@@ -24,14 +35,15 @@ This script has saved me a ton of time. I run this on every computer that I use.
 - Hold the Capslock and drag any window with the right mouse button (not just the title bar).
 - Access the following functions when pressing Capslock:
 
+**Disclaimer -  Once the combinations gets in to your muscle memory, the script becomes very addictive. If you are switching computers frequently (Eg. IT support) please be mindful of it.**
 ## Installation Instructions
 1. Donwnload `Capsy.exe` to your computer
 2. Simply run the program by double clicking.
 3. Doesn't require admin previledges
 
+If you know how to use [Autohotkey](https://www.autohotkey.com/), you can download the script `Capsy.ahk` and change it to suite your own needs.
 
-
-## How to use
+## Usage Instructions
 
 #### Toggle Caps lock
 CapsLock is deactivated by default. However, if one wants to activate it, can use the below combination to toggle.
