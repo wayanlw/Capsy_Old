@@ -6,17 +6,17 @@ After using the keyboard for so many years and trying to optimize its use in eve
 To test my hypothesis, I observed my keyboard usage over a month using a keylogger script. I observed frequently used key-combinations and corresponding hand movements. And this uncovered the amount of unnecessary hand movements that we do while using the keyboard for day-to-day work. Almost all the frequently used key combinations required significant hand movement.
 
 
-| Rank | Key Combination | Hand Movement                                                                                     | Capsy Key binding                                                                                        | Capsy Hand Movement                             |
-| ---- | --------------- | ------------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------- | ----------------------------------------------- |
-| 1    | Alt tab         | Left hand Left & down to alt key                                                                  | Capslock + z                                                                                             | No Movement                                     |
-| 2    | Backspace       | Right hand up to BS key. When used with the mouse have to take the right hand away from the mouse | Capslock + b (For left hand) <br> Capslock + n (For right hand)                                          | No Movement. Can use with mouse simultaneously. |
-| 3    | Esc             | Left hand up and right to ESC                                                                     | Capslock + q                                                                                             | No Movement                                     |
-| 5    | Enter           | Minimal                                                                                           | Capslock + c (for left hand) <br> Capslock + / (For right hand) <br> Side Mouse Button (Used with mouse) | No Movement. Can use with mouse simultaneously. |
-| 6    | Arrows          | Right hand right and down to the arrow key area                                                   | Capslock + ijlk                                                                                          | No Movement. Can use with mouse simultaneously. |
-| 7    | c-v             | Left hand down and left. One finger to ctrl and the other to v                                    | Capslock + f                                                                                             | No movement                                     |
-| 8    | Delete          | Right hand right. When used with the mouse have to take the right hand away from the mouse         | Capslock + v (For left hand) <br> Capslock + , (for right hand)                                          | No movement                                     |
-| 9    | c-c             | Left hand down and left. One finger to ctrl and the other to c                                    | Capslock + d                                                                                             | No movement                                     |
-| 10   | c-z             | Left hand down and left. One finger to ctrl and the other to z                                    | Capslock + e                                                                                             | No movement                                     |
+| Rank | Key Combination | Hand Movement                                                                                     | Capsy Key binding                                                                                        | Capsy Hand Movement                                 |
+| ---- | --------------- | ------------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------- | --------------------------------------------------- |
+| 1    | Alt+tab         | Left hand Left & down to alt key                                                                  | Capslock + z                                                                                             | No Movement                                         |
+| 2    | Backspace       | Right hand up to BS key. When used with the mouse have to take the right hand away from the mouse | Capslock + b (For left hand) <br> Capslock + n (For right hand)                                          | No Movement. Can be used with mouse simultaneously. |
+| 3    | Esc             | Left hand up and right to ESC                                                                     | Capslock + q                                                                                             | No Movement                                         |
+| 5    | Enter           | Minimal                                                                                           | Capslock + c (for left hand) <br> Capslock + / (For right hand) <br> Side Mouse Button (Used with mouse) | No Movement. Can be used with mouse simultaneously. |
+| 6    | Arrows          | Right hand right and down to the arrow key area                                                   | Capslock + ijlk                                                                                          | No Movement. Can be used with mouse simultaneously. |
+| 7    | Cntrl-v (Paste) | Left hand down and left. One finger to ctrl and the other to v                                    | Capslock + f                                                                                             | No movement                                         |
+| 8    | Delete          | Right hand right. When used with the mouse have to take the right hand away from the mouse        | Capslock + v (For left hand) <br> Capslock + , (for right hand)                                          | No movement                                         |
+| 9    | Ctrl+c (Copy)   | Left hand down and left. One finger to ctrl and the other to c                                    | Capslock + d                                                                                             | No movement                                         |
+| 10   | Ctrl+z (Undo)   | Left hand down and left. One finger to ctrl and the other to z                                    | Capslock + e                                                                                             | No movement                                         |
 
 This script tries to
 1. Minimize hand movements while using the keyboard.
@@ -135,23 +135,23 @@ CapsLock is deactivated by default. However, if one wants to activate it, can us
 #### Launcher
 
 Launcher = `Capslock + w`. The key combination should be Entered immediately after pressing the launcher combination.
-| Function        | Hotkey        | Simulated Keys                          |
-|-----------------|---------------|-----------------------------------------|
-| Delete all      | ` Launcher + fa ` | {Ctrl}+a  {Delete}                         |
-| Delete to Start | ` Launcher + fs ` | {Shift}+{Home}  {Delete}                   |
-| Delete to End   | ` Launcher + fe ` | {Shift}+{End}  {delete}                    |
-| copy all        | ` Launcher + da ` | {Ctrl}+a  {Ctrl}+c                          |
-| copy to start   | ` Launcher + ds ` | {Shift}+{Home}  {Ctrl}+c                    |
-| copy to end     | ` Launcher + de ` | {Shift}+{End}  {Ctrl}+c                     |
-| cut all         | ` Launcher + va ` | {Ctrl}+a  {Ctrl}+x                          |
+| Function        | Hotkey            | Simulated Keys                                  |
+| --------------- | ----------------- | ----------------------------------------------- |
+| Delete all      | ` Launcher + fa ` | {Ctrl}+a  {Delete}                              |
+| Delete to Start | ` Launcher + fs ` | {Shift}+{Home}  {Delete}                        |
+| Delete to End   | ` Launcher + fe ` | {Shift}+{End}  {delete}                         |
+| copy all        | ` Launcher + da ` | {Ctrl}+a  {Ctrl}+c                              |
+| copy to start   | ` Launcher + ds ` | {Shift}+{Home}  {Ctrl}+c                        |
+| copy to end     | ` Launcher + de ` | {Shift}+{End}  {Ctrl}+c                         |
+| cut all         | ` Launcher + va ` | {Ctrl}+a  {Ctrl}+x                              |
 | cut word        | ` Launcher + vw ` | {Ctrl}+{right}  {Shift}+{Ctrl}+{left}  {Ctrl}+x |
-| cut line        | ` Launcher + vv ` | {Home}  {Shift}+{End}  {Ctrl}+x               |
-| cut to start    | ` Launcher + vs ` | {Shift}+{Home}  {Ctrl}+x                    |
-| cut to end      | ` Launcher + ve ` | {Shift}+{End}{  Ctrl}+x                     |
-| Select all      | ` Launcher + sa ` | {Ctrl}+a                                 |
-| Select to start | ` Launcher + ss ` | {Shift}+{home}  {Shift}+{home}              |
-| Select to end   | ` Launcher + se ` | {Shift}+{End}  {Shift}+{End}                |
-| Select word     | ` Launcher + sw ` | {Ctrl}+{right}  {Shift}+{Ctrl}+{left}        |
+| cut line        | ` Launcher + vv ` | {Home}  {Shift}+{End}  {Ctrl}+x                 |
+| cut to start    | ` Launcher + vs ` | {Shift}+{Home}  {Ctrl}+x                        |
+| cut to end      | ` Launcher + ve ` | {Shift}+{End}{  Ctrl}+x                         |
+| Select all      | ` Launcher + sa ` | {Ctrl}+a                                        |
+| Select to start | ` Launcher + ss ` | {Shift}+{home}  {Shift}+{home}                  |
+| Select to end   | ` Launcher + se ` | {Shift}+{End}  {Shift}+{End}                    |
+| Select word     | ` Launcher + sw ` | {Ctrl}+{right}  {Shift}+{Ctrl}+{left}           |
 
 <br>
 
@@ -192,8 +192,8 @@ Insert numbers without reaching the number pad. This becomes more useful if you'
 
 
 #### Quick Copy text to a Notepad
-| Function                         | Hotkey         |
-|----------------------------------|----------------|
+| Function                         | Hotkey             |
+| -------------------------------- | ------------------ |
 | Copy selection to a notepad file | ` Ctrl + Alt + c ` |
 
 #### Microsoft Excel Hotkeys
@@ -241,29 +241,29 @@ Insert numbers without reaching the number pad. This becomes more useful if you'
 ## Mouse Functionality
 #### Normal mouse with the keyboard
 Whilst holding the Right Shift key move use qwerasdfzxcv keys for mouse functionality
-| Function              | Hotkey                        |
-|-----------------------|-------------------------------|
-|  move up              |  ` RShift + E `                   |
-|  move down            |  ` RShift + D `                   |
-|  Move left            |  ` RShift + S `                   |
-|  Move right           |  ` RShift + F `                   |
-|  Scroll down          |  ` RShift + W `                   |
-|  Scroll up            |  ` RShift + R `                   |
-|  Left Button          |  ` RShift + Space / Rshift + ; `  |
-|  Control Left button  |  ` RShift + ' `                   |
+| Function            | Hotkey                          |
+| ------------------- | ------------------------------- |
+| move up             | ` RShift + E `                  |
+| move down           | ` RShift + D `                  |
+| Move left           | ` RShift + S `                  |
+| Move right          | ` RShift + F `                  |
+| Scroll down         | ` RShift + W `                  |
+| Scroll up           | ` RShift + R `                  |
+| Left Button         | ` RShift + Space / Rshift + ; ` |
+| Control Left button | ` RShift + ' `                  |
 
 
 #### Quickly move mouse cursor in the screen
 
-| Function        | Hotkey       |
-|-----------------|--------------|
-|  Top Left       |  ` RShift + q `  |
-|  Top Right      |  ` RShift + t `  |
-|  Middle Left    |  ` RShift + a `  |
-|  Middle CEnter  |  ` RShift + c `  |
-|  Middle Right   |  ` RShift + g `  |
-|  Bottom Left    |  ` RShift + z `  |
-|  Bottom Right   |  ` RShift + b `  |
+| Function      | Hotkey         |
+| ------------- | -------------- |
+| Top Left      | ` RShift + q ` |
+| Top Right     | ` RShift + t ` |
+| Middle Left   | ` RShift + a ` |
+| Middle CEnter | ` RShift + c ` |
+| Middle Right  | ` RShift + g ` |
+| Bottom Left   | ` RShift + z ` |
+| Bottom Right  | ` RShift + b ` |
 
 #### Mapping the Real mouse buttons
 These button's are helpful when you're using the keyboard from your lefthand and mouse from your right hand. Enter and Delete keys are used very often in this situation.
