@@ -3,6 +3,7 @@
 /* -------------------------------------------------------------------------- */
 */
 
+
 #SingleInstance, Force
 
 #Persistent
@@ -232,7 +233,7 @@ Capslock & q::SendInput {Esc}
 ;Capslock & w::Launcher
 Capslock & e::SendInput ^z ; This has repetitive press. Sould be a comfortable place.
 Capslock & r::SendInput ^y ; redo
-;Capslock & t:: The Word Key --> single press = select word | double press = copy word | long press = cut word
+;Capslock & t:: The Word Key --> single press = copy word | double press = delete word | long press = select word
 ; Capslock & y::SendInput {Blind}{Home} ;with space for contrl+end
 Capslock & u::SendInput {Blind}{pgUp}
 Capslock & i::SendInput {Blind}{Up}
@@ -252,10 +253,10 @@ Capslock & j::SendInput {Blind}{Left}
 Capslock & k::SendInput {Blind}{Down}
 Capslock & l::SendInput {Blind}{Right}
 Capslock & SC027::SendInput {Blind}^{right}
-;Capslock & ':: Sorround with ""
+;Capslock & ':: --> Sorround with ""
 
-;Capslock & z::alt tab
-Capslock & x::SendInput {AppsKey}
+;Capslock & z:: --> alt tab
+;Capslock & x:: --> single press = find | long press = find selection
 Capslock & c::SendInput {Enter}
 ; Capslock & v:: SendInput {Delete} ; Single press = delete | long press = delete line
 ; Capslock & b:: SendInput {Blind}{BS} ; Single press = backspace | long press = delete word
@@ -389,10 +390,10 @@ Capslock & F1:: SendInput {AppsKey}
 
 /* ------------------------------- Number keys ------------------------------
 */
-Capslock & `:: `
+Capslock & `:: SendInput {AppsKey}
 Capslock & 1:: !
-Capslock & 2:: SendInput {F2}
-Capslock & 3:: #
+Capslock & 2:: SendInput +{Enter}
+Capslock & 3:: =
 Capslock & 4:: $
 Capslock & 5:: SendRaw, `%
 Capslock & 6:: ^
@@ -411,7 +412,7 @@ Capslock & z::AltTab
 
 ; ------------------------ copy | hold to copy line --------------------------
 capslock & d::
-    keywait, d, t 0.2
+    keywait, d, t 0.5
     if errorlevel{
         ;long press to copy line
         sendinput, {home}{home}+{end}+{end}^c
@@ -426,7 +427,7 @@ return
 
 ; ------------------------ copy | hold to cut line --------------------------
 Capslock & s::
-    keywait, s, t 0.2
+    keywait, s, t 0.5
     if errorlevel{
         ;long press to cut line
         SendInput, {Home}{Home}+{End}+{End}^x
@@ -441,7 +442,7 @@ return
 
 ; ------------------------ Delete | hold to delete line --------------------------
 Capslock & v::
-    keywait, v, t 0.2
+    keywait, v, t 0.5
     if errorlevel{
         ;long press to delete line
         SendInput, {Home}{Home}+{End}+{End}{Del}
@@ -456,7 +457,7 @@ return
 
 ; ------------------------ backspace  | hold to backspace word --------------------------
 Capslock & b::
-    keywait, b, t 0.2
+    keywait, b, t 0.3
     if errorlevel{
         ;long press to delete word
         Send, ^{Left}+^{Right}{del}
@@ -466,13 +467,13 @@ Capslock & b::
         SendInput, {Blind}{BS}
         return
     }
-    keywait,b
+    keywait,b, t 0.3
 return
 
 Capslock & t::
-    keywait, t, t 0.2
+    keywait, t, t 1
     if errorlevel{
-        ; long press to cut word
+        ; long press to select word
         SendInput, ^{Left}+^{Right}
 
     }
@@ -480,11 +481,11 @@ Capslock & t::
         keywait,t
         keywait, t, d ,t 0.15
         if errorlevel
-            ; single press to select word
+            ; single press to copy word
         SendInput, ^{Left}+^{Right}^c
         else{
-            ; double press to copy word
-            SendInput, ^{Right}+^{Left}{Del}
+            ; double press to delete word
+            SendInput, ^{Left}+^{Right}{Del}
             return
         }
     }
@@ -494,7 +495,7 @@ return
 ; ------------------------ single press = copy Line | double press = delete Line | hold = Select Line--------------------------
 
 Capslock & g::
-    keywait, g, t 0.2
+    keywait, g, t 0.5
     if errorlevel{
         ;long press to copy line
         SendInput, {Home}{Home}+{End}+{End}
@@ -512,6 +513,19 @@ Capslock & g::
         }
     }
     keywait,g
+return
+capslock & x::
+    keywait, x, t 0.5
+    if errorlevel{
+        ;long press to copy line
+        sendinput, ^c^f^v
+    }
+    else{
+        ;short press to copy
+        sendinput, ^f
+        return
+    }
+    keywait,x
 return
 
 ; ----------------------------- Single Press = Save| Double Press = Save As -------------------------------

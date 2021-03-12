@@ -1,15 +1,15 @@
-#SingleInstance, Force
-SetWorkingDir, %A_ScriptDir%
+; #SingleInstance, Force
+; SetWorkingDir, %A_ScriptDir%
 
-#Persistent
-; SendMode Input ; with this the launcher keys will not work (q)
-SetCapsLockState, AlwaysOff
-SetScrollLockState, AlwaysOff
+; #Persistent
+; ; SendMode Input ; with this the launcher keys will not work (q)
+; SetScrollLockState, AlwaysOff
 
-CapsLock & x::sendinput, ^c^f^v
+; #IfWinActive ahk_class Chrome_WidgetWin_1
+Capslock:: Return
+Capslock & 2::SendInput +{Enter}
 
-
-
+; #if
 
 
 

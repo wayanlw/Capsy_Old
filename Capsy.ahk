@@ -1,7 +1,8 @@
 /* -------------------------------------------------------------------------- */
-/* Version 0 */
+/*                                  Version 0                                 */
 /* -------------------------------------------------------------------------- */
 */
+
 
 #SingleInstance, Force
 
@@ -392,7 +393,7 @@ Capslock & F1:: SendInput {AppsKey}
 Capslock & `:: SendInput {AppsKey}
 Capslock & 1:: !
 Capslock & 2:: SendInput {F2}
-Capslock & 3:: #
+Capslock & 3:: =
 Capslock & 4:: $
 Capslock & 5:: SendRaw, `%
 Capslock & 6:: ^
@@ -453,7 +454,7 @@ return
 ; return
 
 capslock & x::
-    keywait, x, t 0.2
+    keywait, x, t 0.5
     if errorlevel{
         ;long press to copy line
         sendinput, ^c^f^v
