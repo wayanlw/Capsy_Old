@@ -38,11 +38,11 @@ This script has saved me a ton of time. I run this on every computer that I use.
 
 **Disclaimer -  Once the combinations get into your muscle memory, the script becomes very addictive. If you are switching computers frequently (Eg. IT support) please be mindful of it.**
 ## Installation Instructions
-1. Download `Capsy.exe` on your computer
+1. Download ` Capsy.exe ` on your computer
 2. Simply run the program by double-clicking.
 3. Doesn't require admin privileges
 
-If you know how to use [Autohotkey](https://www.autohotkey.com/), you can download the script `Capsy.ahk` and change it to suit your own needs.
+If you know how to use [Autohotkey](https://www.autohotkey.com/), you can download the script ` Capsy.ahk ` and change it to suit your own needs.
 
 ## Usage Instructions
 
@@ -121,10 +121,10 @@ CapsLock is deactivated by default. However, if one wants to activate it, can us
 | --------------------------------------------------- | ---------------------------- | ----------------------------------------------------------------------- |
 | Control (Holding)                                   | ` CapsLock + Space `         | {Ctrl (Hold)}                                                           |
 | Shift (Can be used in combinations with other keys) | ` Capslock + Tab `           | {Shift}                                                                 |
-| ~~~~~~~~~~~~~~~~~~~~~~~~                            | ~ ~~~~~~~~~~~~~~~            | ~~~~~~~~~~~~~~~~~~~~~~~~~~~                                             |
+| ~~~~~~~~~~~~~~~~~~~~~~~~                            | ~~~~~~~~~~~~~~~~~            | ~~~~~~~~~~~~~~~~~~~~~~~~~~~                                             |
 | Enter Blank line below                              | ` Capslock + Enter `         | {End}{Enter}                                                            |
 | Enter Blank line above                              | ` Capslock + space + Enter ` | {Home}{Enter}{Up}                                                       |
-| ~~~~~~~~~~~~~~~~~~~~~~~~                            | ~ ~~~~~~~~~~~~~~~            | ~~~~~~~~~~~~~~~~~~~~~~~~~~~                                             |
+| ~~~~~~~~~~~~~~~~~~~~~~~~                            | ~~~~~~~~~~~~~~~~~            | ~~~~~~~~~~~~~~~~~~~~~~~~~~~                                             |
 | Duplicate the current line                          | ` Capslock + Up `            | {Home}   {Shift}+{End}  {Ctrl}+c  {End}  {Enter}  {Ctrl}+v  {up}  {End} |
 | Duplicate the current line Down                     | ` Capslock + Down `          | {Home}   {Shift}+{End}  {Ctrl}+c  {End}  {Enter} {Ctrl}+v               |
 |                                                     |                              |                                                                         |
