@@ -450,7 +450,7 @@ return
 +^!,:: SendInput {Numpad2}
 +^!.:: SendInput {Numpad3}
 +^!j:: SendInput {Numpad4}
-+^!k:: SendInput {Numpad5}
++^!k:: SendInput {Numpad5}r
 +^!l:: SendInput {Numpad6}
 +^!u:: SendInput {Numpad7}
 +^!i:: SendInput {Numpad8}

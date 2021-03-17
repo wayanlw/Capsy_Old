@@ -1,10 +1,9 @@
 /* -------------------------------------------------------------------------- */
-/*                                  Version 0                                 */
-/* compared to capsy Holding S,D,V,T and caps-2 > shift+enter(for jupyter)                          */
-/*                                  Version 0                                 */
+/* Version 0 */
+/* compared to capsy Holding S,D,V,T and caps-2 > shift+enter(for jupyter) */
+/* Version 0 */
 /* -------------------------------------------------------------------------- */
 */
-
 
 #SingleInstance, Force
 
@@ -76,8 +75,6 @@ SC027::
     keywait, SC027, u
     SENDINPUT {LButton UP}
 Return
-
-
 
 ; ------ Left side --------
 v::Click, 1
@@ -639,8 +636,6 @@ Capslock & w::
         SendInput, +{End}^x
         return
     }
-
-
 
     ;----------------------- Select all
     else if key=sa
