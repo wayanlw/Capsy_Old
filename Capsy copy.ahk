@@ -1,8 +1,9 @@
 /* -------------------------------------------------------------------------- */
 /* Version 0 */
 /* compared to capsy Holding S,D,V,T and caps-2 > shift+enter(for jupyter) */
-/* Swapped the control backspace and control delete key                     */
-/* -------------------------------------------------------------------------- */
+/* Swapped the control backspace and control delete key */
+/* --------------------------------------------------------------------------
+*/
 
 #SingleInstance, Force
 
@@ -280,8 +281,8 @@ Capslock & BS::SendInput {Blind}{BS}
 
 ; -------------------------- copy lines up and down ----------------------------
 
-Capslock & up::SendInput {Home}{Home}+{End}+{End}^c{End}{Enter}+{Home}^v{up}{End}
-Capslock & Down::SendInput {Home}{Home}+{End}+{End}^c{End}{Enter}+{Home}^v
+Capslock & up::SendInput {Home}{Home}+{End}+{End}^c{End}{Enter}^v{up}{End}
+Capslock & Down::SendInput {Home}{Home}+{End}+{End}^c{End}{Enter}^v
 
 ; --------------------------- Close windows and tab ----------------------------
 
@@ -469,7 +470,7 @@ Capslock & b::
 return
 
 Capslock & t::
-    keywait, t, t 1
+    keywait, t, t 0.5
     if errorlevel{
         ; long press to select word
         SendInput, ^{Left}+^{Right}
@@ -495,14 +496,14 @@ return
 Capslock & g::
     keywait, g, t 0.5
     if errorlevel{
-        ;long press to copy line
+        ;long press to select line
         SendInput, {Home}{Home}+{End}+{End}
     }
     else{
         keywait,g
         keywait, g, d ,t 0.15
         if errorlevel
-            ; single press to select line
+            ; single press to copy line
         Send, {Home}{Home}+{End}+{End}^c
         else{
             ; double press to delete line
@@ -695,7 +696,7 @@ return
 
     ; Run C:\Program Files (x86)\Google\Chrome\Application\chrome.exe https://www.youtube.com/results?search_query="%clipboard%"
     Run https://www.youtube.com/results?search_query=%clipboard%
-    Sleep 200
+    Sleep 500 ; at 200 the content was getting copied to the current clipbarod
     Clipboard:= OldClipboard
     Send, ^c ;copies selected text
 Return
@@ -722,7 +723,7 @@ return
     ClipWait, 1
     ; Run C:\Program Files (x86)\Google\Chrome\Application\chrome.exe http://www.google.com/search?q=%Clipboard%&num=100&source=lnms&filter=0
     Run http://www.google.com/search?q=%Clipboard%&num=100&source=lnms&filter=0
-    Sleep 200
+    Sleep 500
     Clipboard:= OldClipboard
     OldClipboard:=""
     ;    MsgBox %OldClipboard%
@@ -803,12 +804,76 @@ return
     Clipboard := OldClipboard
 Return
 
-;---------------------------------------------------------------------------------------------------------
-;######################### End quickly gather text to a notepad ##########################################
-;---------------------------------------------------------------------------------------------------------
+; ------------------------------------------------------------------------------
+;                                  Gather text to any preselected app
+; ------------------------------------------------------------------------------
+
++!c::
+
+    If !WinTag
+    {
+        MsgBox, , Capsy CopyToApp, You pressed the combination of CopyToApp. First, tag a target window in NotePad
+        , WordPad or a GUI edit field.`r`r 1
+        . Activate window`n 2
+        . Press Ctrl+Win+Shift+Z
+        Return
+    }
+
+    OldClipboard:= ClipboardAll
+    ; Clipboard:= ""
+    ; sleep 500
+    SendInput, ^c ;copies selected text
+    ClipWait,
+    If ErrorLevel
+    {
+        MsgBox, , Capsy CopyToApp, No text selected!
+        Return
+    }
+    IfWinExist, %winTitlePart%
+    {
+        ;Save the currently active window title
+        WinGetTitle, actWin, A
+
+        ; If OneNote is not active, activate it now
+        IfWinNotActive, %winTitlePart%
+            WinActivate, %winTitlePart%
+
+        ; Check again, if ON active then paste else error
+        IfWinActive, %winTitlePart%
+        {
+            SendInput, ^v`r ; Use sendplay to avoid unexpected interactions with Win key
+            ; Switch window back to previously active
+            WinActivate, %actWin%
+        }
+        sleep 500
+    }
+    Else
+    {
+        MsgBox, Window < "%winTitlePart%" > does not Exist!
+    }
+    Clipboard := OldClipboard
+Return
+
+^#+z::
+    Click, %A_CaretX%, %A_CaretY%
+    MouseGetPos, , , WinTag, Control
+    WinGetTitle, winTitlePart, ahk_id %WinTag%
+    MsgBox, , Capsy CopyToApp, " %winTitlePart% " is tagged as the destination window!`r - Press < Alt+Shift+C > to copy selection to this app.`r - Press < Ctrl+Win+Shift+R > to reset.
+    ; MsgBox, , Capsy CopyToApp, < %winTitlePart% > is tagged as the destination window!`rUnique ID: %WinTag%`rControl: %Control%`rCtrl+Win+Alt+R to activate.,3
+Return
+
+^#+r::
+    WinActivate, ahk_id %WinTag%
+    MsgBox, , Capsy CopyToApp, CopyToApp windows is reset!, 3
+    WinTag:=""
+Return
+
+; ------------------------------------------------------------------------------
+;                                 Exit or Suspend
+; ------------------------------------------------------------------------------
 
 >!q::Suspend
 
 >^q::
-    MsgBox Exiting the script
+    MsgBox, , Capsy, Existing Capsy
 ExitApp

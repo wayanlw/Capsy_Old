@@ -1,8 +1,7 @@
 /* -------------------------------------------------------------------------- */
-/*                                  Version 0                                 */
+/* Version 0 */
 /* -------------------------------------------------------------------------- */
 */
-
 
 #SingleInstance, Force
 
@@ -74,8 +73,6 @@ SC027::
     keywait, SC027, u
     SENDINPUT {LButton UP}
 Return
-
-
 
 ; ------ Left side --------
 v::Click, 1
@@ -233,8 +230,8 @@ Capslock & q::SendInput {Esc}
 ;Capslock & w::Launcher
 Capslock & e::SendInput ^z ; This has repetitive press. Sould be a comfortable place.
 Capslock & r::SendInput ^y ; redo
-;Capslock & t:: copy / delete(2) word
-; Capslock & y::SendInput {Blind}{Home}  ;with space for contrl+end
+;Capslock & t:: The Word Key --> single press = copy word | double press = delete word | long press = select word
+; Capslock & y::SendInput {Blind}{Home} ;with space for contrl+end
 Capslock & u::SendInput {Blind}{pgUp}
 Capslock & i::SendInput {Blind}{Up}
 Capslock & o::SendInput {Blind}{pgDn}
@@ -261,9 +258,9 @@ Capslock & c::SendInput {Enter}
 Capslock & v::SendInput {Delete}
 Capslock & b::SendInput {Blind}{BS}
 Capslock & n::SendInput {Blind}{BS}
-Capslock & m::SendInput {Blind}^{BS}
+Capslock & m::SendInput ^{Delete}
 Capslock & ,::SendInput {Delete}
-Capslock & .::SendInput ^{Delete}
+Capslock & .::SendInput {Blind}^{BS}
 Capslock & /::SendInput {enter}
 
 /* ------------------------------ Special Keys ------------------------------
@@ -416,24 +413,25 @@ Capslock & t::
     keywait,t
     keywait, t, d ,t 0.15
     if errorlevel
-        SendInput, ^{Left}+^{Right}^c
+        ; single press to copy word
+    SendInput, ^{Left}+^{Right}^c
     else
-        Send, ^{Left}+^{Right}{del}
+        SendInput, ^{Left}+^{Right}{Del}
 return
 
 ; ------------------------ single press = copy Line | double press = delete Line | hold = Select Line--------------------------
 
 Capslock & g::
-    keywait, g, t 0.3
+    keywait, g, t 0.5
     if errorlevel{
-        ;long press to copy line
+        ;long press to select line
         SendInput, {Home}{Home}+{End}+{End}
     }
     else{
         keywait,g
         keywait, g, d ,t 0.15
         if errorlevel
-            ; single press to select line
+            ; single press to copy line
         Send, {Home}{Home}+{End}+{End}^c
         else{
             ; double press to delete line
@@ -468,7 +466,6 @@ capslock & x::
 return
 
 ; ----------------------------- Single Press = Save| Double Press = Save As -------------------------------
-
 Capslock & a::
     keywait, a
     keywait, a, d ,t 0.2
@@ -577,8 +574,6 @@ Capslock & w::
         return
     }
 
-
-
     ;----------------------- Select all
     else if key=sa
     {
@@ -638,7 +633,7 @@ return
 
     ; Run C:\Program Files (x86)\Google\Chrome\Application\chrome.exe https://www.youtube.com/results?search_query="%clipboard%"
     Run https://www.youtube.com/results?search_query=%clipboard%
-    Sleep 200
+    Sleep 500 ; at 200 the content was getting copied to the current clipbarod
     Clipboard:= OldClipboard
     Send, ^c ;copies selected text
 Return
@@ -665,7 +660,7 @@ return
     ClipWait, 1
     ; Run C:\Program Files (x86)\Google\Chrome\Application\chrome.exe http://www.google.com/search?q=%Clipboard%&num=100&source=lnms&filter=0
     Run http://www.google.com/search?q=%Clipboard%&num=100&source=lnms&filter=0
-    Sleep 200
+    Sleep 500
     Clipboard:= OldClipboard
     OldClipboard:=""
     ;    MsgBox %OldClipboard%
@@ -746,12 +741,75 @@ return
     Clipboard := OldClipboard
 Return
 
-;---------------------------------------------------------------------------------------------------------
-;######################### End quickly gather text to a notepad ##########################################
-;---------------------------------------------------------------------------------------------------------
+; ------------------------------------------------------------------------------
+;                                  Gather text to any preselected app
+; ------------------------------------------------------------------------------
+
++!c::
+
+    If !WinTag
+    {
+        MsgBox, , Capsy CopyToApp, You pressed the combination of CopyToApp. First, tag a target window in NotePad
+        , WordPad or a GUI edit field.`r`r 1
+        . Activate window`n 2
+        . Press Ctrl+Win+Shift+Z
+        Return
+    }
+
+    OldClipboard:= ClipboardAll
+    ; Clipboard:= ""
+    ; sleep 500
+    SendInput, ^c ;copies selected text
+    ClipWait,
+    If ErrorLevel
+    {
+        MsgBox, , Capsy CopyToApp, No text selected!
+        Return
+    }
+    IfWinExist, %winTitlePart%
+    {
+        ;Save the currently active window title
+        WinGetTitle, actWin, A
+
+        ; If OneNote is not active, activate it now
+        IfWinNotActive, %winTitlePart%
+            WinActivate, %winTitlePart%
+
+        ; Check again, if ON active then paste else error
+        IfWinActive, %winTitlePart%
+        {
+            SendInput, ^v`r ; Use sendplay to avoid unexpected interactions with Win key
+            ; Switch window back to previously active
+            WinActivate, %actWin%
+        }
+        sleep 500
+    }
+    Else
+    {
+        MsgBox, Window < "%winTitlePart%" > does not Exist!
+    }
+    Clipboard := OldClipboard
+Return
+
+^#+z::
+    Click, %A_CaretX%, %A_CaretY%
+    MouseGetPos, , , WinTag, Control
+    WinGetTitle, winTitlePart, ahk_id %WinTag%
+    MsgBox, , Capsy CopyToApp, " %winTitlePart% " is tagged as the destination window!`r - Press < Alt+Shift+C > to copy selection to this app.`r - Press < Ctrl+Win+Shift+R > to reset.
+Return
+
+^#+r::
+    WinActivate, ahk_id %WinTag%
+    MsgBox, , Capsy CopyToApp, CopyToApp windows is reset!, 3
+    WinTag:=""
+Return
+
+; ------------------------------------------------------------------------------
+;                                 Exit or Suspend
+; ------------------------------------------------------------------------------
 
 >!q::Suspend
 
 >^q::
-    MsgBox Exiting the script
+    MsgBox, , Capsy, Existing Capsy
 ExitApp
