@@ -1,9 +1,8 @@
 /* -------------------------------------------------------------------------- */
 /* Version 0 */
 /* compared to capsy Holding S,D,V,T and caps-2 > shift+enter(for jupyter) */
-/* Version 0 */
+/* Swapped the control backspace and control delete key                     */
 /* -------------------------------------------------------------------------- */
-*/
 
 #SingleInstance, Force
 
@@ -260,9 +259,9 @@ Capslock & c::SendInput {Enter}
 ; Capslock & v:: SendInput {Delete} ; Single press = delete | long press = delete line
 ; Capslock & b:: SendInput {Blind}{BS} ; Single press = backspace | long press = delete word
 Capslock & n::SendInput {Blind}{BS}
-Capslock & m::SendInput {Blind}^{BS}
+Capslock & m::SendInput ^{Delete}
 Capslock & ,::SendInput {Delete}
-Capslock & .::SendInput ^{Delete}
+Capslock & .::SendInput {Blind}^{BS}
 Capslock & /::SendInput {enter}
 
 /* ------------------------------ Special Keys ------------------------------
