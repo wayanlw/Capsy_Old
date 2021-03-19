@@ -42,9 +42,9 @@ Capslock & [::SendInput {{}{}}{Left}
 Capslock & ]::SendInput {[}{]}{Left}
 Capslock & \::SendInput |
 
-;Capslock & a:: save and save as
+;Capslock & a:: single press = Save | Double press = Save as
 Capslock & s:: SendInput ^x
-Capslock & d:: SendInput ^c ;Copy and double click to cut
+Capslock & d:: SendInput ^c
 Capslock & f:: SendInput ^v
 ;Capslock & g:: selecet & copy / delete line
 Capslock & h::SendInput {Blind}^{Left}
@@ -54,15 +54,15 @@ Capslock & l::SendInput {Blind}{Right}
 Capslock & SC027::SendInput {Blind}^{right}
 Capslock & '::SendInput ""{left}
 
-;Capslock & z::alt tab
-Capslock & x:: SendInput {AppsKey}
-Capslock & c:: SendInput {Enter}
-Capslock & v:: SendInput {Delete}
-Capslock & b:: SendInput {Blind}{BS}
+;Capslock & z:: --> alt tab
+;Capslock & x:: --> single press = find | long press = find selection
+Capslock & c::SendInput {Enter}
+Capslock & v::SendInput {Delete}
+Capslock & b::SendInput {Blind}{BS}
 Capslock & n::SendInput {Blind}{BS}
+Capslock & .::SendInput ^{Delete}
+Capslock & ,::SendInput {Delete}
 Capslock & m::SendInput {Blind}^{BS}
-Capslock & ,:: SendInput {Delete}
-Capslock & .:: SendInput ^{Delete}
 Capslock & /::SendInput {enter}
 
 /* ------------------------------ Special Keys ------------------------------
@@ -79,34 +79,31 @@ Capslock & BS::SendInput {Blind}{BS}
 
 #space::Send,{space}{left}
 
-
-
 ; -------------------------- copy lines up and down ----------------------------
 
-Capslock & up::SendInput {Home}{Home}+{End}+{End}^c{End}{Enter}+{Home}^v{up}{End}
-Capslock & Down:: SendInput {Home}{Home}+{End}+{End}^c{End}{Enter}+{Home}^v
+Capslock & up::SendInput {Home}{Home}+{End}+{End}^c{End}{Enter}^v{up}{End}
+Capslock & Down::SendInput {Home}{Home}+{End}+{End}^c{End}{Enter}^v
 
 ; --------------------------- Close windows and tab ----------------------------
 
 !+q::SendInput !{F4}
 !q::SendInput ^w
 
-; ------------------------- enter line below or above --------------------------
+; ------------------------- Enter line below or above --------------------------
 
 Capslock & enter::
     If GetKeyState("space","p") = 1
     {
-        Send,{End}{enter}
+        Send,{Home}{enter}{up}
     }
     Else
     {
-        Send,{Home}{enter}{up}
+        Send,{End}{enter}
     }
 Return
 
 
-/* --------------------------------- F keys ---------------------------------*/
-*/
+; --------------------------------- F keys ---------------------------------*/
 
 Capslock & F1:: SendInput {AppsKey}
 ; Capslock & F2:: --------------
@@ -123,10 +120,10 @@ Capslock & F1:: SendInput {AppsKey}
 
 /* ------------------------------- Number keys ------------------------------
 */
-
+Capslock & `:: SendInput {AppsKey}
 Capslock & 1:: !
 Capslock & 2:: SendInput {F2}
-Capslock & 3:: #
+Capslock & 3:: =
 Capslock & 4:: $
 Capslock & 5:: SendRaw, `%
 Capslock & 6:: ^
@@ -147,27 +144,52 @@ Capslock & z::AltTab
 
 Capslock & t::
     keywait,t
-    keywait, t, d ,t 0.2
+    keywait, t, d ,t 0.15
     if errorlevel
         SendInput, ^{Left}+^{Right}^c
     else
         Send, ^{Left}+^{Right}{del}
 return
 
-; ------------------------ Line select(copy) , delete --------------------------
+; ------------------------ single press = copy Line | double press = delete Line | hold = Select Line--------------------------
 
 Capslock & g::
+    keywait, g, t 0.5
+    if errorlevel{
+        ;long press to select line
+        SendInput, {Home}{Home}+{End}+{End}
+    }
+    else{
+        keywait,g
+        keywait, g, d ,t 0.15
+        if errorlevel
+            ; single press to copy line
+        Send, {Home}{Home}+{End}+{End}^c
+        else{
+            ; double press to delete line
+            Send, {Home}{Home}+{End}+{End}{Del}
+            return
+        }
+    }
     keywait,g
-    keywait, g, d ,t 0.2
-    if errorlevel
-        SendInput, {Home}{Home}+{End}+{End}^c
-    else
-        SendInput, {Home}{Home}+{End}+{End}{del}
 return
 
-; ----------------------------- Save and save as -------------------------------
 
+capslock & x::
+    keywait, x, t 0.5
+    if errorlevel{
+        ;long press to copy line
+        sendinput, ^c^f^v
+    }
+    else{
+        ;short press to copy
+        sendinput, ^f
+        return
+    }
+    keywait,x
+return
 
+; ----------------------------- Single Press = Save| Double Press = Save As -------------------------------
 Capslock & a::
     keywait, a
     keywait, a, d ,t 0.2
@@ -186,11 +208,12 @@ Capslock & a::
     }
 return
 
-; ------------------------------------------------------------------------------
-;                               Search Functions
-; ------------------------------------------------------------------------------
+/* -------------------------------------------------------------------------- */
+/* Search Functions */
+/* -------------------------------------------------------------------------- */
+*/
 
-/* ------------------------------ Youtube Search -----------------------------*/
+/* ------------------------------ Youtube Search -----------------------------
 */
 
 #y::
@@ -213,7 +236,7 @@ return
 
     ; Run C:\Program Files (x86)\Google\Chrome\Application\chrome.exe https://www.youtube.com/results?search_query="%clipboard%"
     Run https://www.youtube.com/results?search_query=%clipboard%
-    Sleep 200
+    Sleep 500 ; at 200 the content was getting copied to the current clipbarod
     Clipboard:= OldClipboard
     Send, ^c ;copies selected text
 Return
@@ -240,7 +263,7 @@ return
     ClipWait, 1
     ; Run C:\Program Files (x86)\Google\Chrome\Application\chrome.exe http://www.google.com/search?q=%Clipboard%&num=100&source=lnms&filter=0
     Run http://www.google.com/search?q=%Clipboard%&num=100&source=lnms&filter=0
-    Sleep 200
+    Sleep 500
     Clipboard:= OldClipboard
     OldClipboard:=""
     ;    MsgBox %OldClipboard%
@@ -282,5 +305,5 @@ Return
 ; ------------------------------------------------------------------------------
 
 >^q::
-    MsgBox Exiting the script Y
+    MsgBox Exiting the script
 ExitApp

@@ -6,15 +6,190 @@
 ; SetScrollLockState, AlwaysOff
 
 ; #IfWinActive ahk_class Chrome_WidgetWin_1
-Capslock:: Return
-Capslock & 2::SendInput +{Enter}
+; Capslock:: Return
+; Capslock & 2::SendInput +{Enter}
 
-; #if
+; AutoHotkey Version: 1.x
+; Language:       English
+; Platform:       Win9x/NT
+; Author:        Jack Dunning, Jack's AutoHotkey Blog (https://jacks-autohotkey-blog.com/)
+;
+;
+/*
+Script Function:
+The CopyRef.ahk script copies any selected text to an "Untitled - Notepad" window.
+The script uses the standard Windows Clipboard manipulation routine discussed in detail at:
+https://jacks-autohotkey-blog.com/2016/03/23/autohotkey-windows-clipboard-techniques-for-swapping-letters-beginning-hotkeys-part-9/
+Be sure to save the Notepad file after copying references.
 
+April 21, 2020 Copy text to Notepad, WordPad or GUI Edit field
+To set up a reference target window tag either a NotePad, WordPad, or GUI Edit field as the
+target by activating the window, clicking in the target field and pressing:
+Ctrl+Win+Alt+T
 
+Then move to any source window, highlight the targeted text, then press:
+Ctrl+Alt+C
 
+Without activating the target window, the script uses the Control, EditPaste command
+to insert the text into the window at the cursor location.
 
+Uncomment the ControlSetText command to replace rather than add text.
 
+Use Ctrl+Win+Alt+R to return to the tagged window.
+
+*/
+
+; ^!c::
+
+;     OldClipboard := ClipboardAll
+;     Clipboard := "" ;clears the Clipboard
+;     SendInput, ^c
+;     ClipWait 0 ; pause for Clipboard data
+;     Control, EditPaste, % Clipboard . chr(13) . chr(10) . chr(13) . chr(10) , , *Untitled - Notepad
+;     ; Clipboard := OldClipboard
+;     MsgBox test
+; Return
+
+; ------------------------------------------------------------------------------
++!c::
+
+    If !WinTag
+    {
+        MsgBox, Tag a target window in NotePad
+        ,`rWordPad or a GUI edit field:`r`r 1
+        . Activate window`n 2
+        . Press Ctrl+Win+Alt+T
+        Return
+    }
+
+    ; ----------------------------- managing the copy -------------------------------
+
+    OldClipboard:= ClipboardAll
+    ; Clipboard:= ""
+    ; sleep 500
+    SendInput, ^c ;copies selected text
+    ClipWait,
+    If ErrorLevel
+    {
+        MsgBox, No text selected!
+        Return
+    }
+    IfWinExist, %winTitlePart%
+    {
+        ;Save the currently active window title
+        WinGetTitle, actWin, A
+
+        ; If OneNote is not active, activate it now
+        IfWinNotActive, %winTitlePart%
+            WinActivate, %winTitlePart%
+
+        ; Check again, if ON active then paste else error
+        IfWinActive, %winTitlePart%
+        {
+            SendInput, ^v`r ; Use sendplay to avoid unexpected interactions with Win key
+            ; Switch window back to previously active
+            WinActivate, %actWin%
+        }
+    }
+    sleep 500
+    Clipboard := OldClipboard
+Return
+
+^#+z::
+    Click, %A_CaretX%, %A_CaretY%
+    MouseGetPos, , , WinTag, Control
+    WinGetTitle, winTitlePart, ahk_id %WinTag%
+    MsgBox The "%winTitlePart%" window is tagged!`rUnique ID: %WinTag%`rControl: %Control%`rCtrl+Win+Alt+R to activate.
+Return
+
+^!#r::
+    WinActivate, ahk_id %WinTag%
+Return
+
+; original winref------------------------------------------------------------------------------
+
+; ^!c::
+
+;     If !WinTag
+;     {
+;         MsgBox, Tag a target window in NotePad
+;         ,`rWordPad or a GUI edit field:`r`r 1
+;         . Activate window`n 2
+;         . Press Ctrl+Win+Alt+T
+;         Return
+;     }
+
+;     OldClipboard := ClipboardAll
+;     Clipboard := "" ;clears the Clipboard
+;     SendInput, ^c
+;     ClipWait 0 ; pause for Clipboard data
+;     If ErrorLevel
+;     {
+;         MsgBox, No text selected!
+;         Return
+;     }
+;     ; MsgBox, %WinTitle%
+;     ; Control, EditPaste, %Clipboard% `n`n ,%control%,  ahk_id %WinTag%     . chr(13) . chr(10) . chr(13) . chr(10)
+;     Control, EditPaste, %Clipboard% ,,'Pandas CookBook 1.x - OneNote'
+;     ;To replace text (rather than add), use the following ControlSetText command:
+;     ;ControlSetText , %Control%, %Clipboard%, ahk_id %WinTag%
+;     ToolTip , Text inserted into %WinTitle% `rControl: %control%!
+;     Sleep, 3000
+;     ToolTip
+;     ; Clipboard := OldClipboard
+; Return
+
+; ^!#t::
+;     Click, %A_CaretX%, %A_CaretY%
+;     MouseGetPos, , , WinTag, Control
+;     WinGetTitle, WinTitle, ahk_id %WinTag%
+;     MsgBox The "%WinTitle%" window is tagged!`rUnique ID: %WinTag%`rControl: %Control%`rCtrl+Win+Alt+R to activate.
+; Return
+
+; ^!#r::
+;     WinActivate, ahk_id %WinTag%
+; Return
+
+; ------------------------------------------------------------------------------
+
+; !+c::
+;     oldTitleMatchMode := A_TitleMatchMode
+;     SetTitleMatchMode, 2
+
+;     ; Settings
+;     winTitlePart := " - OneNote" ; Partial title of ON windows
+
+;     ; Copy currently selected stuff
+;     Send, ^c ; Use sendplay to avoid unexpected interactions with Win key
+
+;     ; If OneNote is not started, give up
+;     IfWinExist, %winTitlePart%
+;     {
+;         ; Save the currently active window title
+;         WinGetTitle, actWin, A
+
+;         ; If OneNote is not active, activate it now
+;         IfWinNotActive, %winTitlePart%
+;             WinActivate, %winTitlePart%
+
+;         ; Check again, if ON active then paste else error
+;         IfWinActive, %winTitlePart%
+;         {
+;             ; Paste to ON &amp; Add some blank lines
+;             Send, ^v`r ; Use sendplay to avoid unexpected interactions with Win key
+;             ; Switch window back to previously active
+;             WinActivate, %actWin%
+;         }
+;         else
+;             MsgBox, Could not activate OneNote window.
+
+;     } else
+;     MsgBox, Can't find ON [%winTitlePart%]
+
+;     SetTitleMatchMode, %oldTitleMatchMode%
+; return
+
+; ------------------------------------------------------------------------------
 
 ; #UseHook ; without this the mouse movement will not work
 
@@ -119,3 +294,9 @@ Capslock & 2::SendInput +{Enter}
 ;     keywait,space
 
 ; return
+
+>!q::Suspend
+
+>^q::
+    MsgBox Exiting the script
+ExitApp
