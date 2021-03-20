@@ -302,29 +302,6 @@ Capslock & enter::
     }
 Return
 
-; ------------------------ Control Home | Control End --------------------------
-
-Capslock & y::
-    If GetKeyState("space","p") = 1
-    {
-        Send,^{Home}
-    }
-    Else
-    {
-        Send,{Home}
-    }
-Return
-
-Capslock & p::
-    If GetKeyState("space","p") = 1
-    {
-        Send,^{End}
-    }
-    Else
-    {
-        Send,{End}
-    }
-Return
 
 ; ---------------------------- Sorrounding in ( ) ------------------------------
 
@@ -393,11 +370,11 @@ Capslock & `:: SendInput {AppsKey}
 Capslock & 1:: !
 Capslock & 2:: SendInput +{Enter}
 Capslock & 3:: =
-Capslock & 4:: $
-Capslock & 5:: SendRaw, `%
-Capslock & 6:: ^
-Capslock & 7:: &
-Capslock & 8:: *
+;Capslock & 4:: SendInput--------------
+;Capslock & 5:: SendInput --------------
+Capslock & 6:: SendInput {Blind}^{Home}
+Capslock & 7:: SendInput {Blind}^{End}
+; Capslock & 8:: --------------
 ; Capslock & 9:: Sorround with paranthesis or (
 Capslock & 0:: )
 Capslock & -:: _
@@ -704,7 +681,7 @@ Return
 /* ------------------------------ Google Search -----------------------------
 */
 
-#s::
+#^s::
     InputBox, Search, Google Search, , , 400, 100
     if not ErrorLevel ; when cancel is not pressed
     {
@@ -716,7 +693,7 @@ return
 /* ----------------------- Google Search Selected Word ----------------------
 */
 
-#^s::
+#s::
     OldClipboard:= Clipboard
     Clipboard:= ""
     SendInput, ^c ;copies selected text
@@ -821,9 +798,9 @@ Return
 
     OldClipboard:= ClipboardAll
     ; Clipboard:= ""
-    ; sleep 500
-    SendInput, ^c ;copies selected text
-    ClipWait,
+    sleep 200
+    Send, ^c ;copies selected text
+    ClipWait,1
     If ErrorLevel
     {
         MsgBox, , Capsy CopyToApp, No text selected!
@@ -841,7 +818,7 @@ Return
         ; Check again, if ON active then paste else error
         IfWinActive, %winTitlePart%
         {
-            SendInput, ^v`r ; Use sendplay to avoid unexpected interactions with Win key
+            Send, ^v`r ; Use sendplay to avoid unexpected interactions with Win key
             ; Switch window back to previously active
             WinActivate, %actWin%
         }
