@@ -2,6 +2,7 @@
 ;
 ;
 ; Version 0
+; compared to capsy Holding S,D,V,T and caps-2
 ;
 ;
 ; ------------------------------------------------------------------------------
@@ -245,8 +246,8 @@ Capslock & ]::SendInput []{Left}
 Capslock & \::SendInput |
 
 ;Capslock & a:: SendInput ^x ; single press = Save | Double press = Save as
-Capslock & s:: SendInput ^x
-Capslock & d:: SendInput ^c
+;Capslock & s:: SendInput ^x ; single press = cut | long press = cut line
+;Capslock & d:: SendInput ^c ; single press = copy | long press = Copy line
 Capslock & f:: SendInput ^v
 ;Capslock & g:: selecet & copy / delete line
 Capslock & h::SendInput {Blind}^{Left}
@@ -259,8 +260,8 @@ Capslock & SC027::SendInput {Blind}^{right}
 ;Capslock & z:: --> alt tab
 ;Capslock & x:: SendInput ^x ; single press = find | long press = find selection
 Capslock & c::SendInput {Enter}
-Capslock & v::SendInput {Delete}
-Capslock & b::SendInput {Blind}{BS}
+;Capslock & v:: SendInput {Delete} ; Single press = delete | long press = delete line
+;Capslock & b:: SendInput {Blind}{BS} ; Single press = backspace | long press = delete word
 Capslock & n::SendInput {Blind}{BS}
 Capslock & m::SendInput ^{Delete}
 Capslock & ,::SendInput {Delete}
@@ -358,16 +359,29 @@ Capslock & =:: +
 
 Capslock & z::AltTab
 
-; ------------- single press=copy word |double press=delete word ---------------
+; ---- single press=copy word |double press=delete word | hold=Select word -----
 Capslock & t::
+    keywait, t, t 0.5
+    if errorlevel{
+        ; long press to select word
+        SendInput, ^{Left}+^{Right}
+
+    }
+    else{
+        keywait,t
+        keywait, t, d ,t 0.15
+        if errorlevel
+            ; single press to copy word
+        SendInput, ^{Left}+^{Right}^c
+        else{
+            ; double press to delete word
+            SendInput, ^{Left}+^{Right}{Del}
+            return
+        }
+    }
     keywait,t
-    keywait, t, d ,t 0.15
-    if errorlevel
-        ; single press to copy word
-    SendInput, ^{Left}+^{Right}^c
-    else
-        SendInput, ^{Left}+^{Right}{Del}
 return
+
 ; ---------------- Single Press = Save| Double Press = Save As -----------------
 Capslock & a::
     keywait, a
@@ -387,6 +401,35 @@ Capslock & a::
     }
 return
 
+; --------------- Single Press = Cut | Double Press = Cut Line -----------------
+Capslock & s::
+    keywait, s, t 0.5
+    if errorlevel{
+        ;long press to cut line
+        SendInput, {Home}{Home}+{End}+{End}^x
+    }
+    else{
+        ;long press to cut
+        SendInput, ^x
+        return
+    }
+    keywait,s
+return
+
+; -------------- Single Press = Copy | Double Press = Copy Line ----------------
+capslock & d::
+    keywait, d, t 0.5
+    if errorlevel{
+        ;long press to copy line
+        sendinput, {home}{home}+{end}+{end}^c
+    }
+    else{
+        ;short press to copy
+        sendinput, ^c
+        return
+    }
+    keywait,d
+return
 
 ; ---- single press=copy Line |double press=delete Line | hold=Select Line -----
 Capslock & g::
@@ -433,15 +476,6 @@ Capslock & '::
     }
 return
 
-
-; Capslock & g::
-;     keywait,g
-;     keywait, g, d ,t 0.15
-;     if errorlevel
-;         SendInput, {Home}{Home}+{End}+{End}^c
-;     else
-;         SendInput, {Home}{Home}+{End}+{End}{del}
-; return
 ; ------------- Single Press = Find | Long Press = Find Selected ---------------
 capslock & x::
     keywait, x, t 0.5
@@ -455,6 +489,37 @@ capslock & x::
         return
     }
     keywait,x
+return
+
+; ------------- Single Press = Delete | Long Press = Delete Line ---------------
+Capslock & v::
+    keywait, v, t 0.5
+    if errorlevel{
+        ;long press to delete line
+        SendInput, {Home}{Home}+{End}+{End}{Del}
+    }
+    else{
+        ;short press to delete
+        SendInput, {Del}
+        return
+    }
+    keywait,v
+return
+
+; ---------- Single Press = BackSpace | Long Press = Backspace Word ------------
+
+Capslock & b::
+    keywait, b, t 0.3
+    if errorlevel{
+        ;long press to delete word
+        Send, ^{Left}+^{Right}{del}
+    }
+    else{
+        ;short press to backspace
+        SendInput, {Blind}{BS}
+        return
+    }
+    keywait,b, t 0.3
 return
 
 ; ------------------ Sourround in () whck clicked with space -------------------
@@ -474,7 +539,7 @@ Capslock & 9::
     }
     Else
     {
-        send (
+        send (){left}
     }
 return
 
@@ -778,6 +843,7 @@ Return
     MouseGetPos, , , WinTag, Control
     WinGetTitle, winTitlePart, ahk_id %WinTag%
     MsgBox, , Capsy CopyToApp, " %winTitlePart% " is tagged as the destination window!`r - Press < Alt+Shift+C > to copy selection to this app.`r - Press < Ctrl+Win+Shift+R > to reset.
+    ; MsgBox, , Capsy CopyToApp, < %winTitlePart% > is tagged as the destination window!`rUnique ID: %WinTag%`rControl: %Control%`rCtrl+Win+Alt+R to activate.,3
 Return
 
 ^#+r::

@@ -8,7 +8,7 @@
 #SingleInstance, Force
 
 #Persistent
-; SendMode Input ; with this the launcher keys will not work (q)
+; SendMode Input ; with this the launcher keys will not work with the mouse section d: f: etc.  (w)
 SetCapsLockState, AlwaysOff
 SetScrollLockState, AlwaysOff
 
@@ -127,8 +127,10 @@ XButton1::send {Delete}
 WheelLeft::WheelLeft
 WheelRight::WheelRight
 
-/* ------------------------------- Excel area -------------------------------
-*/
+; ------------------------------------------------------------------------------
+;                                  Excel area
+; ------------------------------------------------------------------------------
+
 
 #IfWinActive ahk_class XLMAIN
     WheelLeft::SendInput, !{PgUp}
@@ -215,8 +217,9 @@ return
 
 #IfWinActive
 
-/* -------------------- Toggle CapsLock with the win key --------------------
-*/
+; ------------------------------------------------------------------------------
+;                                Capslock Toggle
+; ------------------------------------------------------------------------------
 
 #Capslock::
     If GetKeyState("CapsLock", "T") = 1
@@ -225,109 +228,116 @@ return
         SetCapsLockState, AlwaysOn
 Return
 
-/* -------------------------------- Main Keys -------------------------------
-*/
+; ------------------------------------------------------------------------------
+;                                   Main Keys
+; ------------------------------------------------------------------------------
 
 Capslock & q::SendInput {Esc}
-;Capslock & w::Launcher
+;Capslock & w::            ;Launcher
 Capslock & e::SendInput ^z ; This has repetitive press. Sould be a comfortable place.
 Capslock & r::SendInput ^y ; redo
-;Capslock & t:: The Word Key --> single press = copy word | double press = delete word | long press = select word
-; Capslock & y::SendInput {Blind}{Home} ;with space for contrl+end
+Capslock & t::             ; --> single press = copy word | double press = delete word | long press = select word
+    keywait, t, t 0.5
+    if errorlevel{
+        ; long press to select word
+        SendInput, ^{Left}+^{Right}
+
+    }
+    else{
+        keywait,t
+        keywait, t, d ,t 0.15
+        if errorlevel
+        ; single press to copy word
+        SendInput, ^{Left}+^{Right}^c
+        else{
+            ; double press to delete word
+            SendInput, ^{Left}+^{Right}{Del}
+            return
+        }
+    }
+    keywait,t
+return
+Capslock & y::SendInput {Blind}{Home}
 Capslock & u::SendInput {Blind}{pgUp}
 Capslock & i::SendInput {Blind}{Up}
 Capslock & o::SendInput {Blind}{pgDn}
-; Capslock & p::SendInput {Blind}{End} ;with space for contrl+end
+Capslock & p::SendInput {Blind}{End}
 Capslock & [::SendInput {{}{}}{Left}
 Capslock & ]::SendInput []{Left}
 Capslock & \::SendInput |
 
-;Capslock & a:: single press = Save | Double press = Save as
-;Capslock & s:: SendInput ^x ; single press = cut | long press = cut line
-;Capslock & d:: SendInput ^c ; single press = copy | long press = Copy line
+Capslock & a::  ; ----------------------------- Single Press = Save| Double Press = Save As -------------------------------
+    keywait, a
+    keywait, a, d ,t 0.2
+    if errorlevel
+    {
+        SendInput ^s ; save
+    }
+    else
+    {
+        IfWinActive, ahk_class XLMAIN
+        {
+            ; save as in excel
+            SendInput {f12}
+            return
+        }
+        ; save as
+        SendInput ^+s
+    }
+return
+Capslock & s:: ; SendInput ^x ; single press = cut | long press = cut line
+    keywait, s, t 0.5
+    if errorlevel{
+        ;long press to cut line
+        SendInput, {Home}{Home}+{End}+{End}^x
+    }
+    else{
+        ;long press to cut
+        SendInput, ^x
+        return
+    }
+    keywait,s
+return
+capslock & d:: ; SendInput ^c ; single press = copy | long press = Copy line
+    keywait, d, t 0.5
+    if errorlevel{
+        ;long press to copy line
+        sendinput, {home}{home}+{end}+{end}^c
+    }
+    else{
+        ;short press to copy
+        sendinput, ^c
+        return
+    }
+    keywait,d
+return
 Capslock & f:: SendInput ^v
-;Capslock & g:: selecet & copy / delete line
+Capslock & g:: ; single press = Copy Line | Double press = Delete Line | long press = Select Line
+    keywait, g, t 0.5
+    if errorlevel{
+        ;long press to select line
+        SendInput, {Home}{Home}+{End}+{End}
+    }
+    else{
+        keywait,g
+        keywait, g, d ,t 0.15
+        if errorlevel
+            ; single press to copy line
+        Send, {Home}{Home}+{End}+{End}^c
+        else{
+            ; double press to delete line
+            Send, {Home}{Home}+{End}+{End}{Del}
+            return
+        }
+    }
+    keywait,g
+return
 Capslock & h::SendInput {Blind}^{Left}
 Capslock & j::SendInput {Blind}{Left}
 Capslock & k::SendInput {Blind}{Down}
 Capslock & l::SendInput {Blind}{Right}
 Capslock & SC027::SendInput {Blind}^{right}
-;Capslock & ':: --> Sorround with ""
-
-;Capslock & z:: --> alt tab
-;Capslock & x:: --> single press = find | long press = find selection
-Capslock & c::SendInput {Enter}
-; Capslock & v:: SendInput {Delete} ; Single press = delete | long press = delete line
-; Capslock & b:: SendInput {Blind}{BS} ; Single press = backspace | long press = delete word
-Capslock & n::SendInput {Blind}{BS}
-Capslock & m::SendInput ^{Delete}
-Capslock & ,::SendInput {Delete}
-Capslock & .::SendInput {Blind}^{BS}
-Capslock & /::SendInput {enter}
-
-/* ------------------------------ Special Keys ------------------------------
-*/
-
-Capslock & alt::SendInput {Blind}{Alt}
-
-Capslock & space::return
-
-Capslock & Tab::SendInput {Blind}{shift Down}
-Capslock & Tab up::SendInput {Blind}{shift up}
-
-Capslock & BS::SendInput {Blind}{BS}
-
-#space::Send,{space}{left}
-
-; -------------------------- copy lines up and down ----------------------------
-
-Capslock & up::SendInput {Home}{Home}+{End}+{End}^c{End}{Enter}^v{up}{End}
-Capslock & Down::SendInput {Home}{Home}+{End}+{End}^c{End}{Enter}^v
-
-; --------------------------- Close windows and tab ----------------------------
-
-!+q::SendInput !{F4}
-!q::SendInput ^w
-
-; ------------------------- Enter line below or above --------------------------
-
-Capslock & enter::
-    If GetKeyState("space","p") = 1
-    {
-        Send,{Home}{enter}{up}
-    }
-    Else
-    {
-        Send,{End}{enter}
-    }
-Return
-
-
-; ---------------------------- Sorrounding in ( ) ------------------------------
-
-Capslock & 9::
-    If GetKeyState("Space","p") = 1
-    {
-        OldClipboard := Clipboard
-        Clipboard := ""
-        Send ^c
-        ClipWait, 1
-        Clipboard = (%Clipboard%)
-        Send ^v
-        Sleep 200
-        Clipboard := OldClipboard
-        OldClipboard := ""
-        ; Send, ^c
-    }
-    Else
-    {
-        send (){left}
-    }
-return
-
-; ---------------------------- Sorrounding in " " ------------------------------
-
-Capslock & '::
+Capslock & '::  ; --> Sorround with ""
     If GetKeyState("Space","p") = 1
     {
         OldClipboard := Clipboard
@@ -349,10 +359,112 @@ Capslock & '::
     }
 return
 
+Capslock & z::AltTab ; --> alt tab
+capslock & x::  ; --> single press = find | long press = find selection
+    keywait, x, t 0.5
+    if errorlevel{
+        ;long press to copy line
+        sendinput, ^c^f^v
+    }
+    else{
+        ;short press to copy
+        sendinput, ^f
+        return
+    }
+    keywait,x
+return
+Capslock & c::SendInput {Enter}
+Capslock & v::  ; SendInput {Delete} ; Single press = delete | long press = delete line
+    keywait, v, t 0.5
+    if errorlevel{
+        ;long press to delete line
+        SendInput, {Home}{Home}+{End}+{End}{Del}
+    }
+    else{
+        ;short press to delete
+        SendInput, {Del}
+        return
+    }
+    keywait,v
+return
+Capslock & b:: ; SendInput {Blind}{BS} ; Single press = backspace | long press = delete word
+    keywait, b, t 0.3
+    if errorlevel{
+        ;long press to delete word
+        Send, ^{Left}+^{Right}{del}
+    }
+    else{
+        ;short press to backspace
+        SendInput, {Blind}{BS}
+        return
+    }
+    keywait,b, t 0.3
+return
+Capslock & n::SendInput {Blind}{BS}
+Capslock & m::SendInput ^{Delete}
+Capslock & ,::SendInput {Delete}
+Capslock & .::SendInput {Blind}^{BS}
+Capslock & /::SendInput {enter}
+
+
+
+/* ------------------------------ Special Keys ------------------------------
+*/
+
+Capslock & alt::SendInput {Blind}{Alt}
+Capslock & space::return
+Capslock & BS::SendInput {Blind}{BS}
+#space::Send,{space}{left}
+
+Capslock & Tab::SendInput {Blind}{shift Down}
+Capslock & Tab up::SendInput {Blind}{shift up}
+
+Capslock & enter::
+    If GetKeyState("space","p") = 1
+    {
+        Send,{Home}{Home}{enter}{up}
+    }
+    Else
+    {
+        Send,{End}{End}{enter}
+    }
+Return
+
+Capslock & up::SendInput {Home}{Home}+{End}+{End}^c{End}{Enter}^v{up}{End}
+Capslock & Down::SendInput {Home}{Home}+{End}+{End}^c{End}{Enter}^v
+Capslock & Right::SendInput {End}{space}{Delete}{End}
+Capslock & Left::SendInput {Home}{BackSpace}{space}{end}
+
+; --------------------------- Close windows and tab ----------------------------
+
+!+q::SendInput !{F4}
+!q::SendInput ^w
+
+
+
 ; --------------------------------- F keys ---------------------------------*/
 
 Capslock & F1:: SendInput {AppsKey}
-; Capslock & F2:: --------------
+Capslock & F2::
+    if (%top% = True)
+    {
+        WinSet, AlwaysOnTop, toggle, A
+        ToolTip ,%AlwayOnTopWindow% `r NOT on top!
+        Sleep, 500
+        ToolTip
+        AlwayOnTopWindow = ""
+        top = False
+    }
+    Else
+    {
+        WinGetTitle, AlwayOnTopWindow, A ; A stands for Active Window
+        WinSet, AlwaysOnTop, toggle, A
+        ToolTip , %AlwayOnTopWindow% `rstays on top!
+        Sleep, 500
+        ToolTip
+        top = True
+    }
+Return
 ; Capslock & F3:: --------------
 ; Capslock & F4:: --------------
 ; Capslock & F5:: --------------
@@ -366,163 +478,37 @@ Capslock & F1:: SendInput {AppsKey}
 
 /* ------------------------------- Number keys ------------------------------
 */
-Capslock & `:: SendInput {AppsKey}
-Capslock & 1:: !
-Capslock & 2:: SendInput +{Enter}
+; Capslock & `:: SendInput --------------
+Capslock & 1:: SendInput {F2}
+Capslock & 2:: SendInput {AppsKey}
 Capslock & 3:: =
 ;Capslock & 4:: SendInput--------------
 ;Capslock & 5:: SendInput --------------
 Capslock & 6:: SendInput {Blind}^{Home}
 Capslock & 7:: SendInput {Blind}^{End}
-; Capslock & 8:: --------------
-; Capslock & 9:: Sorround with paranthesis or (
+;Capslock & 8:: --------------
+Capslock & 9::  ; Sorround with paranthesis or (
+    If GetKeyState("Space","p") = 1
+    {
+        OldClipboard := Clipboard
+        Clipboard := ""
+        Send ^c
+        ClipWait, 1
+        Clipboard = (%Clipboard%)
+        Send ^v
+        Sleep 200
+        Clipboard := OldClipboard
+        OldClipboard := ""
+        ; Send, ^c
+    }
+    Else
+    {
+        send (){left}
+    }
+return
 Capslock & 0:: )
 Capslock & -:: _
 Capslock & =:: +
-
-; ------------------------------------------------------------------------------
-;                               Special Functions
-; ------------------------------------------------------------------------------
-
-Capslock & z::AltTab
-
-; ------------------------ copy | hold to copy line --------------------------
-capslock & d::
-    keywait, d, t 0.5
-    if errorlevel{
-        ;long press to copy line
-        sendinput, {home}{home}+{end}+{end}^c
-    }
-    else{
-        ;short press to copy
-        sendinput, ^c
-        return
-    }
-    keywait,d
-return
-
-; ------------------------ copy | hold to cut line --------------------------
-Capslock & s::
-    keywait, s, t 0.5
-    if errorlevel{
-        ;long press to cut line
-        SendInput, {Home}{Home}+{End}+{End}^x
-    }
-    else{
-        ;long press to cut
-        SendInput, ^x
-        return
-    }
-    keywait,s
-return
-
-; ------------------------ Delete | hold to delete line --------------------------
-Capslock & v::
-    keywait, v, t 0.5
-    if errorlevel{
-        ;long press to delete line
-        SendInput, {Home}{Home}+{End}+{End}{Del}
-    }
-    else{
-        ;short press to delete
-        SendInput, {Del}
-        return
-    }
-    keywait,v
-return
-
-; ------------------------ backspace  | hold to backspace word --------------------------
-Capslock & b::
-    keywait, b, t 0.3
-    if errorlevel{
-        ;long press to delete word
-        Send, ^{Left}+^{Right}{del}
-    }
-    else{
-        ;short press to backspace
-        SendInput, {Blind}{BS}
-        return
-    }
-    keywait,b, t 0.3
-return
-
-Capslock & t::
-    keywait, t, t 0.5
-    if errorlevel{
-        ; long press to select word
-        SendInput, ^{Left}+^{Right}
-
-    }
-    else{
-        keywait,t
-        keywait, t, d ,t 0.15
-        if errorlevel
-            ; single press to copy word
-        SendInput, ^{Left}+^{Right}^c
-        else{
-            ; double press to delete word
-            SendInput, ^{Left}+^{Right}{Del}
-            return
-        }
-    }
-    keywait,t
-return
-
-; ------------------------ single press = copy Line | double press = delete Line | hold = Select Line--------------------------
-
-Capslock & g::
-    keywait, g, t 0.5
-    if errorlevel{
-        ;long press to select line
-        SendInput, {Home}{Home}+{End}+{End}
-    }
-    else{
-        keywait,g
-        keywait, g, d ,t 0.15
-        if errorlevel
-            ; single press to copy line
-        Send, {Home}{Home}+{End}+{End}^c
-        else{
-            ; double press to delete line
-            Send, {Home}{Home}+{End}+{End}{Del}
-            return
-        }
-    }
-    keywait,g
-return
-capslock & x::
-    keywait, x, t 0.5
-    if errorlevel{
-        ;long press to copy line
-        sendinput, ^c^f^v
-    }
-    else{
-        ;short press to copy
-        sendinput, ^f
-        return
-    }
-    keywait,x
-return
-
-; ----------------------------- Single Press = Save| Double Press = Save As -------------------------------
-
-Capslock & a::
-    keywait, a
-    keywait, a, d ,t 0.2
-    if errorlevel
-    {
-        SendInput ^s ; save
-    }
-    else
-    {
-        IfWinActive, ahk_class XLMAIN
-        {
-            SendInput {f12} ; save as in excel
-            return
-        }
-        SendInput ^+s ; save as
-    }
-return
 
 /* ------------------------------ Num lock keys -----------------------------
 */
@@ -554,13 +540,13 @@ Capslock & w::
     ;----------------------Delete to Start
     else if key=fs
     {
-        SendInput, +{Home}{delete}
+        SendInput, +{Home}+{Home}{delete}
         return
     }
     ;----------------------Delete to End
     else if key=fe
     {
-        SendInput, +{End}{delete}
+        SendInput, +{End}+{End}{delete}
         return
     }
 
@@ -573,13 +559,13 @@ Capslock & w::
     ;-----------------------copy to start
     else if key=ds
     {
-        SendInput, +{Home}^c
+        SendInput, +{Home}+{Home}^c
         return
     }
     ;-----------------------copy to end
     else if key=de
     {
-        SendInput, +{End}^c
+        SendInput, +{End}+{End}^c
         return
     }
 
@@ -598,19 +584,19 @@ Capslock & w::
     ;----------------------- cut line
     else if key=vv
     {
-        SendInput, {Home}+{End}^x
+        SendInput, {Home}{Home}+{End}+{End}^x
         return
     }
     ;----------------------- cut to start
     else if key=vs
     {
-        SendInput, +{Home}^x
+        SendInput, +{Home}+{Home}^x
         return
     }
     ;----------------------- cut to end
     else if key=ve
     {
-        SendInput, +{End}^x
+        SendInput, +{End}+{End}^x
         return
     }
 
@@ -707,10 +693,6 @@ return
     Send, ^c ;copies selected text
 Return
 
-/* -------------------------- Window always on top --------------------------
-*/
-
-^F12:: Winset, Alwaysontop, , A
 
 /* -------------------------------------------------------------------------- */
 /* Drag Windows with CapsLock + Right Mouse Button */
@@ -798,7 +780,7 @@ Return
 
     OldClipboard:= ClipboardAll
     ; Clipboard:= ""
-    sleep 200
+    sleep 500
     Send, ^c ;copies selected text
     ClipWait,1
     If ErrorLevel

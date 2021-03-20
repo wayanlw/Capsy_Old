@@ -1,20 +1,281 @@
-; #SingleInstance, Force
-; SetWorkingDir, %A_ScriptDir%
 
-; #Persistent
-; ; SendMode Input ; with this the launcher keys will not work (q)
-; SetScrollLockState, AlwaysOff
+SetWorkingDir, %A_ScriptDir%
+#SingleInstance, Force
 
-; #IfWinActive ahk_class Chrome_WidgetWin_1
-; Capslock:: Return
-; Capslock & 2::SendInput +{Enter}
+#Persistent
+SendMode Input ; with this the launcher keys will not work (q)
+SetCapsLockState, AlwaysOff
+SetScrollLockState, AlwaysOff
 
-; AutoHotkey Version: 1.x
-; Language:       English
-; Platform:       Win9x/NT
-; Author:        Jack Dunning, Jack's AutoHotkey Blog (https://jacks-autohotkey-blog.com/)
-;
-;
+SetBatchLines -1
+#UseHook ; without this the mouse movement will not work
+
+MouseDelay = 0
+Increment = 1
+
+
+
+
+
+
+; ^!c::
+
+;     OldClipboard := ClipboardAll
+;     Clipboard := "" ;clears the Clipboard
+;     SendInput, ^c
+;     ClipWait 0 ; pause for Clipboard data
+;     Control, EditPaste, % Clipboard . chr(13) . chr(10) . chr(13) . chr(10) , , *Untitled - Notepad
+;     ; Clipboard := OldClipboardkn
+;     MsgBox test
+; Return
+
+; --------------------- Active Window AlwaysOnTop toggle -----------------------
+
+Capslock & F2::
+    ; if (%top% = True)
+    ; {
+    ; ToolTip , %AlwayOnTopWindow% `r does not stay on top!
+    ; Sleep, 3000
+    ; ToolTip
+    ; AlwayOnTopWindow = ""
+    ; top = False
+    ; }
+    ; Else
+    ; {
+    ; WinGetTitle, AlwayOnTopWindow, A ; A stands for Active Window
+    ; ToolTip , %AlwayOnTopWindow% `rstays on top!
+    ; Sleep, 3000
+    ; ToolTip
+    ; top = True
+    ; }
+
+    WinSet, AlwaysOnTop, toggle, A
+    WinGet, ExStyle, ExStyle, A
+    WinGetTitle, WinTitle , A
+    TrayTip, %WinTitle% , % ExStyle & 0x8
+    ? "Always-On-Top ON" : "Always-On-Top OFF"
+Return
+
+Capslock & w::
+
+    Input Key, L2 T2 ; L3 to limit the input to 3 eys. T5 , wait for 5 seconds
+    ;----------------------Delete all
+    if Key=fa
+    {
+        SendInput ^a{delete}
+        return
+    }
+    ;----------------------Delete to Start
+    else if key=fs
+    {
+        SendInput, +{Home}{delete}
+        return
+    }
+    ;----------------------Delete to End
+    else if key=fe
+    {
+        SendInput, +{End}{delete}
+        return
+    }
+
+    ;-----------------------copy all
+    else if key=da
+    {
+        SendInput, ^a^c
+        return
+    }
+    ;-----------------------copy to start
+    else if key=ds
+    {
+        SendInput, +{Home}^c
+        return
+    }
+    ;-----------------------copy to end
+    else if key=de
+    {
+        SendInput, +{End}^c
+        return
+    }
+
+    ;----------------------- cut all
+    else if key=va
+    {
+        SendInput, ^a^x
+        return
+    }
+    ;----------------------- cut word
+    else if key=vw
+    {
+        SendInput, ^{right}+^{left}^x
+        return
+    }
+    ;----------------------- cut line
+    else if key=vv
+    {
+        SendInput, {Home}+{End}^x
+        return
+    }
+    ;----------------------- cut to start
+    else if key=vs
+    {
+        SendInput, +{Home}^x
+        return
+    }
+    ;----------------------- cut to end
+    else if key=ve
+    {
+        SendInput, +{End}^x
+        return
+    }
+
+    ;----------------------- Select all
+    else if key=sa
+    {
+        SendInput, ^a
+        return
+    }
+
+    ;----------------------- Select to start
+
+    else if key=ss
+    {
+        SendInput, +{home}+{home}
+        return
+    }
+    ;----------------------- Select to end
+    else if key=se
+    {
+        SendInput, +{End}+{End}
+        return
+    }
+
+    ;----------------------- Select word
+
+    else if key=sw
+    {
+        SendInput, ^{right}+^{left}
+        return
+    }
+
+return
+
+
+
+
+
+
+
+
+
+
+; ------------------------------------------------------------------------------
+;                                  Capsy Ultra Light
+; ------------------------------------------------------------------------------
+
+
+; Capslock & q::SendInput {Esc}
+; Capslock & w::SendInput ^a
+; Capslock & e::SendInput ^z ; This has repetitive press. Sould be a comfortable place.
+; Capslock & r::SendInput ^y ; redo
+; Capslock & t::SendInput ^{Left}+^{Right}
+; Capslock & y::SendInput {Blind}{Home}
+; Capslock & u::SendInput {Blind}{pgUp}
+; Capslock & i::SendInput {Blind}{Up}
+; Capslock & o::SendInput {Blind}{pgDn}
+; Capslock & p::SendInput {Blind}{End}
+; Capslock & [::SendInput {{}{}}{Left}
+; Capslock & ]::SendInput []{Left}
+; Capslock & \::SendInput |
+
+; Capslock & a::SendInput ^s
+; Capslock & s::SendInput ^x
+; Capslock & d::SendInput ^c
+; Capslock & f::SendInput ^v
+; Capslock & g::SendInput {Home}{Home}+{End}+{End}
+; Capslock & h::SendInput {Blind}^{Left}
+; Capslock & j::SendInput {Blind}{Left}
+; Capslock & k::SendInput {Blind}{Down}
+; Capslock & l::SendInput {Blind}{Right}
+; Capslock & SC027::SendInput {Blind}^{right}
+; Capslock & ':: SendInput ""{Left}
+
+; Capslock & z::AltTab
+; Capslock & x:: SendInput ^f
+; Capslock & c::SendInput {Enter}
+; Capslock & v:: SendInput {Delete}
+; Capslock & b:: SendInput {Home}{Home}+{End}+{End}{Del}
+; Capslock & n::SendInput {Blind}{BS}
+; Capslock & m::SendInput ^{Delete}
+; Capslock & ,::SendInput {Delete}
+; Capslock & .::SendInput {Blind}^{BS}
+; Capslock & /::SendInput {enter}
+
+; Capslock & Tab::SendInput {Blind}{shift Down}
+; Capslock & Tab up::SendInput {Blind}{shift up}
+
+; XButton2::send {Enter}
+; XButton1::send {Delete}
+; WheelLeft::WheelLeft
+; WheelRight::WheelRight
+
+; !+q::SendInput !{F4}
+; !q::SendInput ^w
+
+; Capslock & alt::SendInput {Blind}{Alt}
+; Capslock & space::SendInput {Enter}
+
+; ; +Space ::SendInput {Blind}{CtrlDown}
+; ; LShift & space up ::SendInput {Blind}{Ctrlup}
+
+; Capslock & enter::Send,{End}{enter}
+
+; Capslock & 1:: SendInput {F2}
+; Capslock & 2:: SendInput {AppsKey}
+; Capslock & 3:: =
+; Capslock & 4:: SendInput {Blind}^{Home}
+; Capslock & 5:: SendInput {Blind}^{End}
+; ;Capslock & 6:: --------
+; ;Capslock & 7:: --------
+; ;Capslock & 8:: --------
+; Capslock & 9:: send (){left}
+; Capslock & 0:: send ''{left}
+; Capslock & -:: _
+; Capslock & =:: SendInput {Home}{Home}+{End}+{End}^c{End}{Enter}^v
+
+; ; --------------------------------- F keys ---------------------------------*/
+
+; Capslock & F1:: SendInput {AppsKey}
+; Capslock & F2:: Winset, Alwaysontop, , A
+; Capslock & F3::
+;     SendInput ^c
+;     run http://www.duckduckgo.com/
+; Return
+; Capslock & F4:: --------------
+; Capslock & F5:: --------------
+; Capslock & F6:: --------------
+; Capslock & F7:: --------------
+; Capslock & F8:: --------------
+; Capslock & F9:: --------------
+; Capslock & F10:: --------------
+; Capslock & F11:: --------------
+; Capslock & F12::--------------
+
+
+; --------------------- two keys for Holding vs pressing -----------------------
+
+; *'::
+;     Send {Blind}{Ctrl Down}
+;     cDown := A_TickCount
+; Return
+
+; *' up::
+;     If ((A_TickCount-cDown)<200)  ; Modify press time as needed (milliseconds)
+;         Send {Blind}{Ctrl Up}'
+;     Else
+;         Send {Blind}{Ctrl Up}
+; Return
+
+; original winref------------------------------------------------------------------------------
 /*
 Script Function:
 The CopyRef.ahk script copies any selected text to an "Untitled - Notepad" window.
@@ -39,74 +300,6 @@ Use Ctrl+Win+Alt+R to return to the tagged window.
 
 */
 
-; ^!c::
-
-;     OldClipboard := ClipboardAll
-;     Clipboard := "" ;clears the Clipboard
-;     SendInput, ^c
-;     ClipWait 0 ; pause for Clipboard data
-;     Control, EditPaste, % Clipboard . chr(13) . chr(10) . chr(13) . chr(10) , , *Untitled - Notepad
-;     ; Clipboard := OldClipboard
-;     MsgBox test
-; Return
-
-; ------------------------------------------------------------------------------
-+!c::
-
-    If !WinTag
-    {
-        MsgBox, Tag a target window in NotePad
-        ,`rWordPad or a GUI edit field:`r`r 1
-        . Activate window`n 2
-        . Press Ctrl+Win+Alt+T
-        Return
-    }
-
-    ; ----------------------------- managing the copy -------------------------------
-
-    OldClipboard:= ClipboardAll
-    ; Clipboard:= ""
-    ; sleep 500
-    SendInput, ^c ;copies selected text
-    ClipWait,
-    If ErrorLevel
-    {
-        MsgBox, No text selected!
-        Return
-    }
-    IfWinExist, %winTitlePart%
-    {
-        ;Save the currently active window title
-        WinGetTitle, actWin, A
-
-        ; If OneNote is not active, activate it now
-        IfWinNotActive, %winTitlePart%
-            WinActivate, %winTitlePart%
-
-        ; Check again, if ON active then paste else error
-        IfWinActive, %winTitlePart%
-        {
-            SendInput, ^v`r ; Use sendplay to avoid unexpected interactions with Win key
-            ; Switch window back to previously active
-            WinActivate, %actWin%
-        }
-    }
-    sleep 500
-    Clipboard := OldClipboard
-Return
-
-^#+z::
-    Click, %A_CaretX%, %A_CaretY%
-    MouseGetPos, , , WinTag, Control
-    WinGetTitle, winTitlePart, ahk_id %WinTag%
-    MsgBox The "%winTitlePart%" window is tagged!`rUnique ID: %WinTag%`rControl: %Control%`rCtrl+Win+Alt+R to activate.
-Return
-
-^!#r::
-    WinActivate, ahk_id %WinTag%
-Return
-
-; original winref------------------------------------------------------------------------------
 
 ; ^!c::
 
