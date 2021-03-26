@@ -1,9 +1,22 @@
 
-SetWorkingDir, %A_ScriptDir%
+; SetWorkingDir, %A_ScriptDir%
+; #SingleInstance, Force
+
+; #Persistent
+; ; SendMode Input ; with this the launcher keys will not work (q)
+; SetCapsLockState, AlwaysOff
+; SetScrollLockState, AlwaysOff
+
+; SetBatchLines -1
+; #UseHook ; without this the mouse movement will not work
+
+
+
+
 #SingleInstance, Force
 
 #Persistent
-SendMode Input ; with this the launcher keys will not work (q)
+; SendMode Input ; with this the launcher keys will not work with the mouse section d: f: etc.  (w)
 SetCapsLockState, AlwaysOff
 SetScrollLockState, AlwaysOff
 
@@ -13,10 +26,48 @@ SetBatchLines -1
 MouseDelay = 0
 Increment = 1
 
+e::
+d::
+s::
+f::
+ralt::
+    xVal=
+    yVal=
+    If GetKeyState("ralt","p") = 1
+    {
+        IncrementValue := Increment
+        Loop,
+        {
+            ; lower increment value higher startup speed. Lower increment slower acceleration
+            If (A_Index > IncrementValue * 2) and (IncrementValue < Increment * 9 )
+                IncrementValue := IncrementValue * 2
+            If GetKeyState("d", "P")
+                yVal := IncrementValue
+            Else If GetKeyState("e", "P")
+                yVal := -IncrementValue
+            If !yVal
+                yVal := 0
 
-
-
-
+            If GetKeyState("s", "P")
+                xVal := -IncrementValue
+            Else If GetKeyState("f", "P")
+                xVal := IncrementValue
+            If !xVal
+                xVal := 0
+            If GetKeyState(A_ThisHotKey, "P")
+                MouseMove, %xVal%, %yVal%,%MouseDelay%,R
+            Else
+                Break
+        }
+        send {ralt up}
+    }
+    else
+    {
+        Send % "{" . A_ThisHotKey . "}"
+        Send, {ralt up}
+        ; Send, {RALT up}
+    }
+return
 
 ; ^!c::
 
@@ -28,139 +79,6 @@ Increment = 1
 ;     ; Clipboard := OldClipboardkn
 ;     MsgBox test
 ; Return
-
-; --------------------- Active Window AlwaysOnTop toggle -----------------------
-
-Capslock & F2::
-    ; if (%top% = True)
-    ; {
-    ; ToolTip , %AlwayOnTopWindow% `r does not stay on top!
-    ; Sleep, 3000
-    ; ToolTip
-    ; AlwayOnTopWindow = ""
-    ; top = False
-    ; }
-    ; Else
-    ; {
-    ; WinGetTitle, AlwayOnTopWindow, A ; A stands for Active Window
-    ; ToolTip , %AlwayOnTopWindow% `rstays on top!
-    ; Sleep, 3000
-    ; ToolTip
-    ; top = True
-    ; }
-
-    WinSet, AlwaysOnTop, toggle, A
-    WinGet, ExStyle, ExStyle, A
-    WinGetTitle, WinTitle , A
-    TrayTip, %WinTitle% , % ExStyle & 0x8
-    ? "Always-On-Top ON" : "Always-On-Top OFF"
-Return
-
-Capslock & w::
-
-    Input Key, L2 T2 ; L3 to limit the input to 3 eys. T5 , wait for 5 seconds
-    ;----------------------Delete all
-    if Key=fa
-    {
-        SendInput ^a{delete}
-        return
-    }
-    ;----------------------Delete to Start
-    else if key=fs
-    {
-        SendInput, +{Home}{delete}
-        return
-    }
-    ;----------------------Delete to End
-    else if key=fe
-    {
-        SendInput, +{End}{delete}
-        return
-    }
-
-    ;-----------------------copy all
-    else if key=da
-    {
-        SendInput, ^a^c
-        return
-    }
-    ;-----------------------copy to start
-    else if key=ds
-    {
-        SendInput, +{Home}^c
-        return
-    }
-    ;-----------------------copy to end
-    else if key=de
-    {
-        SendInput, +{End}^c
-        return
-    }
-
-    ;----------------------- cut all
-    else if key=va
-    {
-        SendInput, ^a^x
-        return
-    }
-    ;----------------------- cut word
-    else if key=vw
-    {
-        SendInput, ^{right}+^{left}^x
-        return
-    }
-    ;----------------------- cut line
-    else if key=vv
-    {
-        SendInput, {Home}+{End}^x
-        return
-    }
-    ;----------------------- cut to start
-    else if key=vs
-    {
-        SendInput, +{Home}^x
-        return
-    }
-    ;----------------------- cut to end
-    else if key=ve
-    {
-        SendInput, +{End}^x
-        return
-    }
-
-    ;----------------------- Select all
-    else if key=sa
-    {
-        SendInput, ^a
-        return
-    }
-
-    ;----------------------- Select to start
-
-    else if key=ss
-    {
-        SendInput, +{home}+{home}
-        return
-    }
-    ;----------------------- Select to end
-    else if key=se
-    {
-        SendInput, +{End}+{End}
-        return
-    }
-
-    ;----------------------- Select word
-
-    else if key=sw
-    {
-        SendInput, ^{right}+^{left}
-        return
-    }
-
-return
-
-
-
 
 
 
@@ -326,7 +244,7 @@ Use Ctrl+Win+Alt+R to return to the tagged window.
 ;     Control, EditPaste, %Clipboard% ,,'Pandas CookBook 1.x - OneNote'
 ;     ;To replace text (rather than add), use the following ControlSetText command:
 ;     ;ControlSetText , %Control%, %Clipboard%, ahk_id %WinTag%
-;     ToolTip , Text inserted into %WinTitle% `rControl: %control%!
+;     ToolTip , Text inserted into %WinTitle% `ralt: %control%!
 ;     Sleep, 3000
 ;     ToolTip
 ;     ; Clipboard := OldClipboard
@@ -336,7 +254,7 @@ Use Ctrl+Win+Alt+R to return to the tagged window.
 ;     Click, %A_CaretX%, %A_CaretY%
 ;     MouseGetPos, , , WinTag, Control
 ;     WinGetTitle, WinTitle, ahk_id %WinTag%
-;     MsgBox The "%WinTitle%" window is tagged!`rUnique ID: %WinTag%`rControl: %Control%`rCtrl+Win+Alt+R to activate.
+;     MsgBox The "%WinTitle%" window is tagged!`rUnique ID: %WinTag%`ralt: %Control%`rCtrl+Win+Alt+R to activate.
 ; Return
 
 ; ^!#r::
@@ -488,7 +406,7 @@ Use Ctrl+Win+Alt+R to return to the tagged window.
 
 ; return
 
->!q::Suspend
+>+q::Suspend
 
 >^q::
     MsgBox Exiting the script

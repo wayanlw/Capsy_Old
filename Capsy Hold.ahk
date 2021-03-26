@@ -24,10 +24,10 @@ e::
 d::
 s::
 f::
-rshift::
+RAlt::
     xVal=
     yVal=
-    If GetKeyState("RShift","p") = 1
+    If GetKeyState("RAlt","p") = 1
     {
         IncrementValue := Increment
         Loop,
@@ -53,40 +53,40 @@ rshift::
             Else
                 Break
         }
-        send {RShift up}
+        Send {RAlt up}
     }
     else
     {
         Send % "{" . A_ThisHotKey . "}"
-        Send, {RSHIFT up}
+        Send, {RAlt up}
         ; Send, {RALT up}
     }
 return
 
-#If GetKeyState("rShift","P") = 1
+#If GetKeyState("RAlt","P") = 1
 
 /* --------------------------- Mouse Button Clicks --------------------------
 */
 
 l:: Send {RButton}
 Insert:: Send {MButton}
-':: senDinput ^{LButton}
+':: SendInput ^{LButton}
 
 SC027::
-    SENDINPUT {LBUTTON DOWN}
+    SendInput {LButton Down}
     keywait, SC027, u
-    SENDINPUT {LButton UP}
-Return
+    SendInput {LButton UP}
+return
 
 ; ------ Left side --------
 v::Click, 1
 x:: Click, 2
 
 space::
-    SENDINPUT {LBUTTON DOWN}
+    SendInput {LButton Down}
     keywait, space, u
-    SENDINPUT {LButton UP}
-Return
+    SendInput {LButton Up}
+return
 
 ; ---------------------------- scroll up and down ------------------------------
 
@@ -123,8 +123,8 @@ b::MouseMove, (A_ScreenWidth / 6 * 5), (A_ScreenHeight / 6 * 5)
 /* --------------------- Real Mouse: buttons and wheels ---------------------
 */
 
-XButton2::send {Enter}
-XButton1::send {Delete}
+XButton2::Send {Enter}
+XButton1::Send {Delete}
 WheelLeft::WheelLeft
 WheelRight::WheelRight
 
@@ -143,18 +143,18 @@ WheelRight::WheelRight
     Capslock & 5::SendInput {F9}
 
     ;-----------------pasting ----------------
-    ^!v::SendInput ^!v{v}{enter}
-    ^!f::SendInput ^!v{f}{enter}
-    ^!t::SendInput ^!v{t}{enter}
+    ^!v::SendInput ^!v{v}{Enter}
+    ^!f::SendInput ^!v{f}{Enter}
+    ^!t::SendInput ^!v{t}{Enter}
     ^!z::SendInput ^!v{l}
 
     ;--------Conditional formating ------------
-    ^!s::SendInput !H{L}{d}{enter}
-    ^!d::SendInput !H{L}{s}{enter}
-    ^!x::SendInput !H{L}{c}{s}{enter}
+    ^!s::SendInput !H{L}{d}{Enter}
+    ^!d::SendInput !H{L}{s}{Enter}
+    ^!x::SendInput !H{L}{c}{s}{Enter}
 
     ;-----------------------------------------
-    Capslock & u::SendInput ^{up}
+    Capslock & u::SendInput ^{Up}
     Capslock & o::SendInput ^{Down}
 
     ;-----------------------------------------
@@ -174,24 +174,24 @@ WheelRight::WheelRight
     Capslock & F3::SendInput {*}
     Capslock & F4::SendInput {/}
 
-    ; ---------------------------- alt enter in excel ------------------------------
-Capslock & enter::
+    ; ---------------------------- alt Enter in excel ------------------------------
+Capslock & Enter::
     If GetKeyState("space","p") = 1
     {
-        SendInput,{Home}!{enter}{up}
+        SendInput,{Home}!{Enter}{Up}
     }
     Else
     {
-        SendInput,{End}!{enter}
+        SendInput,{End}!{Enter}
     }
-Return
+return
 
 ; --------------------- Enter and delete rows and columns ----------------------
 
 Capslock & up::
     If GetKeyState("SPACE","p") = 1
     {
-        SendInput {up}+{space}^{-}{up}{down}
+        SendInput {Up}+{space}^{-}{Up}{down}
         RETURN
     }
     Else
@@ -225,7 +225,7 @@ return
         SetCapsLockState, AlwaysOff
     Else
         SetCapsLockState, AlwaysOn
-Return
+return
 
 ; ------------------------------------------------------------------------------
 ;                                   Main Keys
@@ -235,18 +235,18 @@ Capslock & q::SendInput {Esc}
 ;Capslock & w::Launcher
 Capslock & e::SendInput ^z ; This has repetitive press. Sould be a comfortable place.
 Capslock & r::SendInput ^y ; redo
-;Capslock & t:: The Word Key --> single press = copy word | double press = delete word | long press = select word
-Capslock & y::SendInput {Blind}{Home} ;with space for contrl+end
+;Capslock & t:: The Word Key ; single press = copy word | double press = delete word | long press = select word
+Capslock & y::SendInput {Blind}{Home} ;with space for contrl+End
 Capslock & u::SendInput {Blind}{pgUp}
 Capslock & i::SendInput {Blind}{Up}
 Capslock & o::SendInput {Blind}{pgDn}
 Capslock & p::SendInput {Blind}{End}
-Capslock & [::SendInput {{}{}}{Left}
-Capslock & ]::SendInput []{Left}
+; Capslock & [::SendInput {{}{}}{Left} ; Sorround in []
+; Capslock & ]::SendInput []{Left}     ; Sorround in {}
 Capslock & \::SendInput |
 
 ;Capslock & a:: SendInput ^x ; single press = Save | Double press = Save as
-;Capslock & s:: SendInput ^x ; single press = cut | long press = cut line
+;Capslock & s:: SendInput ^x ; single press = cut  | long press = cut line
 ;Capslock & d:: SendInput ^c ; single press = copy | long press = Copy line
 Capslock & f:: SendInput ^v
 ;Capslock & g:: selecet & copy / delete line
@@ -258,26 +258,26 @@ Capslock & SC027::SendInput {Blind}^{right}
 ;Capslock & ':: --> Sorround with ""
 
 ;Capslock & z:: --> alt tab
-;Capslock & x:: SendInput ^x ; single press = find | long press = find selection
+;Capslock & x:: SendInput ^x ; single press = find| long press = find selection
 Capslock & c::SendInput {Enter}
-;Capslock & v:: SendInput {Delete} ; Single press = delete | long press = delete line
+;Capslock & v:: SendInput {Delete}    ; Single press = delete    | long press = delete line
 ;Capslock & b:: SendInput {Blind}{BS} ; Single press = backspace | long press = delete word
 Capslock & n::SendInput {Blind}{BS}
-Capslock & m::SendInput ^{Delete}
+Capslock & m::SendInput {Blind}^{BS}
 Capslock & ,::SendInput {Delete}
-Capslock & .::SendInput {Blind}^{BS}
-Capslock & /::SendInput {enter}
+Capslock & .::SendInput ^{Delete}
+Capslock & /::SendInput {Enter}
 
 ; ------------------------------- Special Keys ---------------------------------
 
 
 Capslock & alt::SendInput {Blind}{Alt}
 Capslock & space::return
-Capslock & BS::SendInput {Blind}{BS}
+Capslock & BS::SendInput {Blind}^{BS}
 #space::Send,{space}{left}
 
-Capslock & Tab::SendInput {Blind}{shift Down}
-Capslock & Tab up::SendInput {Blind}{shift up}
+Capslock & Tab::SendInput {Blind}{Shift Down}
+Capslock & Tab up::SendInput {Blind}{Shift up}
 
 ; --------------------------- Close windows and tab ----------------------------
 
@@ -286,21 +286,21 @@ Capslock & Tab up::SendInput {Blind}{shift up}
 
 ; ------------------------------- Line Editing ---------------------------------
 
-Capslock & enter::
+Capslock & Enter::
     If GetKeyState("space","p") = 1
     {
-        Send,{Home}{Home}{enter}{up}
+        Send,{Home}{Home}{Enter}{Up}
     }
     Else
     {
-        Send,{End}{End}{enter}
+        Send,{End}{End}{Enter}
     }
-Return
+return
 
-Capslock & up::SendInput {Home}{Home}+{End}+{End}^c{End}{Enter}^v{up}{End}
+Capslock & up::SendInput {Home}{Home}+{End}+{End}^c{End}{Enter}^v{Up}{End}
 Capslock & Down::SendInput {Home}{Home}+{End}+{End}^c{End}{Enter}^v
 Capslock & Right::SendInput {End}{space}{Delete}{End}
-Capslock & Left::SendInput {Home}{Home}{BackSpace}{space}{end}
+Capslock & Left::SendInput {Home}{Home}{BackSpace}{space}{End}
 
 
 ; --------------------------------- F keys ---------------------------------*/
@@ -325,7 +325,7 @@ Capslock & F2::
         ToolTip
         top = True
     }
-Return
+return
 ; Capslock & F3:: --------------
 ; Capslock & F4:: --------------
 ; Capslock & F5:: --------------
@@ -343,15 +343,16 @@ Return
 Capslock & 1:: SendInput {F2}
 Capslock & 2:: SendInput {AppsKey}
 Capslock & 3:: =
-;Capslock & 4:: SendInput--------------
-;Capslock & 5:: SendInput --------------
-Capslock & 6:: SendInput {Blind}^{Home}
-Capslock & 7:: SendInput {Blind}^{End}
-; Capslock & 8:: --------------
-; Capslock & 9:: Sorround with paranthesis or (
-Capslock & 0:: )
+Capslock & 4:: SendInput {Blind}^{Home}
+Capslock & 5:: SendInput {Blind}^{End}
+;Capslock & 6:: SendInput--------------
+;Capslock & 7:: endInput --------------
+;Capslock & 8:: --------------
+;Capslock & 9:: Sorround with paranthesis or (
+;Capslock & 0:: Sorround with ""
 Capslock & -:: _
 Capslock & =:: +
+
 
 ; ------------------------------------------------------------------------------
 ;                               Special Functions
@@ -421,7 +422,7 @@ capslock & d::
     keywait, d, t 0.5
     if errorlevel{
         ;long press to copy line
-        sendinput, {home}{home}+{end}+{end}^c
+        sendinput, {Home}{Home}+{End}+{End}^c
     }
     else{
         ;short press to copy
@@ -453,28 +454,7 @@ Capslock & g::
     keywait,g
 return
 
-; ------------------------- Sorrounding in  " " ---------------------------
-Capslock & '::
-    If GetKeyState("Space","p") = 1
-    {
-        OldClipboard := Clipboard
-        Clipboard := ""
-        Send ^c
-        ClipWait, 1
-        Clipboard = "%Clipboard%"
-        Send ^v
-        Sleep 200
-        Clipboard := OldClipboard
-        OldClipboard := ""
-        ; Send, ^c
-        return
-    }
-    else
-    {
-        SendInput ""{left}
-        return
-    }
-return
+
 
 ; ------------- Single Press = Find | Long Press = Find Selected ---------------
 capslock & x::
@@ -509,7 +489,7 @@ return
 ; ---------- Single Press = BackSpace | Long Press = Backspace Word ------------
 
 Capslock & b::
-    keywait, b, t 0.3
+    keywait, b, t 0.2
     if errorlevel{
         ;long press to delete word
         Send, ^{Left}+^{Right}{del}
@@ -519,11 +499,14 @@ Capslock & b::
         SendInput, {Blind}{BS}
         return
     }
-    keywait,b, t 0.3
+    keywait,b, t 0.2
 return
 
-; ------------------ Sourround in () whck clicked with space -------------------
-Capslock & 9::
+; ------------------------------------------------------------------------------
+;                            Sorround the Selection
+; ------------------------------------------------------------------------------
+
+Capslock & 9::  ; Sourround in ()
     If GetKeyState("Space","p") = 1
     {
         OldClipboard := Clipboard
@@ -532,14 +515,101 @@ Capslock & 9::
         ClipWait, 1
         Clipboard = (%Clipboard%)
         Send ^v
-        Sleep 200
+        Sleep 500
         Clipboard := OldClipboard
         OldClipboard := ""
         ; Send, ^c
     }
     Else
     {
-        send (){left}
+        Send (){left}
+    }
+return
+
+Capslock & 0::  ; Sourround in ''
+    If GetKeyState("Space","p") = 1
+    {
+        OldClipboard := Clipboard
+        Clipboard := ""
+        Send ^c
+        ClipWait, 1
+        Clipboard = '%Clipboard%'
+        Send ^v
+        Sleep 500
+        Clipboard := OldClipboard
+        OldClipboard := ""
+        ; Send, ^c
+    }
+    Else
+    {
+        Send ''{left}
+    }
+return
+
+
+Capslock & '::  ; Sourround in ""
+    If GetKeyState("Space","p") = 1
+    {
+        OldClipboard := Clipboard
+        Clipboard := ""
+        Send ^c
+        ClipWait, 1
+        Clipboard = "%Clipboard%"
+        Send ^v
+        Sleep 200
+        Clipboard := OldClipboard
+        OldClipboard := ""
+        ; Send, ^c
+        return
+    }
+    else
+    {
+        SendInput ""{left}
+        return
+    }
+return
+
+Capslock & [::  ; Sourround in []
+    If GetKeyState("Space","p") = 1
+    {
+        OldClipboard := Clipboard
+        Clipboard := ""
+        Send ^c
+        ClipWait, 1
+        Clipboard = [%Clipboard%]
+        Send ^v
+        Sleep 200
+        Clipboard := OldClipboard
+        OldClipboard := ""
+        ; Send, ^c
+        return
+    }
+    else
+    {
+        SendInput []{left}
+        return
+    }
+return
+
+Capslock & ]::  ; Sourround in {}
+    If GetKeyState("Space","p") = 1
+    {
+        OldClipboard := Clipboard
+        Clipboard := ""
+        Send ^c
+        ClipWait, 1
+        Clipboard = {%Clipboard%}
+        Send ^v
+        Sleep 200
+        Clipboard := OldClipboard
+        OldClipboard := ""
+        ; Send, ^c
+        return
+    }
+    else
+    {
+        SendInput ""{left}
+        return
     }
 return
 
@@ -593,7 +663,7 @@ Capslock & w::
         SendInput, +{Home}+{Home}^c
         return
     }
-    ;-----------------------copy to end
+    ;-----------------------copy to End
     else if key=de
     {
         SendInput, +{End}+{End}^c
@@ -624,7 +694,7 @@ Capslock & w::
         SendInput, +{Home}+{Home}^x
         return
     }
-    ;----------------------- cut to end
+    ;----------------------- cut to End
     else if key=ve
     {
         SendInput, +{End}+{End}^x
@@ -642,10 +712,10 @@ Capslock & w::
 
     else if key=ss
     {
-        SendInput, +{home}+{home}
+        SendInput, +{Home}+{Home}
         return
     }
-    ;----------------------- Select to end
+    ;----------------------- Select to End
     else if key=se
     {
         SendInput, +{End}+{End}
@@ -691,7 +761,7 @@ return
     Sleep 500 ; at 200 the content was getting copied to the current clipbarod
     Clipboard:= OldClipboard
     Send, ^c ;copies selected text
-Return
+return
 
 ; ------------------------------- Google Search --------------------------------
 
@@ -718,7 +788,7 @@ return
     OldClipboard:=""
     ;    MsgBox %OldClipboard%
     Send, ^c ;copies selected text
-Return
+return
 
 
 ; ------------------------------------------------------------------------------
@@ -786,7 +856,7 @@ return
 
     Control, EditPaste, % Clipboard . chr(13) . chr(10) . chr(13) . chr(10) , , *Untitled - Notepad
     Clipboard := OldClipboard
-Return
+return
 
 ; ------------------------------------------------------------------------------
 ;                      Gather text to any preselected app
@@ -800,7 +870,7 @@ Return
         , WordPad or a GUI edit field.`r`r 1
         . Activate window`n 2
         . Press Ctrl+Win+Shift+Z
-        Return
+        return
     }
 
     OldClipboard:= ClipboardAll
@@ -811,7 +881,7 @@ Return
     If ErrorLevel
     {
         MsgBox, , Capsy CopyToApp, No text selected!
-        Return
+        return
     }
     IfWinExist, %winTitlePart%
     {
@@ -836,7 +906,7 @@ Return
         MsgBox, Window < "%winTitlePart%" > does not Exist!
     }
     Clipboard := OldClipboard
-Return
+return
 
 ^#+z::
     Click, %A_CaretX%, %A_CaretY%
@@ -844,19 +914,19 @@ Return
     WinGetTitle, winTitlePart, ahk_id %WinTag%
     MsgBox, , Capsy CopyToApp, " %winTitlePart% " is tagged as the destination window!`r - Press < Alt+Shift+C > to copy selection to this app.`r - Press < Ctrl+Win+Shift+R > to reset.
     ; MsgBox, , Capsy CopyToApp, < %winTitlePart% > is tagged as the destination window!`rUnique ID: %WinTag%`rControl: %Control%`rCtrl+Win+Alt+R to activate.,3
-Return
+return
 
 ^#+r::
     WinActivate, ahk_id %WinTag%
     MsgBox, , Capsy CopyToApp, CopyToApp windows is reset!, 3
     WinTag:=""
-Return
+return
 
 ; ------------------------------------------------------------------------------
 ;                                 Exit or Suspend
 ; ------------------------------------------------------------------------------
 
->!q::Suspend
+>+q::Suspend
 
 >^q::
     MsgBox, , Capsy, Existing Capsy

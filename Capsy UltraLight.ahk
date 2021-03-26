@@ -13,6 +13,20 @@ SetScrollLockState, AlwaysOff
     MsgBox, , Capsy, Existing Capsy UL
 ExitApp
 
+; ------------------------------------------------------------------------------
+;                                Capslock Toggle
+; ------------------------------------------------------------------------------
+
+#Capslock::
+    If GetKeyState("CapsLock", "T") = 1
+        SetCapsLockState, AlwaysOff
+    Else
+        SetCapsLockState, AlwaysOn
+Return
+
+
+
+
 ; --------------------------------- Main Keys ----------------------------------
 
 Capslock & q::SendInput {Esc}
@@ -90,7 +104,7 @@ Capslock & 6:: SenDinput {LButton}
 Capslock & 9:: send (){left}
 Capslock & 0:: send ''{left}
 ; Capslock & -:: --------
-Capslock & =:: SendInput {Home}{Home}+{End}+{End}^c{End}{Enter}^v
+; Capslock & =:: --------
 
 ; ---------------------------------- Fn keys -----------------------------------
 
