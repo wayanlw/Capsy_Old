@@ -1,0 +1,169 @@
+2021-03-20 19:06:49 info: XVBA Live Server extension is now active!
+2021-03-20 19:06:49 debug: Start Watch Excel Export VBA Files
+2021-03-20 19:06:49 debug: Start Run Macro Server
+2021-03-20 19:14:30 debug: Start Move VBA files from tmp to Workspace
+2021-03-20 19:14:30 debug: Finish Move VBA files from tmp to Workspace
+2021-03-20 19:24:43 debug: Start Move VBA files from tmp to Workspace
+2021-03-20 19:24:43 debug: Move vba file Module1.bas namespace: default
+2021-03-20 19:24:44 debug: Move vba file MyRibbon.bas namespace: vba-files/ribbons
+2021-03-20 19:24:44 debug: Finish Move VBA files from tmp to Workspace
+2021-03-20 19:26:22 debug: Start Move VBA files from tmp to Workspace
+2021-03-20 19:26:22 debug: Move vba file AllMacro.bas namespace: default
+2021-03-20 19:26:22 debug: Move vba file MyRibbon.bas namespace: vba-files/ribbons
+2021-03-20 19:26:22 debug: Finish Move VBA files from tmp to Workspace
+2021-03-20 19:27:17 debug: Start Move VBA files from tmp to Workspace
+2021-03-20 19:27:17 debug: Move vba file AllMacro.bas namespace: default
+2021-03-20 19:27:17 debug: Move vba file MyRibbon.bas namespace: vba-files/ribbons
+2021-03-20 19:27:17 debug: Finish Move VBA files from tmp to Workspace
+2021-03-20 19:27:36 debug: Start Move VBA files from tmp to Workspace
+2021-03-20 19:27:36 debug: Move vba file AllMacro.bas namespace: default
+2021-03-20 19:27:36 debug: Move vba file MyRibbon.bas namespace: vba-files/ribbons
+2021-03-20 19:27:36 debug: Finish Move VBA files from tmp to Workspace
+2021-03-20 19:28:46 debug: Exec Excel for Load Macro
+2021-03-20 19:28:56 debug: Start Move VBA files from tmp to Workspace
+2021-03-20 19:28:56 debug: Move vba file AllMacro.bas namespace: default
+2021-03-20 19:28:56 debug: Move vba file MyRibbon.bas namespace: vba-files/ribbons
+2021-03-20 19:28:56 debug: Finish Move VBA files from tmp to Workspace
+2021-03-20 19:30:08 debug: Start Move VBA files from tmp to Workspace
+2021-03-20 19:30:08 debug: Move vba file AllMacro.bas namespace: default
+2021-03-20 19:30:08 debug: Move vba file AllMacro1.bas namespace: default
+2021-03-20 19:30:08 debug: Move vba file MyRibbon.bas namespace: vba-files/ribbons
+2021-03-20 19:30:08 debug: Finish Move VBA files from tmp to Workspace
+2021-03-20 19:40:48 debug: Start Move VBA files from tmp to Workspace
+2021-03-20 19:40:48 debug: Move vba file MyRibbon.bas namespace: vba-files/ribbons
+2021-03-20 19:40:48 debug: Move vba file WayXL.bas namespace: default
+2021-03-20 19:40:48 debug: Finish Move VBA files from tmp to Workspace
+2021-03-20 20:10:05 debug: Start Move VBA files from tmp to Workspace
+2021-03-20 20:10:05 debug: Finish Move VBA files from tmp to Workspace
+2021-03-20 21:19:14 debug: Start Move VBA files from tmp to Workspace
+2021-03-20 21:19:14 debug: Finish Move VBA files from tmp to Workspace
+2021-03-20 22:19:46 debug: Start Move VBA files from tmp to Workspace
+2021-03-20 22:19:46 debug: Finish Move VBA files from tmp to Workspace
+2021-03-20 23:20:15 debug: Start Move VBA files from tmp to Workspace
+2021-03-20 23:20:15 debug: Finish Move VBA files from tmp to Workspace
+2021-03-21 00:22:24 debug: Start Move VBA files from tmp to Workspace
+2021-03-21 00:22:24 debug: Finish Move VBA files from tmp to Workspace
+2021-03-21 02:22:27 debug: Start Move VBA files from tmp to Workspace
+2021-03-21 02:22:27 debug: Finish Move VBA files from tmp to Workspace
+2021-03-21 03:23:55 debug: Start Move VBA files from tmp to Workspace
+2021-03-21 03:23:55 debug: Finish Move VBA files from tmp to Workspace
+2021-03-21 04:23:55 debug: Start Move VBA files from tmp to Workspace
+2021-03-21 04:23:55 debug: Finish Move VBA files from tmp to Workspace
+2021-03-21 05:24:35 debug: Start Move VBA files from tmp to Workspace
+2021-03-21 05:24:35 debug: Finish Move VBA files from tmp to Workspace
+2021-03-21 06:25:26 debug: Start Move VBA files from tmp to Workspace
+2021-03-21 06:25:26 debug: Finish Move VBA files from tmp to Workspace
+2021-03-21 07:26:01 debug: Start Move VBA files from tmp to Workspace
+2021-03-21 07:26:01 debug: Finish Move VBA files from tmp to Workspace
+2021-03-21 08:34:30 debug: Start Move VBA files from tmp to Workspace
+2021-03-21 08:34:30 debug: Finish Move VBA files from tmp to Workspace
+2021-03-21 09:41:56 debug: Start Move VBA files from tmp to Workspace
+2021-03-21 09:41:56 debug: Finish Move VBA files from tmp to Workspace
+2021-03-21 10:42:41 debug: Start Move VBA files from tmp to Workspace
+2021-03-21 10:42:41 debug: Finish Move VBA files from tmp to Workspace
+2021-03-21 11:42:52 debug: Start Move VBA files from tmp to Workspace
+2021-03-21 11:42:52 debug: Finish Move VBA files from tmp to Workspace
+2021-03-21 12:43:56 debug: Start Move VBA files from tmp to Workspace
+2021-03-21 12:43:56 debug: Finish Move VBA files from tmp to Workspace
+2021-03-21 13:44:25 debug: Start Move VBA files from tmp to Workspace
+2021-03-21 13:44:25 debug: Finish Move VBA files from tmp to Workspace
+2021-03-21 14:44:55 debug: Start Move VBA files from tmp to Workspace
+2021-03-21 14:44:55 debug: Finish Move VBA files from tmp to Workspace
+2021-03-21 16:32:33 debug: Close Watch Excel Export VBA Files
+2021-03-23 10:39:12 info: XVBA Live Server extension is now active!
+2021-03-23 10:39:12 debug: Start Run Macro Server
+2021-03-23 10:39:12 debug: Start Watch Excel Export VBA Files
+2021-03-23 16:23:06 debug: Close Watch Excel Export VBA Files
+2021-03-24 23:09:27 info: XVBA Live Server extension is now active!
+2021-03-24 23:09:27 debug: Start Watch Excel Export VBA Files
+2021-03-24 23:09:27 debug: Start Run Macro Server
+2021-03-24 23:19:23 debug: Close Watch Excel Export VBA Files
+2021-03-27 04:42:29 info: XVBA Live Server extension is now active!
+2021-03-27 04:42:29 debug: Start Watch Excel Export VBA Files
+2021-03-27 04:42:29 debug: Start Run Macro Server
+2021-03-27 04:43:12 debug: Close Watch Excel Export VBA Files
+2021-03-27 04:43:15 info: XVBA Live Server extension is now active!
+2021-03-27 04:43:15 debug: Start Watch Excel Export VBA Files
+2021-03-27 04:43:15 debug: Start Run Macro Server
+2021-03-27 04:56:58 debug: Close Watch Excel Export VBA Files
+2021-03-27 04:57:06 info: XVBA Live Server extension is now active!
+2021-03-27 04:57:06 debug: Start Watch Excel Export VBA Files
+2021-03-27 04:57:06 debug: Start Run Macro Server
+2021-03-27 06:12:05 debug: Close Watch Excel Export VBA Files
+2021-03-29 15:21:11 info: XVBA Live Server extension is now active!
+2021-03-29 15:21:11 debug: Start Run Macro Server
+2021-03-29 15:21:11 debug: Start Watch Excel Export VBA Files
+2021-03-29 15:31:40 debug: Close Watch Excel Export VBA Files
+2021-03-29 20:11:46 info: XVBA Live Server extension is now active!
+2021-03-29 20:11:46 debug: Start Watch Excel Export VBA Files
+2021-03-29 20:11:46 debug: Start Run Macro Server
+2021-03-30 10:47:05 debug: Close Watch Excel Export VBA Files
+2021-03-30 12:14:10 info: XVBA Live Server extension is now active!
+2021-03-30 12:14:10 debug: Start Watch Excel Export VBA Files
+2021-03-30 12:14:10 debug: Start Run Macro Server
+2021-03-31 11:11:17 info: XVBA Live Server extension is now active!
+2021-03-31 11:11:17 debug: Start Watch Excel Export VBA Files
+2021-03-31 11:11:17 debug: Start Run Macro Server
+2021-03-31 11:11:21 debug: Close Watch Excel Export VBA Files
+2021-03-31 11:11:24 info: XVBA Live Server extension is now active!
+2021-03-31 11:11:24 debug: Start Watch Excel Export VBA Files
+2021-03-31 11:11:24 debug: Start Run Macro Server
+2021-03-31 11:11:30 debug: Close Watch Excel Export VBA Files
+2021-03-31 15:08:34 info: XVBA Live Server extension is now active!
+2021-03-31 15:08:34 debug: Start Run Macro Server
+2021-03-31 15:08:34 debug: Start Watch Excel Export VBA Files
+2021-03-31 19:56:13 debug: Close Watch Excel Export VBA Files
+2021-04-03 06:29:44 info: XVBA Live Server extension is now active!
+2021-04-03 06:29:44 debug: Start Run Macro Server
+2021-04-03 06:29:44 debug: Start Watch Excel Export VBA Files
+2021-04-03 06:32:59 debug: Close Watch Excel Export VBA Files
+2021-04-03 14:28:00 info: XVBA Live Server extension is now active!
+2021-04-03 14:28:00 debug: Start Watch Excel Export VBA Files
+2021-04-03 14:28:00 debug: Start Run Macro Server
+2021-04-03 15:09:38 debug: Close Watch Excel Export VBA Files
+2021-04-06 10:54:07 info: XVBA Live Server extension is now active!
+2021-04-06 10:54:07 debug: Start Watch Excel Export VBA Files
+2021-04-06 10:54:07 debug: Start Run Macro Server
+2021-04-06 10:54:29 debug: Close Watch Excel Export VBA Files
+2021-04-10 03:35:48 info: XVBA Live Server extension is now active!
+2021-04-10 03:35:48 debug: Start Watch Excel Export VBA Files
+2021-04-10 03:35:48 debug: Start Run Macro Server
+2021-04-10 03:35:51 debug: Close Watch Excel Export VBA Files
+2021-04-30 09:42:31 info: XVBA Live Server extension is now active!
+2021-04-30 09:42:31 debug: Start Watch Excel Export VBA Files
+2021-04-30 09:42:31 debug: Start Run Macro Server
+2021-04-30 18:08:34 debug: Close Watch Excel Export VBA Files
+2021-04-30 21:50:53 info: XVBA Live Server extension is now active!
+2021-04-30 21:50:53 debug: Start Run Macro Server
+2021-04-30 21:50:53 debug: Start Watch Excel Export VBA Files
+2021-04-30 22:05:56 debug: Close Watch Excel Export VBA Files
+2021-05-03 12:50:25 info: XVBA Live Server extension is now active!
+2021-05-03 12:50:25 debug: Start Watch Excel Export VBA Files
+2021-05-03 12:50:25 debug: Start Run Macro Server
+2021-05-03 13:06:43 debug: Close Watch Excel Export VBA Files
+2021-05-03 13:07:38 info: XVBA Live Server extension is now active!
+2021-05-03 13:07:38 debug: Start Watch Excel Export VBA Files
+2021-05-03 13:07:38 debug: Start Run Macro Server
+2021-05-04 13:55:40 debug: Close Watch Excel Export VBA Files
+2021-05-04 14:52:37 info: XVBA Live Server extension is now active!
+2021-05-04 14:52:37 debug: Start Watch Excel Export VBA Files
+2021-05-04 14:52:37 debug: Start Run Macro Server
+2021-05-04 17:09:35 debug: Close Watch Excel Export VBA Files
+2021-05-06 10:34:01 info: XVBA Live Server extension is now active!
+2021-05-06 10:34:01 debug: Start Watch Excel Export VBA Files
+2021-05-06 10:34:01 debug: Start Run Macro Server
+2021-05-06 11:12:28 debug: Close Watch Excel Export VBA Files
+2021-05-12 08:48:50 info: XVBA Live Server extension is now active!
+2021-05-12 08:48:50 debug: Start Watch Excel Export VBA Files
+2021-05-12 08:48:50 debug: Start Run Macro Server
+2021-05-13 09:30:03 info: XVBA Live Server extension is now active!
+2021-05-13 09:30:03 debug: Start Run Macro Server
+2021-05-13 09:30:03 debug: Start Watch Excel Export VBA Files
+2021-05-13 09:31:18 debug: Close Watch Excel Export VBA Files
+2021-05-16 17:59:33 info: XVBA Live Server extension is now active!
+2021-05-16 17:59:33 debug: Start Run Macro Server
+2021-05-16 17:59:33 debug: Start Watch Excel Export VBA Files
+2021-05-16 18:11:30 debug: Close Watch Excel Export VBA Files
+2021-05-16 18:13:53 info: XVBA Live Server extension is now active!
+2021-05-16 18:13:53 debug: Start Watch Excel Export VBA Files
+2021-05-16 18:13:53 debug: Start Run Macro Server

@@ -23,10 +23,10 @@ e::
 d::
 s::
 f::
-RAlt::
+RShift::
     xVal=
     yVal=
-    If GetKeyState("RAlt","p") = 1
+    If GetKeyState("RShift","p") = 1
     {
         IncrementValue := Increment
         Loop,
@@ -52,17 +52,17 @@ RAlt::
             Else
                 Break
         }
-        Send {RAlt up}
+        Send {RShift up}
     }
     else
     {
         Send % "{" . A_ThisHotKey . "}"
-        Send, {RAlt up}
+        Send, {RShift up}
         ; Send, {RALT up}
     }
 return
 
-#If GetKeyState("RAlt","P") = 1
+#If GetKeyState("RShift","P") = 1
 
 /* --------------------------- Mouse Button Clicks --------------------------
 */
@@ -278,6 +278,11 @@ Capslock & BS::SendInput {Blind}^{BS}
 Capslock & Tab::SendInput {Blind}{Shift Down}
 Capslock & Tab up::SendInput {Blind}{Shift up}
 
+Capslock & up::SendInput ^{Up}
+Capslock & Down::SendInput ^{Down}
+Capslock & Left::SendInput ^{Left}
+Capslock & Right::SendInput ^{Right}
+
 ; --------------------------- Close windows and tab ----------------------------
 
 !+q::SendInput !{F4}
@@ -296,11 +301,12 @@ Capslock & Enter::
     }
 return
 
-Capslock & up::SendInput {Home}{Home}+{End}+{End}^c{End}{Enter}^v{Up}{End}
-Capslock & Down::SendInput {Home}{Home}+{End}+{End}^c{End}{Enter}^v
-Capslock & Right::SendInput {End}{space}{Delete}{End}
-Capslock & Left::SendInput {Home}{Home}{BackSpace}{space}{End}
 
+
+Capslock & Home::SendInput {Home}{Home}+{End}+{End}^c{End}{Enter}^v{Up}{End} ;duplicate the line and go to the end
+Capslock & End::SendInput {Home}{Home}+{End}+{End}^c{End}{Enter}^v ; duplicate line and to the end of the duplicated line
+Capslock & PgUp::SendInput {End}{space}{Delete}{End} ; bring the below line to the current line
+Capslock & PgDn::SendInput {Home}{Home}{BackSpace}{space}{End} ; Take the current line to the line above
 
 ; --------------------------------- F keys ---------------------------------*/
 
@@ -342,11 +348,11 @@ return
 Capslock & 1:: SendInput {F2}
 Capslock & 2:: SendInput {AppsKey}
 Capslock & 3:: =
-Capslock & 4:: SendInput {Blind}^{Home}
-Capslock & 5:: SendInput {Blind}^{End}
-;Capslock & 6:: SendInput--------------
-;Capslock & 7:: endInput --------------
-;Capslock & 8:: --------------
+;Capslock & 4:: Excel +
+;ZCapslock & 5:: excel F9
+Capslock & 6:: SendInput {Blind}^{Home}
+Capslock & 7:: SendInput {Blind}^{End}
+;Capslock & 8:: ---------------------------
 ;Capslock & 9:: Sorround with paranthesis or (
 ;Capslock & 0:: Sorround with ""
 Capslock & -:: _
@@ -561,6 +567,28 @@ return
 +^!u:: SendInput {Numpad7}
 +^!i:: SendInput {Numpad8}
 +^!o:: SendInput {Numpad9}
+
+; ------------------------------- Numpad kys --------------------------------
+Capslock & Numpad8:: SendInput {Blind}{Up}
+Capslock & Numpad4:: SendInput {Blind}{Left}
+Capslock & Numpad5:: SendInput {Blind}{Down}
+Capslock & Numpad6:: SendInput {Blind}{Right}
+
+Capslock & NumpadDiv:: SendInput {Blind}^{up}
+Capslock & Numpad7:: SendInput {Blind}^{Left}
+Capslock & Numpad2:: SendInput {Blind}^{Down}
+Capslock & Numpad9:: SendInput {Blind}^{Right}
+
+Capslock & Numpad1:: SendInput {Blind}^{BS}
+Capslock & Numpad3:: SendInput {Blind}^{Del}
+
+Capslock & Numpad0::SendInput {F2}
+
+Capslock & NumpadAdd:: SendInput {Blind}{=}
+Capslock & NumpadEnter:: SendInput {Blind}^{Enter}
+
+Capslock & NumLock:: SendInput {Esc}
+
 
 ; ------------------------------------------------------------------------------
 ;                                   Launcher
@@ -862,7 +890,7 @@ return
 ;                                 Exit or Suspend
 ; ------------------------------------------------------------------------------
 
->+q::Suspend
+; >+q::Suspend
 
 >^q::
     MsgBox, , Capsy, Existing Capsy
