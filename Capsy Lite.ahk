@@ -79,10 +79,18 @@ Capslock & BS::SendInput {Blind}{BS}
 
 #space::Send,{space}{left}
 
+Capslock & up::SendInput ^{Up}
+Capslock & Down::SendInput ^{Down}
+Capslock & Left::SendInput ^{Left}
+Capslock & Right::SendInput ^{Right}
+
 ; -------------------------- copy lines up and down ----------------------------
 
-Capslock & up::SendInput {Home}{Home}+{End}+{End}^c{End}{Enter}^v{up}{End}
-Capslock & Down::SendInput {Home}{Home}+{End}+{End}^c{End}{Enter}^v
+
+Capslock & Home::SendInput {Home}{Home}+{End}+{End}^c{End}{Enter}^v{Up}{End} ;duplicate the line and go to the end
+Capslock & End::SendInput {Home}{Home}+{End}+{End}^c{End}{Enter}^v ; duplicate line and to the end of the duplicated line
+Capslock & PgUp::SendInput {End}{space}{Delete}{End} ; bring the below line to the current line
+Capslock & PgDn::SendInput {Home}{Home}{BackSpace}{space}{End} ; Take the current line to the line above
 
 ; --------------------------- Close windows and tab ----------------------------
 

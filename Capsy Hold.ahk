@@ -143,6 +143,13 @@ WheelRight::WheelRight
     Capslock & 5::SendInput {F9}
 
     ;-----------------pasting ----------------
+    ^!x::
+        SendInput ^c
+        Sleep 200
+        SendInput ^!v{v}{Enter}
+    Return
+
+
     ^!v::SendInput ^!v{v}{Enter}
     ^!f::SendInput ^!v{f}{Enter}
     ^!t::SendInput ^!v{t}{Enter}
@@ -151,7 +158,7 @@ WheelRight::WheelRight
     ;--------Conditional formating ------------
     ^!s::SendInput !H{L}{d}{Enter}
     ^!d::SendInput !H{L}{s}{Enter}
-    ^!x::SendInput !H{L}{c}{s}{Enter}
+    ^!b::SendInput !H{L}{c}{s}{Enter}
 
     ;-----------------------------------------
     Capslock & u::SendInput ^{Up}
@@ -188,31 +195,31 @@ return
 
 ; --------------------- Enter and delete rows and columns ----------------------
 
-Capslock & up::
-    If GetKeyState("SPACE","p") = 1
-    {
-        SendInput {Up}+{space}^{-}{Up}{down}
-        RETURN
-    }
-    Else
-    {
-        SendInput +{space}^+{=}{down}
-        RETURN
-    }
-return
+; Capslock & up::
+;     If GetKeyState("SPACE","p") = 1
+;     {
+;         SendInput {Up}+{space}^{-}{Up}{down}
+;         RETURN
+;     }
+;     Else
+;     {
+;         SendInput +{space}^+{=}{down}
+;         RETURN
+;     }
+; return
 
-Capslock & left::
-    If GetKeyState("SPACE","p") = 1
-    {
-        SendInput {left}^{space}^{-}{left}{right}
-        RETURN
-    }
-    Else
-    {
-        SendInput ^{space}^+{=}{right}
-        RETURN
-    }
-return
+; Capslock & left::
+;     If GetKeyState("SPACE","p") = 1
+;     {
+;         SendInput {left}^{space}^{-}{left}{right}
+;         RETURN
+;     }
+;     Else
+;     {
+;         SendInput ^{space}^+{=}{right}
+;         RETURN
+;     }
+; return
 
 #IfWinActive
 
@@ -279,10 +286,10 @@ Capslock & BS::SendInput {Blind}^{BS}
 Capslock & Tab::SendInput {Blind}{Shift Down}
 Capslock & Tab up::SendInput {Blind}{Shift up}
 
-Capslock & up::SendInput ^{Up}
-Capslock & Down::SendInput ^{Down}
-Capslock & Left::SendInput ^{Left}
-Capslock & Right::SendInput ^{Right}
+; Capslock & up::SendInput ^{Up}
+; Capslock & Down::SendInput ^{Down}
+; Capslock & Left::SendInput ^{Left}
+; Capslock & Right::SendInput ^{Right}
 
 ; --------------------------- Close windows and tab ----------------------------
 

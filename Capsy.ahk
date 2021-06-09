@@ -122,8 +122,27 @@ b::MouseMove, (A_ScreenWidth / 6 * 5), (A_ScreenHeight / 6 * 5)
 /* --------------------- Real Mouse: buttons and wheels ---------------------
 */
 
-XButton2::Send {Enter}
-XButton1::Send {Delete}
+; XButton2::Send {Enter}
+; XButton1::Send {Delete}
+
+
+; Mouse Buttons as Scroll Up and Down
+; XButton2::
+;     While GetKeyState("XButton2", "P")
+;     {
+;         Send {Wheelup}
+;         sleep 100
+;     }
+; return
+
+; XButton1::
+;     While GetKeyState("XButton1", "P")
+;     {
+;         Send {WheelDown}
+;         sleep 100
+;     }
+; return
+
 WheelLeft::WheelLeft
 WheelRight::WheelRight
 
@@ -135,11 +154,11 @@ WheelRight::WheelRight
     WheelRight::SendInput, !{PgDn}
 
     ;---------------- dependants -------------
+    `::,
     Capslock & 1::SendInput ^[
     Capslock & 2::SendInput {F5}{Enter}
     Capslock & 3::SendInput {=}
     Capslock & 4::SendInput {+}
-    Capslock & 5::SendInput {F9}
 
     ;-----------------pasting ----------------
     ^!v::SendInput ^!v{v}{Enter}
@@ -187,31 +206,31 @@ return
 
 ; --------------------- Enter and delete rows and columns ----------------------
 
-Capslock & up::
-    If GetKeyState("SPACE","p") = 1
-    {
-        SendInput {Up}+{space}^{-}{Up}{down}
-        RETURN
-    }
-    Else
-    {
-        SendInput +{space}^+{=}{down}
-        RETURN
-    }
-return
+; Capslock & up::
+;     If GetKeyState("SPACE","p") = 1
+;     {
+;         SendInput {Up}+{space}^{-}{Up}{down}
+;         RETURN
+;     }
+;     Else
+;     {
+;         SendInput +{space}^+{=}{down}
+;         RETURN
+;     }
+; return
 
-Capslock & left::
-    If GetKeyState("SPACE","p") = 1
-    {
-        SendInput {left}^{space}^{-}{left}{right}
-        RETURN
-    }
-    Else
-    {
-        SendInput ^{space}^+{=}{right}
-        RETURN
-    }
-return
+; Capslock & left::
+;     If GetKeyState("SPACE","p") = 1
+;     {
+;         SendInput {left}^{space}^{-}{left}{right}
+;         RETURN
+;     }
+;     Else
+;     {
+;         SendInput ^{space}^+{=}{right}
+;         RETURN
+;     }
+; return
 
 #IfWinActive
 
@@ -278,10 +297,10 @@ Capslock & BS::SendInput {Blind}^{BS}
 Capslock & Tab::SendInput {Blind}{Shift Down}
 Capslock & Tab up::SendInput {Blind}{Shift up}
 
-Capslock & up::SendInput ^{Up}
-Capslock & Down::SendInput ^{Down}
-Capslock & Left::SendInput ^{Left}
-Capslock & Right::SendInput ^{Right}
+; Capslock & up::SendInput ^{Up}
+; Capslock & Down::SendInput ^{Down}
+; Capslock & Left::SendInput ^{Left}
+; Capslock & Right::SendInput ^{Right}
 
 ; --------------------------- Close windows and tab ----------------------------
 
@@ -349,10 +368,10 @@ Capslock & 1:: SendInput {F2}
 Capslock & 2:: SendInput {AppsKey}
 Capslock & 3:: =
 ;Capslock & 4:: Excel +
-;ZCapslock & 5:: excel F9
-Capslock & 6:: SendInput {Blind}^{Home}
-Capslock & 7:: SendInput {Blind}^{End}
-;Capslock & 8:: ---------------------------
+Capslock & 5:: SendInput {Blind}^{Home}
+Capslock & 6:: SendInput {Blind}^{End}
+Capslock & 7:: SendInput {PgUp}
+Capslock & 8:: SendInput {PgDn}
 ;Capslock & 9:: Sorround with paranthesis or (
 ;Capslock & 0:: Sorround with ""
 Capslock & -:: _
