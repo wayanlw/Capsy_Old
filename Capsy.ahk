@@ -16,6 +16,8 @@ SetScrollLockState, AlwaysOff
 SetBatchLines -1
 #UseHook ; without this the mouse movement will not work
 
+;###################Start Mouse#####################
+
 MouseDelay = 0
 Increment = 1
 
@@ -119,6 +121,10 @@ b::MouseMove, (A_ScreenWidth / 6 * 5), (A_ScreenHeight / 6 * 5)
 
 #if
 
+;###############End Mouse #########################################
+
+
+
 /* --------------------- Real Mouse: buttons and wheels ---------------------
 */
 
@@ -159,8 +165,10 @@ WheelRight::WheelRight
     Capslock & 2::SendInput {F5}{Enter}
     Capslock & 3::SendInput {=}
     Capslock & 4::SendInput {+}
+    Capslock & 5::SendInput {F9}
 
     ;-----------------pasting ----------------
+
     ^!v::SendInput ^!v{v}{Enter}
     ^!f::SendInput ^!v{f}{Enter}
     ^!t::SendInput ^!v{t}{Enter}
@@ -297,6 +305,21 @@ Capslock & BS::SendInput {Blind}^{BS}
 Capslock & Tab::SendInput {Blind}{Shift Down}
 Capslock & Tab up::SendInput {Blind}{Shift up}
 
+
+; --------------------- Control Keys -----------------------
+
+*'::
+    Send {Blind}{Ctrl Down}
+    cDown := A_TickCount
+Return
+
+*' up::
+    If ((A_TickCount-cDown)<100)  ; Modify press time as needed (milliseconds)
+        Send {Blind}{Ctrl Up}'
+    Else
+        Send {Blind}{Ctrl Up}
+Return
+
 ; Capslock & up::SendInput ^{Up}
 ; Capslock & Down::SendInput ^{Down}
 ; Capslock & Left::SendInput ^{Left}
@@ -367,7 +390,7 @@ return
 Capslock & 1:: SendInput {F2}
 Capslock & 2:: SendInput {AppsKey}
 Capslock & 3:: =
-;Capslock & 4:: Excel +
+;Capslock & 4:: Excel F4
 Capslock & 5:: SendInput {Blind}^{Home}
 Capslock & 6:: SendInput {Blind}^{End}
 Capslock & 7:: SendInput {PgUp}
@@ -390,7 +413,7 @@ Capslock & t::
     keywait, t, d ,t 0.15
     if errorlevel
         ; single press to copy word
-    SendInput, ^{Left}+^{Right}^c
+        SendInput, ^{Left}+^{Right}^c
     else
         SendInput, ^{Left}+^{Right}{Del}
 return
@@ -425,11 +448,11 @@ Capslock & g::
         keywait,g
         keywait, g, d ,t 0.15
         if errorlevel
-            ; single press to copy line
-        Send, {Home}{Home}+{End}+{End}^c
+            ; single press to delete line
+        Send, {Home}{Home}+{End}+{End}{Del}
         else{
-            ; double press to delete line
-            Send, {Home}{Home}+{End}+{End}{Del}
+            ; double press to copy line
+            Send, {Home}{Home}+{End}+{End}^c
             return
         }
     }

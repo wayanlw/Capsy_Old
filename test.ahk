@@ -181,17 +181,17 @@ return
 
 ; --------------------- two keys for Holding vs pressing -----------------------
 
-; *'::
-;     Send {Blind}{Ctrl Down}
-;     cDown := A_TickCount
-; Return
+*'::
+    Send {Blind}{Ctrl Down}
+    cDown := A_TickCount
+Return
 
-; *' up::
-;     If ((A_TickCount-cDown)<200)  ; Modify press time as needed (milliseconds)
-;         Send {Blind}{Ctrl Up}'
-;     Else
-;         Send {Blind}{Ctrl Up}
-; Return
+*' up::
+    If ((A_TickCount-cDown)<200)  ; Modify press time as needed (milliseconds)
+        Send {Blind}{Ctrl Up}'
+    Else
+        Send {Blind}{Ctrl Up}
+Return
 
 ; original winref------------------------------------------------------------------------------
 /*
