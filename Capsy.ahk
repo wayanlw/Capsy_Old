@@ -306,19 +306,24 @@ Capslock & Tab::SendInput {Blind}{Shift Down}
 Capslock & Tab up::SendInput {Blind}{Shift up}
 
 
-; --------------------- Control Keys -----------------------
+; --------------------- Control Key -----------------------
 
-*'::
-    Send {Blind}{Ctrl Down}
-    cDown := A_TickCount
-Return
 
-*' up::
-    If ((A_TickCount-cDown)<100)  ; Modify press time as needed (milliseconds)
-        Send {Blind}{Ctrl Up}'
-    Else
-        Send {Blind}{Ctrl Up}
-Return
+RAlt::RControl
+
+
+; making ' single press as ' and long press as control
+; *'::
+;     Send {Blind}{Ctrl Down}
+;     cDown := A_TickCount
+; Return
+
+; *' up::
+;     If ((A_TickCount-cDown)<80)  ; Modify press time as needed (milliseconds)
+;         Send {Blind}{Ctrl Up}'
+;     Else
+;         Send {Blind}{Ctrl Up}
+; Return
 
 ; Capslock & up::SendInput ^{Up}
 ; Capslock & Down::SendInput ^{Down}
