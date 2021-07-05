@@ -176,8 +176,30 @@ return
 ; Capslock & F9:: --------------
 ; Capslock & F10:: --------------
 ; Capslock & F11:: --------------
-; Capslock & F12::--------------
+; Capslzock & F12::--------------
 
+; Right click as a double click
+Rbutton::
+    if GetKeyState("lbutton", "P")
+    {
+        Click Right
+    }
+    Else{
+        Click,2
+    }
+return
+
+#IfWinActive ahk_class CabinetWClass
+Rbutton::
+    if GetKeyState("lbutton", "P")
+    {
+        Click Right
+    }
+    Else{
+        Click,2
+    }
+return
+#If
 
 ; --------------------- two keys for Holding vs pressing -----------------------
 
