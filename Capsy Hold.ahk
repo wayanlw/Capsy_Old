@@ -15,10 +15,10 @@ SetCapsLockState, AlwaysOff
 SetScrollLockState, AlwaysOff
 
 SetBatchLines -1
-#UseHook ; without this the mouse movement will not work
 
 ;###################Start Mouse#####################
 
+#UseHook ; without this the mouse movement will not work
 MouseDelay = 0
 Increment = 1
 
@@ -146,12 +146,11 @@ WheelRight::WheelRight
     Capslock & 1::SendInput ^[
     Capslock & 2::SendInput {F5}{Enter}
     Capslock & 3::SendInput {=}
-    Capslock & 4::SendInput {+}
-    Capslock & 5::SendInput {F9}
+    Capslock & 4::SendInput {F4}
 
     ;-----------------pasting ----------------
 
-    ^!v::SendInput ^!v{v}{Enter}
+    +!v::SendInput ^!v{v}{Enter}
     ^!f::SendInput ^!v{f}{Enter}
     ^!t::SendInput ^!v{t}{Enter}
     ^!z::SendInput ^!v{l}
@@ -290,17 +289,22 @@ Capslock & Tab up::SendInput {Blind}{Shift up}
 
 ; --------------------- Control Keys -----------------------
 
-*'::
-    Send {Blind}{Ctrl Down}
-    cDown := A_TickCount
-Return
 
-*' up::
-    If ((A_TickCount-cDown)<100)  ; Modify press time as needed (milliseconds)
-        Send {Blind}{Ctrl Up}'
-    Else
-        Send {Blind}{Ctrl Up}
-Return
+RAlt::RControl
+
+
+; making ' single press as ' and long press as control
+; *'::
+;     Send {Blind}{Ctrl Down}
+;     cDown := A_TickCount
+; Return
+
+; *' up::
+;     If ((A_TickCount-cDown)<80)  ; Modify press time as needed (milliseconds)
+;         Send {Blind}{Ctrl Up}'
+;     Else
+;         Send {Blind}{Ctrl Up}
+; Return
 
 ; Capslock & up::SendInput ^{Up}
 ; Capslock & Down::SendInput ^{Down}
@@ -311,6 +315,17 @@ Return
 
 !+q::SendInput !{F4}
 !q::SendInput ^w
+!+k::WinMinimize, A
+
+CoordMode,Screen
+!x:: ; [Win]+[=]
+    WinGet, window, ID, A
+    ; InputBox, width, Resize, Width:, , 140, 130
+    ; InputBox, height, Resize, Height:, , 140, 130
+    WinMove, ahk_id %window%, , 2 , 2, A_ScreenWidth-5, A_ScreenHeight-30
+    ; WinGetPos,,, sizeX, sizeY
+    ; WinMove, (A_ScreenWidth/2)-(sizeX/2), (A_ScreenHeight/2)-(sizeY/2)
+    return
 
 ; ------------------------------- Line Editing ---------------------------------
 
@@ -653,6 +668,11 @@ return
 +^!u:: SendInput {Numpad7}
 +^!i:: SendInput {Numpad8}
 +^!o:: SendInput {Numpad9}
++^!p:: SendInput {*}
++^!':: SendInput {-}
++^!SC027:: SendInput {+}
++^!/:: SendInput {/}
++^!n:: SendInput {BS}
 
 ; ------------------------------- Numpad kys --------------------------------
 Capslock & Numpad8:: SendInput {Blind}{Up}
@@ -778,6 +798,33 @@ Capslock & w::
     else if key=sw
     {
         SendInput, ^{right}+^{left}
+        return
+    }
+; ----------------------------Excel Rows | Cols
+    else if key=dc
+    {
+        SendInput, ^{space}^{-}
+        return
+    }
+
+    else if key=dr
+    {
+        SendInput, +{space}^{-}
+        return
+    }
+    else if key=ec
+    {
+        SendInput, ^{space}
+        sleep 100
+        SendInput, !H{I}{C}
+        return
+    }
+
+    else if key=er
+    {
+        SendInput,+{space}
+        sleep 100
+        SendInput, !H{I}{R}
         return
     }
 

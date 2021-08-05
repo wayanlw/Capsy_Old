@@ -14,10 +14,10 @@ SetCapsLockState, AlwaysOff
 SetScrollLockState, AlwaysOff
 
 SetBatchLines -1
-#UseHook ; without this the mouse movement will not work
 
 ;###################Start Mouse#####################
 
+#UseHook ; without this the mouse movement will not work
 MouseDelay = 0
 Increment = 1
 
@@ -626,6 +626,11 @@ return
 +^!u:: SendInput {Numpad7}
 +^!i:: SendInput {Numpad8}
 +^!o:: SendInput {Numpad9}
++^!p:: SendInput {*}
++^!':: SendInput {-}
++^!SC027:: SendInput {+}
++^!/:: SendInput {/}
++^!n:: SendInput {BS}
 
 ; ------------------------------- Numpad kys --------------------------------
 Capslock & Numpad8:: SendInput {Blind}{Up}
