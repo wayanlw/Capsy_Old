@@ -16,11 +16,9 @@ SetScrollLockState, AlwaysOff
 SetBatchLines -1
 
 ;###################Start Mouse#####################
-
 #UseHook ; without this the mouse movement will not work
 MouseDelay = 0
 Increment = 1
-
 e::
 d::
 s::
@@ -42,7 +40,6 @@ RShift::
                 yVal := -IncrementValue
             If !yVal
                 yVal := 0
-
             If GetKeyState("s", "P")
                 xVal := -IncrementValue
             Else If GetKeyState("f", "P")
@@ -63,34 +60,26 @@ RShift::
         ; Send, {RALT up}
     }
 return
-
 #If GetKeyState("RShift","P") = 1
-
 /* --------------------------- Mouse Button Clicks --------------------------
 */
-
 l:: Send {RButton}
 Insert:: Send {MButton}
 ':: SendInput ^{LButton}
-
 SC027::
     SendInput {LButton Down}
     keywait, SC027, u
     SendInput {LButton UP}
 return
-
 ; ------ Left side --------
 v::Click, 1
 x:: Click, 2
-
 space::
     SendInput {LButton Down}
     keywait, space, u
     SendInput {LButton Up}
 return
-
 ; ---------------------------- scroll up and down ------------------------------
-
 r::
     While GetKeyState("r", "P")
     {
@@ -98,7 +87,6 @@ r::
         sleep 100
     }
 return
-
 w::
     While GetKeyState("w", "P")
     {
@@ -106,10 +94,8 @@ w::
         sleep 100
     }
 return
-
 /* -------------------- move the mouse cursor to corners --------------------
 */
-
 CoordMode,Screen
 q::MouseMove, (A_ScreenWidth / 6 ), (A_ScreenHeight / 6 )
 t::MouseMove, (A_ScreenWidth / 6 * 5), (A_ScreenHeight / 6 * 1)
@@ -118,7 +104,6 @@ c::MouseMove, (A_ScreenWidth / 2), (A_ScreenHeight / 2)
 g::MouseMove, (A_ScreenWidth / 6 * 5), (A_ScreenHeight / 6 * 3)
 z::MouseMove, (A_ScreenWidth / 6 * 1), (A_ScreenHeight / 6 * 5)
 b::MouseMove, (A_ScreenWidth / 6 * 5), (A_ScreenHeight / 6 * 5)
-
 #if
 
 ;###############End Mouse #########################################
@@ -284,7 +269,7 @@ Capslock & l::SendInput {Blind}{Right}
 Capslock & SC027::SendInput {Blind}^{right}
 ;Capslock & ':: --> Sorround with ""
 
-;Capslock & z:: --> alt tab
+Capslock & z::AltTab
 ;Capslock & x:: SendInput ^x ; single press = find| long press = find selection
 Capslock & c::SendInput {Enter}
 Capslock & v::SendInput {Delete}
@@ -422,7 +407,6 @@ Capslock & =:: +
 ;                               Special Functions
 ; ------------------------------------------------------------------------------
 
-Capslock & z::AltTab
 
 ; ------------- single press=copy word |double press=delete word ---------------
 Capslock & t::
@@ -627,10 +611,14 @@ return
 +^!i:: SendInput {Numpad8}
 +^!o:: SendInput {Numpad9}
 +^!p:: SendInput {*}
++^![:: SendInput {/}
 +^!':: SendInput {-}
 +^!SC027:: SendInput {+}
-+^!/:: SendInput {/}
++^!/:: SendInput {Enter}
 +^!n:: SendInput {BS}
++^!BS:: SendInput {BS}
++^!Enter:: SendInput {Enter}
++^!h:: SendInput {=}
 
 ; ------------------------------- Numpad kys --------------------------------
 Capslock & Numpad8:: SendInput {Blind}{Up}
