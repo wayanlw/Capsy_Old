@@ -110,7 +110,7 @@ b::MouseMove, (A_ScreenWidth / 6 * 5), (A_ScreenHeight / 6 * 5)
 
 
 
-/* --------------------- Real Mouse: buttons and wheels ---------------------
+
 */
 
 ; XButton2::Send {Enter}
@@ -620,7 +620,7 @@ return
 +^!Enter:: SendInput {Enter}
 +^!h:: SendInput {=}
 
-; ------------------------------- Numpad kys --------------------------------
+; ------------------------------- Numberpad kys --------------------------------
 Capslock & Numpad8:: SendInput {Blind}{Up}
 Capslock & Numpad4:: SendInput {Blind}{Left}
 Capslock & Numpad5:: SendInput {Blind}{Down}
@@ -640,6 +640,11 @@ Capslock & NumpadAdd:: SendInput {Blind}{=}
 Capslock & NumpadEnter:: SendInput {Blind}^{Enter}
 
 Capslock & NumLock:: SendInput {Esc}
+
+; --------------Ctrl | Win | Alt Remapping ----------------------------------
+LAlt::LControl
+Lwin::LAlt
+LControl::LWin
 
 
 ; ------------------------------------------------------------------------------
