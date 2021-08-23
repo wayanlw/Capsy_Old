@@ -1,73 +1,73 @@
 
-; SetWorkingDir, %A_ScriptDir%
-; #SingleInstance, Force
-
-; #Persistent
-; ; SendMode Input ; with this the launcher keys will not work (q)
-; SetCapsLockState, AlwaysOff
-; SetScrollLockState, AlwaysOff
-
-; SetBatchLines -1
-; #UseHook ; without this the mouse movement will not work
-
-
-
-
+SetWorkingDir, %A_ScriptDir%
 #SingleInstance, Force
 
 #Persistent
-; SendMode Input ; with this the launcher keys will not work with the mouse section d: f: etc.  (w)
+; SendMode Input ; with this the launcher keys will not work (q)
 SetCapsLockState, AlwaysOff
 SetScrollLockState, AlwaysOff
 
 SetBatchLines -1
 #UseHook ; without this the mouse movement will not work
 
-MouseDelay = 0
-Increment = 1
 
-e::
-d::
-s::
-f::
-ralt::
-    xVal=
-    yVal=
-    If GetKeyState("ralt","p") = 1
-    {
-        IncrementValue := Increment
-        Loop,
-        {
-            ; lower increment value higher startup speed. Lower increment slower acceleration
-            If (A_Index > IncrementValue * 2) and (IncrementValue < Increment * 9 )
-                IncrementValue := IncrementValue * 2
-            If GetKeyState("d", "P")
-                yVal := IncrementValue
-            Else If GetKeyState("e", "P")
-                yVal := -IncrementValue
-            If !yVal
-                yVal := 0
 
-            If GetKeyState("s", "P")
-                xVal := -IncrementValue
-            Else If GetKeyState("f", "P")
-                xVal := IncrementValue
-            If !xVal
-                xVal := 0
-            If GetKeyState(A_ThisHotKey, "P")
-                MouseMove, %xVal%, %yVal%,%MouseDelay%,R
-            Else
-                Break
-        }
-        send {ralt up}
-    }
-    else
-    {
-        Send % "{" . A_ThisHotKey . "}"
-        Send, {ralt up}
-        ; Send, {RALT up}
-    }
-return
+
+; #SingleInstance, Force
+
+; #Persistent
+; ; SendMode Input ; with this the launcher keys will not work with the mouse section d: f: etc.  (w)
+; SetCapsLockState, AlwaysOff
+; SetScrollLockState, AlwaysOff
+
+; SetBatchLines -1
+; #UseHook ; without this the mouse movement will not work
+
+; ; MouseDelay = 0
+; Increment = 1
+
+; e::
+; d::
+; s::
+; f::
+; ralt::
+;     xVal=
+;     yVal=
+;     If GetKeyState("ralt","p") = 1
+;     {
+;         IncrementValue := Increment
+;         Loop,
+;         {
+;             ; lower increment value higher startup speed. Lower increment slower acceleration
+;             If (A_Index > IncrementValue * 2) and (IncrementValue < Increment * 9 )
+;                 IncrementValue := IncrementValue * 2
+;             If GetKeyState("d", "P")
+;                 yVal := IncrementValue
+;             Else If GetKeyState("e", "P")
+;                 yVal := -IncrementValue
+;             If !yVal
+;                 yVal := 0
+
+;             If GetKeyState("s", "P")
+;                 xVal := -IncrementValue
+;             Else If GetKeyState("f", "P")
+;                 xVal := IncrementValue
+;             If !xVal
+;                 xVal := 0
+;             If GetKeyState(A_ThisHotKey, "P")
+;                 MouseMove, %xVal%, %yVal%,%MouseDelay%,R
+;             Else
+;                 Break
+;         }
+;         send {ralt up}
+;     }
+;     else
+;     {
+;         Send % "{" . A_ThisHotKey . "}"
+;         Send, {ralt up}
+;         ; Send, {RALT up}
+;     }
+; return
 
 ; ^!c::
 
@@ -80,137 +80,51 @@ return
 ;     MsgBox test
 ; Return
 
+f::
+KeyWait, f, T0.3
+If (ErrorLevel = 1)
+{
+	Send {Control Down}
+	KeyWait, f
+	Send {Control Up}
+}
+Else
+	Send f
+Return
 
 
+; Rbutton::
+;     if GetKeyState("lbutton", "P")
+;     {
+;         Click Right
+;     }
+;     Else{
+;         Click,2
+;     }
+; return
 
+; #IfWinActive ahk_class CabinetWClass
+; Rbutton::
+;     if GetKeyState("lbutton", "P")
+;     {
+;         Click Right
+;     }
+;     Else{
+;         Click,2
+;     }
+; return
+; #If
 
+; ; --------------------- two keys for Holding vs pressing -----------------------
 
-
-; ------------------------------------------------------------------------------
-;                                  Capsy Ultra Light
-; ------------------------------------------------------------------------------
-
-
-; Capslock & q::SendInput {Esc}
-; Capslock & w::SendInput ^a
-; Capslock & e::SendInput ^z ; This has repetitive press. Sould be a comfortable place.
-; Capslock & r::SendInput ^y ; redo
-; Capslock & t::SendInput ^{Left}+^{Right}
-; Capslock & y::SendInput {Blind}{Home}
-; Capslock & u::SendInput {Blind}{pgUp}
-; Capslock & i::SendInput {Blind}{Up}
-; Capslock & o::SendInput {Blind}{pgDn}
-; Capslock & p::SendInput {Blind}{End}
-; Capslock & [::SendInput {{}{}}{Left}
-; Capslock & ]::SendInput []{Left}
-; Capslock & \::SendInput |
-
-; Capslock & a::SendInput ^s
-; Capslock & s::SendInput ^x
-; Capslock & d::SendInput ^c
-; Capslock & f::SendInput ^v
-; Capslock & g::SendInput {Home}{Home}+{End}+{End}
-; Capslock & h::SendInput {Blind}^{Left}
-; Capslock & j::SendInput {Blind}{Left}
-; Capslock & k::SendInput {Blind}{Down}
-; Capslock & l::SendInput {Blind}{Right}
-; Capslock & SC027::SendInput {Blind}^{right}
-; Capslock & ':: SendInput ""{Left}
-
-; Capslock & z::AltTab
-; Capslock & x:: SendInput ^f
-; Capslock & c::SendInput {Enter}
-; Capslock & v:: SendInput {Delete}
-; Capslock & b:: SendInput {Home}{Home}+{End}+{End}{Del}
-; Capslock & n::SendInput {Blind}{BS}
-; Capslock & m::SendInput ^{Delete}
-; Capslock & ,::SendInput {Delete}
-; Capslock & .::SendInput {Blind}^{BS}
-; Capslock & /::SendInput {enter}
-
-; Capslock & Tab::SendInput {Blind}{shift Down}
-; Capslock & Tab up::SendInput {Blind}{shift up}
-
-; XButton2::send {Enter}
-; XButton1::send {Delete}
-; WheelLeft::WheelLeft
-; WheelRight::WheelRight
-
-; !+q::SendInput !{F4}
-; !q::SendInput ^w
-
-; Capslock & alt::SendInput {Blind}{Alt}
-; Capslock & space::SendInput {Enter}
-
-; ; +Space ::SendInput {Blind}{CtrlDown}
-; ; LShift & space up ::SendInput {Blind}{Ctrlup}
-
-; Capslock & enter::Send,{End}{enter}
-
-; Capslock & 1:: SendInput {F2}
-; Capslock & 2:: SendInput {AppsKey}
-; Capslock & 3:: =
-; Capslock & 4:: SendInput {Blind}^{Home}
-; Capslock & 5:: SendInput {Blind}^{End}
-; ;Capslock & 6:: --------
-; ;Capslock & 7:: --------
-; ;Capslock & 8:: --------
-; Capslock & 9:: send (){left}
-; Capslock & 0:: send ''{left}
-; Capslock & -:: _
-; Capslock & =:: SendInput {Home}{Home}+{End}+{End}^c{End}{Enter}^v
-
-; ; --------------------------------- F keys ---------------------------------*/
-
-; Capslock & F1:: SendInput {AppsKey}
-; Capslock & F2:: Winset, Alwaysontop, , A
-; Capslock & F3::
-;     SendInput ^c
-;     run http://www.duckduckgo.com/
-; Return
-; Capslock & F4:: --------------
-; Capslock & F5:: --------------
-; Capslock & F6:: --------------
-; Capslock & F7:: --------------
-; Capslock & F8:: --------------
-; Capslock & F9:: --------------
-; Capslock & F10:: --------------
-; Capslock & F11:: --------------
-; Capslzock & F12::--------------
-
-; Right click as a double click
-Rbutton::
-    if GetKeyState("lbutton", "P")
-    {
-        Click Right
-    }
-    Else{
-        Click,2
-    }
-return
-
-#IfWinActive ahk_class CabinetWClass
-Rbutton::
-    if GetKeyState("lbutton", "P")
-    {
-        Click Right
-    }
-    Else{
-        Click,2
-    }
-return
-#If
-
-; --------------------- two keys for Holding vs pressing -----------------------
-
-*'::
+*;::
     Send {Blind}{Ctrl Down}
     cDown := A_TickCount
 Return
 
-*' up::
+*; up::
     If ((A_TickCount-cDown)<200)  ; Modify press time as needed (milliseconds)
-        Send {Blind}{Ctrl Up}'
+        Send {Blind}{Ctrl Up}{SC027}
     Else
         Send {Blind}{Ctrl Up}
 Return

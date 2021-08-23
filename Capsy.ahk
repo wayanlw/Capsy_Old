@@ -291,25 +291,61 @@ Capslock & BS::SendInput {Blind}^{BS}
 Capslock & Tab::SendInput {Blind}{Shift Down}
 Capslock & Tab up::SendInput {Blind}{Shift up}
 
+; ------------------------------use jk as the escape ---------------------------
+; ~j::
+;     KeyWait, k, D T0.3
+;     if (ErrorLevel = 0)
+;         Send, {Esc}
+; return
+
+
+;; --------------swap Ctrl | Win | Alt keys ----------------------------------
+;LAlt::LControl
+;Lwin::LAlt
+;LControl::LWin
+
 
 ; --------------------- Control Key -----------------------
 
-
 RAlt::RControl
+>^1::send {F1}
+>^2::send {F2}
+>^3::send {F3}
+>^4::send {F4}
+>^5::send {F5}
+>^6::send {F6}
+>^7::send {F7}
+>^8::send {F8}
+>^9::send {F9}
+>^0::send {F10}
+>^-::send {F11}
+>^=::send {F12}
 
-
-; making ' single press as ' and long press as control
-; *'::
+; ---- this is the idea case. however with the capslock+; this doesnt work
+; *;::
 ;     Send {Blind}{Ctrl Down}
 ;     cDown := A_TickCount
 ; Return
 
-; *' up::
-;     If ((A_TickCount-cDown)<80)  ; Modify press time as needed (milliseconds)
-;         Send {Blind}{Ctrl Up}'
+; *; up::
+;     If ((A_TickCount-cDown)<200)  ; Modify press time as needed (milliseconds)
+;         Send {Blind}{Ctrl Up}{SC027}
 ;     Else
 ;         Send {Blind}{Ctrl Up}
 ; Return
+
+;making ' single press as ' and long press as control
+*'::
+    Send {Blind}{Ctrl Down}
+    cDown := A_TickCount
+Return
+
+*' up::
+    If ((A_TickCount-cDown)<200)  ; Modify press time as needed (milliseconds)
+        Send {Blind}{Ctrl Up}'
+    Else
+        Send {Blind}{Ctrl Up}
+Return
 
 ; Capslock & up::SendInput ^{Up}
 ; Capslock & Down::SendInput ^{Down}
@@ -389,8 +425,8 @@ return
 /* ------------------------------- Number keys ------------------------------
 */
 ; Capslock & `:: SendInput --------------
-Capslock & 1:: SendInput {F2}
-Capslock & 2:: SendInput {AppsKey}
+Capslock & 1:: SendInput {AppsKey}
+Capslock & 2:: SendInput {F2}
 Capslock & 3:: =
 ;Capslock & 4:: Excel F4
 Capslock & 5:: SendInput {Blind}^{Home}
@@ -641,10 +677,6 @@ Capslock & NumpadEnter:: SendInput {Blind}^{Enter}
 
 Capslock & NumLock:: SendInput {Esc}
 
-; --------------Ctrl | Win | Alt Remapping ----------------------------------
-LAlt::LControl
-Lwin::LAlt
-LControl::LWin
 
 
 ; ------------------------------------------------------------------------------
@@ -814,7 +846,7 @@ return
 
 ; ------------------------------- Google Search --------------------------------
 
-#^s::
+#s::
     InputBox, Search, Google Search, , , 400, 100
     if not ErrorLevel ; when cancel is not pressed
     {
@@ -825,7 +857,7 @@ return
 
 ; ------------------------ Google Search Selected Word -------------------------
 
-#s::
+#+s::
     OldClipboard:= Clipboard
     Clipboard:= ""
     SendInput, ^c ;copies selected text
