@@ -283,6 +283,8 @@ Capslock & BS::SendInput {Blind}^{BS}
 Capslock & Tab::SendInput {Blind}{Shift Down}
 Capslock & Tab up::SendInput {Blind}{Shift up}
 
+!j::SendInput !{Esc}
+!l::SendInput !+{Esc}
 ; ------------------------------use jk as the escape ---------------------------
 ; ~j::
 ;     KeyWait, k, D T0.3
