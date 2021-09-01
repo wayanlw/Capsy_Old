@@ -60,18 +60,11 @@ RShift::
         ; Send, {RALT up}
     }
 return
+
+
 #If GetKeyState("RShift","P") = 1
-/* --------------------------- Mouse Button Clicks --------------------------
-*/
-l:: Send {RButton}
-Insert:: Send {MButton}
-':: SendInput ^{LButton}
-SC027::
-    SendInput {LButton Down}
-    keywait, SC027, u
-    SendInput {LButton UP}
-return
-; ------ Left side --------
+; --------------------------- Mouse Button Clicks --------------------------
+
 v::Click, 1
 x:: Click, 2
 space::
@@ -79,6 +72,7 @@ space::
     keywait, space, u
     SendInput {LButton Up}
 return
+
 ; ---------------------------- scroll up and down ------------------------------
 r::
     While GetKeyState("r", "P")
@@ -94,8 +88,8 @@ w::
         sleep 100
     }
 return
-/* -------------------- move the mouse cursor to corners --------------------
-*/
+; -------------------- move the mouse cursor to corners --------------------
+
 CoordMode,Screen
 q::MouseMove, (A_ScreenWidth / 6 ), (A_ScreenHeight / 6 )
 t::MouseMove, (A_ScreenWidth / 6 * 5), (A_ScreenHeight / 6 * 1)
@@ -108,10 +102,7 @@ b::MouseMove, (A_ScreenWidth / 6 * 5), (A_ScreenHeight / 6 * 5)
 
 ;###############End Mouse #########################################
 
-
-
-
-*/
+; ---------------------------Extra mouse button mapping ---------------------
 
 ; XButton2::Send {Enter}
 ; XButton1::Send {Delete}
@@ -165,38 +156,42 @@ WheelRight::WheelRight
     ^!d::SendInput !H{L}{s}{Enter}
     ^!x::SendInput !H{L}{c}{s}{Enter}
 
-    ;-----------------------------------------
+    ;-------- Control up/down
     Capslock & u::SendInput ^{Up}
     Capslock & o::SendInput ^{Down}
 
-    ;-----------------------------------------
+    ;-------- switch sheets
     Capslock & [::SendInput ^{pgup}
     Capslock & ]::SendInput ^{pgDn}
 
-    ;-----------------------------------------
+    ;------- Copy formula right / down
     Capslock & b::SendInput ^d
     Capslock & t::SendInput ^r
     ; Capslock & g::SendInput {Blind}{Control Down}{Shift Down}
     ; Capslock & g up::SendInput {Blind}{Control up}{Shift up}
+
+    ;------- F2 key
     Capslock & g::SendInput {F2}
 
-    ;-----------------------------------------
+    ;------- Arithmatic operators
     Capslock & F1::SendInput {-}
     Capslock & F2::SendInput {+}
     Capslock & F3::SendInput {*}
     Capslock & F4::SendInput {/}
 
+    Capslock & F5::SendInput ^c{Left}^{Down}{right}+^{up}^v
+
     ; ---------------------------- alt Enter in excel ------------------------------
-Capslock & Enter::
-    If GetKeyState("space","p") = 1
-    {
-        SendInput,{Home}!{Enter}{Up}
-    }
-    Else
-    {
-        SendInput,{End}!{Enter}
-    }
-return
+    Capslock & Enter::
+        If GetKeyState("space","p") = 1
+        {
+            SendInput,{Home}!{Enter}{Up}
+        }
+        Else
+        {
+            SendInput,{End}!{Enter}
+        }
+    return
 
 ; --------------------- Enter and delete rows and columns ----------------------
 
@@ -282,7 +277,6 @@ Capslock & /::SendInput {Enter}
 
 ; ------------------------------- Special Keys ---------------------------------
 
-
 Capslock & alt::SendInput {Blind}{Alt}
 Capslock & space::return
 Capslock & BS::SendInput {Blind}^{BS}
@@ -308,49 +302,32 @@ Capslock & Tab up::SendInput {Blind}{Shift up}
 ; --------------------- Control Key -----------------------
 
 RAlt::RControl
->^1::send {F1}
->^2::send {F2}
->^3::send {F3}
->^4::send {F4}
->^5::send {F5}
->^6::send {F6}
->^7::send {F7}
->^8::send {F8}
->^9::send {F9}
->^0::send {F10}
->^-::send {F11}
->^=::send {F12}
 
-; ---- this is the idea case. however with the capslock+; this doesnt work
-; *;::
+;;---- this is the ideal case. however with the capslock+; this doesnt work
+; *SC027::
 ;     Send {Blind}{Ctrl Down}
 ;     cDown := A_TickCount
 ; Return
 
-; *; up::
+; *SC027 up::
 ;     If ((A_TickCount-cDown)<200)  ; Modify press time as needed (milliseconds)
 ;         Send {Blind}{Ctrl Up}{SC027}
 ;     Else
 ;         Send {Blind}{Ctrl Up}
 ; Return
 
-;making ' single press as ' and long press as control
-*'::
-    Send {Blind}{Ctrl Down}
-    cDown := A_TickCount
-Return
+; ;making ' single press as ' and long press as control
+; *'::
+;     Send {Blind}{Ctrl Down}
+;     cDown := A_TickCount
+; Return
 
-*' up::
-    If ((A_TickCount-cDown)<200)  ; Modify press time as needed (milliseconds)
-        Send {Blind}{Ctrl Up}'
-    Else
-        Send {Blind}{Ctrl Up}
-Return
-
-; Capslock & up::SendInput ^{Up}
-; Capslock & Down::SendInput ^{Down}
-; Capslock & Left::SendInput ^{Left}
-; Capslock & Right::SendInput ^{Right}
+; *' up::
+;     If ((A_TickCount-cDown)<200)  ; Modify press time as needed (milliseconds)
+;         Send {Blind}{Ctrl Up}'
+;     Else
+;         Send {Blind}{Ctrl Up}
+; Return
 
 ; --------------------------- Close windows and tab ----------------------------
 
@@ -383,15 +360,26 @@ return
 
 
 
-Capslock & Home::SendInput {Home}{Home}+{End}+{End}^c{End}{Enter}^v{Up}{End} ;duplicate the line and go to the end
-Capslock & End::SendInput {Home}{Home}+{End}+{End}^c{End}{Enter}^v ; duplicate line and to the end of the duplicated line
+Capslock & Home::SendInput {Home}{Home}+{End}+{End}^c{End}{Enter}^v{Up}{End} ;duplicate the line up and go to the end of the duplicated
+Capslock & End::SendInput {Home}{Home}+{End}+{End}^c{End}{Enter}^v ; duplicate line down and go to the end of the duplicated line
 Capslock & PgUp::SendInput {End}{space}{Delete}{End} ; bring the below line to the current line
 Capslock & PgDn::SendInput {Home}{Home}{BackSpace}{space}{End} ; Take the current line to the line above
 
 ; --------------------------------- F keys ---------------------------------*/
 
 Capslock & F1:: SendInput {AppsKey}
-Capslock & F2::
+; Capslock & F2:: --------------
+; Capslock & F3:: --------------
+; Capslock & F4:: --------------
+; Capslock & F5:: --------------
+; Capslock & F6:: --------------
+; Capslock & F7:: --------------
+; Capslock & F8:: --------------
+; Capslock & F9:: --------------
+; Capslock & F10:: --------------
+; Capslock & F11:: --------------
+; Capslock & F12::--------------
+Capslock & F12:: ;window always on top
     if (%top% = True)
     {
         WinSet, AlwaysOnTop, toggle, A
@@ -411,19 +399,9 @@ Capslock & F2::
         top = True
     }
 return
-; Capslock & F3:: --------------
-; Capslock & F4:: --------------
-; Capslock & F5:: --------------
-; Capslock & F6:: --------------
-; Capslock & F7:: --------------
-; Capslock & F8:: --------------
-; Capslock & F9:: --------------
-; Capslock & F10:: --------------
-; Capslock & F11:: --------------
-; Capslock & F12::--------------
 
-/* ------------------------------- Number keys ------------------------------
-*/
+; ------------------------------- Number keys ------------------------------
+
 ; Capslock & `:: SendInput --------------
 Capslock & 1:: SendInput {AppsKey}
 Capslock & 2:: SendInput {F2}
@@ -474,7 +452,7 @@ Capslock & a::
 return
 
 
-; ---- single press=copy Line |double press=delete Line | hold=Select Line -----
+; ---- single press=delete Line |double press=copy Line | hold=Select Line -----
 Capslock & g::
     keywait, g, t 0.5
     if errorlevel{
@@ -497,7 +475,6 @@ Capslock & g::
 return
 
 
-
 ; ------------- Single Press = Find | Long Press = Find Selected ---------------
 capslock & x::
     keywait, x, t 0.5
@@ -512,6 +489,8 @@ capslock & x::
     }
     keywait,x
 return
+
+
 ; ------------------------------------------------------------------------------
 ;                            Sorround the Selection
 ; ------------------------------------------------------------------------------
@@ -656,7 +635,7 @@ return
 +^!Enter:: SendInput {Enter}
 +^!h:: SendInput {=}
 
-; ------------------------------- Numberpad kys --------------------------------
+; ------------------------------- Numberpad keys --------------------------------
 Capslock & Numpad8:: SendInput {Blind}{Up}
 Capslock & Numpad4:: SendInput {Blind}{Left}
 Capslock & Numpad5:: SendInput {Blind}{Down}
@@ -685,7 +664,7 @@ Capslock & NumLock:: SendInput {Esc}
 
 Capslock & w::
 
-    Input Key, L2 T2 ; L3 to limit the input to 3 eys. T5 , wait for 5 seconds
+    Input Key, L2 T2 ; L2 to limit the input to 2 keys. T2 , wait for 2 seconds. Whichever occurs first
     ;----------------------Delete all
     if Key=fa
     {
@@ -943,7 +922,7 @@ return
 ;                      Gather text to any preselected app
 ; ------------------------------------------------------------------------------
 
-+!c::
++!c::  ; alt+shift+c to copy to the selected window
 
     If !WinTag
     {
@@ -989,14 +968,14 @@ return
     Clipboard := OldClipboard
 return
 
-^#+z::
+^#+z:: ;Ctrl+win+shift+z tag a window as a copy destination
     Click, %A_CaretX%, %A_CaretY%
     MouseGetPos, , , WinTag, Control
     WinGetTitle, winTitlePart, ahk_id %WinTag%
     MsgBox, , Capsy CopyToApp, " %winTitlePart% " is tagged as the destination window!`r - Press < Alt+Shift+C > to copy selection to this app.`r - Press < Ctrl+Win+Shift+R > to reset.
 return
 
-^#+r::
+^#+r:: ;Ctrl+win+shift+r tag a window as a reset destination
     WinActivate, ahk_id %WinTag%
     MsgBox, , Capsy CopyToApp, CopyToApp windows is reset!, 3
     WinTag:=""
