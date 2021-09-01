@@ -179,8 +179,6 @@ WheelRight::WheelRight
     Capslock & F3::SendInput {*}
     Capslock & F4::SendInput {/}
 
-    Capslock & F5::SendInput ^c{Left}^{Down}{right}+^{up}^v
-
     ; ---------------------------- alt Enter in excel ------------------------------
     Capslock & Enter::
         If GetKeyState("space","p") = 1
