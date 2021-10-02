@@ -104,8 +104,8 @@ b::MouseMove, (A_ScreenWidth / 6 * 5), (A_ScreenHeight / 6 * 5)
 
 ; ---------------------------Extra mouse button mapping ---------------------
 
-; XButton2::Send {Enter}
-; XButton1::Send {Delete}
+XButton2::Send {Enter}
+XButton1::Send {Delete}
 
 
 ; Mouse Buttons as Scroll Up and Down
@@ -283,8 +283,9 @@ Capslock & BS::SendInput {Blind}^{BS}
 Capslock & Tab::SendInput {Blind}{Shift Down}
 Capslock & Tab up::SendInput {Blind}{Shift up}
 
+; focus next/previous window
 !j::SendInput !{Esc}
-!l::SendInput !+{Esc}
+!k::SendInput !+{Esc}
 ; ------------------------------use jk as the escape ---------------------------
 ; ~j::
 ;     KeyWait, k, D T0.3
