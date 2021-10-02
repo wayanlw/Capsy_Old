@@ -277,15 +277,21 @@ Capslock & /::SendInput {Enter}
 
 Capslock & alt::SendInput {Blind}{Alt}
 Capslock & space::return
-Capslock & BS::SendInput {Blind}^{BS}
+Capslock & BS:: SendInput {Blind}^{BS}
 #space::Send,{space}{left}
 
 Capslock & Tab::SendInput {Blind}{Shift Down}
 Capslock & Tab up::SendInput {Blind}{Shift up}
 
-; focus next/previous window
-!j::SendInput !{Esc}
-!k::SendInput !+{Esc}
+; using alt+j/l to move to previous active window and next
+; !j::SendInput !{Esc}
+; !l::SendInput !+{Esc}
+
+; using alt+u/o to control+tab and control+shift+tab
+!o::SendInput ^{Tab}
+!u::SendInput ^+{Tab}
+
+
 ; ------------------------------use jk as the escape ---------------------------
 ; ~j::
 ;     KeyWait, k, D T0.3
