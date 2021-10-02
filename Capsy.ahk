@@ -283,10 +283,6 @@ Capslock & BS:: SendInput {Blind}^{BS}
 Capslock & Tab::SendInput {Blind}{Shift Down}
 Capslock & Tab up::SendInput {Blind}{Shift up}
 
-; using alt+j/l to move to previous active window and next
-; !j::SendInput !{Esc}
-; !l::SendInput !+{Esc}
-
 ; using alt+u/o to control+tab and control+shift+tab
 !o::SendInput ^{Tab}
 !u::SendInput ^+{Tab}
@@ -299,18 +295,16 @@ Capslock & Tab up::SendInput {Blind}{Shift up}
 ;         Send, {Esc}
 ; return
 
-
 ;; --------------swap Ctrl | Win | Alt keys ----------------------------------
 ;LAlt::LControl
 ;Lwin::LAlt
 ;LControl::LWin
 
-
 ; --------------------- Control Key -----------------------
 
 RAlt::RControl
 
-;;---- this is the ideal case. however with the capslock+; this doesnt work
+; ;;---- this is the ideal case.
 ; *SC027::
 ;     Send {Blind}{Ctrl Down}
 ;     cDown := A_TickCount
@@ -799,6 +793,47 @@ Capslock & w::
 
 return
 
+
+; ------------------------------------------------------------------------------
+;                               Run or Raise
+; ------------------------------------------------------------------------------
+; #WinActivateForce ; Prevent task bar buttons from flashing when different windows are activated quickly one after the other.
+; F10::OpenOrShowAppBasedOnExeName("msedge.exe")
+; F11::OpenOrShowAppBasedOnExeName("excel.exe")
+
+; ; AppAddress: The address to the .exe (Eg: "C:\Windows\System32\SnippingTool.exe")
+; OpenOrShowAppBasedOnExeName(AppExeName)
+; {
+; 	; AppExeName := SubStr(AppAddress, InStr(AppAddress, "\", false, -1) + 1)
+; 	IfWinExist ahk_exe %AppExeName%
+; 	{
+; 		; IfWinActive
+; 		; {
+; 		; 	WinMinimize
+; 		; 	Return
+; 		; }
+; 		; else
+; 		; {
+; 		WinActivate
+; 		Return
+; 		; }
+; 	}
+; 	else
+; 	{
+; 		Run, %AppExeName%, UseErrorLevel
+;         If ErrorLevel
+;         {
+;             Msgbox, File %AppExeName% Not Found
+;             Return
+;         }
+; 		else
+; 		{
+; 			WinWait, ahk_exe %AppExeName%
+; 			WinActivate ahk_exe %AppExeName%
+; 			Return
+; 		}
+; 	}
+; }
 ; ------------------------------------------------------------------------------
 ;                               Search Functions
 ; ------------------------------------------------------------------------------
