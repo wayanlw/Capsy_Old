@@ -13,6 +13,7 @@
 SetCapsLockState, AlwaysOff
 SetScrollLockState, AlwaysOff
 
+CoordMode,Mouse,Screen
 SetBatchLines -1
 
 ;###################Start Mouse#####################
@@ -90,7 +91,6 @@ w::
 return
 ; -------------------- move the mouse cursor to corners --------------------
 
-CoordMode,Screen
 q::MouseMove, (A_ScreenWidth / 6 ), (A_ScreenHeight / 6 )
 t::MouseMove, (A_ScreenWidth / 6 * 5), (A_ScreenHeight / 6 * 1)
 a::MouseMove, (A_ScreenWidth / 6 * 1), (A_ScreenHeight / 6 * 3)
