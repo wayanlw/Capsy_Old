@@ -391,7 +391,7 @@ Capslock & F12:: ;window always on top
     {
         WinSet, AlwaysOnTop, toggle, A
         ToolTip ,%AlwayOnTopWindow% `r NOT on top!
-        Sleep, 500
+        Sleep, 1500
         ToolTip
         AlwayOnTopWindow = ""
         top = False
@@ -400,8 +400,8 @@ Capslock & F12:: ;window always on top
     {
         WinGetTitle, AlwayOnTopWindow, A ; A stands for Active Window
         WinSet, AlwaysOnTop, toggle, A
-        ToolTip , %AlwayOnTopWindow% `rstays on top!
-        Sleep, 500
+        ToolTip , %AlwayOnTopWindow% `r stays on top!
+        Sleep, 1500
         ToolTip
         top = True
     }
