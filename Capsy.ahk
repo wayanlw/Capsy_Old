@@ -16,6 +16,9 @@ SetScrollLockState, AlwaysOff
 CoordMode,Mouse,Screen
 SetBatchLines -1
 
+;-----------initializing autoexecution variables. Should be defined before the first hotkey
+commandMode=True
+
 ;###################Start Mouse#####################
 #UseHook ; without this the mouse movement will not work
 MouseDelay = 0
@@ -283,17 +286,40 @@ Capslock & BS:: SendInput {Blind}^{BS}
 Capslock & Tab::SendInput {Blind}{Shift Down}
 Capslock & Tab up::SendInput {Blind}{Shift up}
 
+!i::SendInput {up}
+!k::SendInput {down}
+!j::SendInput {left}
+!l::SendInput {right}
+!SC027::SendInput {enter}
+<!f::alttab
+<!e::ShiftAltTab
+
 ; using alt+u/o to control+tab and control+shift+tab
 !o::SendInput ^{Tab}
 !u::SendInput ^+{Tab}
 
-
 ; ------------------------------use jk as the escape ---------------------------
-; ~j::
-;     KeyWait, k, D T0.3
-;     if (ErrorLevel = 0)
-;         Send, {Esc}
-; return
+capslock & F11::
+    if (%commandMode% = True){
+		commandMode = False
+        ToolTip ,Command Mode %commandMode%!
+	}
+	else{
+		commandMode = True
+        ToolTip ,Command Mode %commandMode%!
+	}
+return
+
+CapsLock & F10::MsgBox, %commandMode%
+
+#if (%commandMode%=True)
+	:?*:jk::
+		sendInput {Esc}
+	return
+	:?*:jj::
+		sendInput {Enter}
+	return
+#IF
 
 ;; --------------swap Ctrl | Win | Alt keys ----------------------------------
 ;LAlt::LControl
