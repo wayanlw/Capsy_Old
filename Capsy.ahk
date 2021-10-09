@@ -299,27 +299,6 @@ Capslock & Tab up::SendInput {Blind}{Shift up}
 !u::SendInput ^+{Tab}
 
 ; ------------------------------use jk as the escape ---------------------------
-capslock & F11::
-    if (%commandMode% = True){
-		commandMode = False
-        ToolTip ,Command Mode %commandMode%!
-	}
-	else{
-		commandMode = True
-        ToolTip ,Command Mode %commandMode%!
-	}
-return
-
-CapsLock & F10::MsgBox, %commandMode%
-
-#if (%commandMode%=True)
-	:?*:jk::
-		sendInput {Esc}
-	return
-	:?*:jj::
-		sendInput {Enter}
-	return
-#IF
 
 ;; --------------swap Ctrl | Win | Alt keys ----------------------------------
 ;LAlt::LControl
@@ -405,7 +384,31 @@ Capslock & F1:: SendInput {AppsKey}
 ; Capslock & F9:: --------------
 ; Capslock & F10:: --------------
 ; Capslock & F11:: --------------
-; Capslock & F12::--------------
+capslock & F11::
+	; activate/deactivate command mode
+    if (%commandMode% = True){
+		commandMode = False
+        ToolTip ,Command Mode %commandMode%!
+		sleep 1000
+		ToolTip
+	}
+	else{
+		commandMode = True
+        ToolTip ,Command Mode %commandMode%!
+		sleep 1000
+		ToolTip
+	}
+return
+;CapsLock & F10::MsgBox, %commandMode%
+#if (%commandMode%=True) ; if command mode is on activate the commands
+	:?*:jk::
+		sendInput {Esc}
+	return
+	:?*:jj::
+		sendInput {Enter}
+	return
+#IF
+
 Capslock & F12:: ;window always on top
     if (%top% = True)
     {
