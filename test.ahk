@@ -11,8 +11,6 @@ SetBatchLines -1
 #UseHook ; without this the mouse movement will not work
 
 
-
-
 ; #SingleInstance, Force
 
 ; #Persistent

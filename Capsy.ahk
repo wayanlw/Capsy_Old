@@ -17,7 +17,7 @@ CoordMode,Mouse,Screen
 SetBatchLines -1
 
 ;-----------initializing autoexecution variables. Should be defined before the first hotkey
-commandMode=True
+commandMode=False
 
 ;###################Start Mouse#####################
 #UseHook ; without this the mouse movement will not work
@@ -286,13 +286,12 @@ Capslock & BS:: SendInput {Blind}^{BS}
 Capslock & Tab::SendInput {Blind}{Shift Down}
 Capslock & Tab up::SendInput {Blind}{Shift up}
 
-!i::SendInput {up}
-!k::SendInput {down}
-!j::SendInput {left}
-!l::SendInput {right}
-!SC027::SendInput {enter}
-<!f::alttab
-<!e::ShiftAltTab
+;--- mapping alt arrow keys
+;!i::SendInput {up}
+;!k::SendInput {down}
+;!j::SendInput {left}
+;!l::SendInput {right}
+;!SC027::SendInput {enter}
 
 ; using alt+u/o to control+tab and control+shift+tab
 !o::SendInput ^{Tab}
@@ -404,9 +403,9 @@ return
 	:?*:jk::
 		sendInput {Esc}
 	return
-	:?*:jj::
-		sendInput {Enter}
-	return
+	; :?*:jj::
+	; 	sendInput {Enter}
+	; return
 #IF
 
 Capslock & F12:: ;window always on top
@@ -627,7 +626,7 @@ Capslock & ]::  ; Sourround in {}
     }
     else
     {
-        SendInput ""{left}
+        SendInput {{}{}}{left}
         return
     }
 return
@@ -826,43 +825,76 @@ return
 ; ------------------------------------------------------------------------------
 ;                               Run or Raise
 ; ------------------------------------------------------------------------------
-; #WinActivateForce ; Prevent task bar buttons from flashing when different windows are activated quickly one after the other.
-; F10::OpenOrShowAppBasedOnExeName("msedge.exe")
-; F11::OpenOrShowAppBasedOnExeName("excel.exe")
 
-; ; AppAddress: The address to the .exe (Eg: "C:\Windows\System32\SnippingTool.exe")
-; OpenOrShowAppBasedOnExeName(AppExeName)
-; {
-; 	; AppExeName := SubStr(AppAddress, InStr(AppAddress, "\", false, -1) + 1)
-; 	IfWinExist ahk_exe %AppExeName%
-; 	{
-; 		; IfWinActive
-; 		; {
-; 		; 	WinMinimize
-; 		; 	Return
-; 		; }
-; 		; else
-; 		; {
-; 		WinActivate
-; 		Return
-; 		; }
-; 	}
-; 	else
-; 	{
-; 		Run, %AppExeName%, UseErrorLevel
-;         If ErrorLevel
-;         {
-;             Msgbox, File %AppExeName% Not Found
-;             Return
-;         }
-; 		else
-; 		{
-; 			WinWait, ahk_exe %AppExeName%
-; 			WinActivate ahk_exe %AppExeName%
-; 			Return
-; 		}
-; 	}
-; }
+#WinActivateForce ; Prevent task bar buttons from flashing when different windows are activated quickly one after the other.
+#1::OpenOrShowAppBasedOnExeName("C:\Program Files\Microsoft Office\root\Office16\EXCEL.EXE")
+#2::OpenOrShowAppBasedOnExeName("C:\Scoop\apps\freecommander\current\FreeCommander.exe")
+#3::OpenOrShowAppBasedOnExeName("C:\Program Files (x86)\SAP\FrontEnd\SapGui\saplogon.exe")
+#4::OpenOrShowAppBasedOnExeName("C:\Program Files\Microsoft Office\root\Office16\OUTLOOK.EXE")
+#5::OpenOrShowAppBasedOnExeName("C:\Program Files (x86)\Teams Installer\Teams.exe")
+#+f::OpenOrShowAppBasedOnExeName("C:\Program Files (x86)\Microsoft\Edge\Application\msedge.exe")
+
+CoordMode,Screen
+; AppAddress: The address to the .exe (Eg: "C:\Windows\System32\SnippingTool.exe")
+OpenOrShowAppBasedOnExeName(AppAddress)
+{
+    AppExeName := SubStr(AppAddress, InStr(AppAddress, "\", false, -1) + 1)
+    IfWinExist ahk_exe %AppExeName% ; if window currently exist
+    {
+        IfWinActive ; if the window is active
+        {
+            WinGet, ActiveProcess, ProcessName, A
+            WinGet, OpenWindowsAmount, Count, ahk_exe %ActiveProcess%
+
+            If OpenWindowsAmount = 1 ; If only one Window exist, do nothing
+                Return
+            Else ; if there are multiple windows prewsent cycle between the windows
+            {
+                WinGetTitle, FullTitle, A
+                AppTitle := SubStr(FullTitle, InStr(FullTitle, " ", false, -1) + 1)
+                SetTitleMatchMode, 2
+                WinGet, WindowsWithSameTitleList, List, %AppTitle%
+                If WindowsWithSameTitleList > 1 ; If several Window of same type (title checking) exist
+                {
+                    WinActivate, % "ahk_id " WindowsWithSameTitleList%WindowsWithSameTitleList%	; Activate next Window
+                }
+            }
+            Return
+        }
+        else ; if the window exists,but not active --> activate the window
+        {
+            WinActivate
+
+			;;; uncomment this section to bring the window to the main screen (if required)
+			; WinGet, window, ID, A
+			; WinMove, ahk_id %window%, , 2 , 2, A_ScreenWidth-5, A_ScreenHeight-30
+
+            Return
+        }
+    }
+    else ; if program doesnt exist try to run it
+    {
+        Run, %AppAddress%, UseErrorLevel
+        If ErrorLevel
+        {
+            Msgbox, File %AppExeName% Not Found
+            Return
+        }
+        else
+        {
+            WinWait, ahk_exe %AppExeName%
+            WinActivate ahk_exe %AppExeName%
+
+			;;; uncomment this section to brings the window to the main screen (if required)
+			; WinGet, window, ID, A
+			; WinMove, ahk_id %window%, , 2 , 2, A_ScreenWidth-5, A_ScreenHeight-30
+
+            Return
+        }
+    }
+}
+
+
 ; ------------------------------------------------------------------------------
 ;                               Search Functions
 ; ------------------------------------------------------------------------------
@@ -1026,7 +1058,7 @@ return
         ; Check again, if ON active then paste else error
         IfWinActive, %winTitlePart%
         {
-            Send, ^v`r ; Use sendplay to avoid unexpected interactions with Win key
+            Send, ^v`r`r ; Use sendplay to avoid unexpected interactions with Win key
             ; Switch window back to previously active
             WinActivate, %actWin%
         }
@@ -1040,7 +1072,7 @@ return
 return
 
 ^#+z:: ;Ctrl+win+shift+z tag a window as a copy destination
-    Click, %A_CaretX%, %A_CaretY%
+    ; Click, %A_CaretX%, %A_CaretY%
     MouseGetPos, , , WinTag, Control
     WinGetTitle, winTitlePart, ahk_id %WinTag%
     MsgBox, , Capsy CopyToApp, " %winTitlePart% " is tagged as the destination window!`r - Press < Alt+Shift+C > to copy selection to this app.`r - Press < Ctrl+Win+Shift+R > to reset.
