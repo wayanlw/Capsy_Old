@@ -330,19 +330,19 @@ Capslock & Tab up::SendInput {Blind}{Shift up}
 
 RAlt::RControl
 
-; ;;---- this is the ideal case.
-*SC027::
-    Send {Blind}{Ctrl Down}
-    cDown := A_TickCount
-Return
+; ;;---- this is the ideal case. However, randomly sends ";" key when try to do "cntrl+right" shortcut.
+; *SC027::
+;     Send {Blind}{Ctrl Down}
+;     cDown := A_TickCount
+; Return
 
-*SC027 up::
-    If ((A_TickCount-cDown)<200)  ; Modify press time as needed (milliseconds)
-        Send {Blind}{Ctrl Up}{SC027}
-    Else
-        Send {Blind}{Ctrl Up}
-Return
-
+; *SC027 up::
+;     If ((A_TickCount-cDown)<200)  ; Modify press time as needed (milliseconds)
+;         Send {Blind}{Ctrl Up}{SC027}
+;     Else
+;         Send {Blind}{Ctrl Up}
+; Return
+; ;
 ; ;making ' single press as ' and long press as control
 ; *'::
 ;     Send {Blind}{Ctrl Down}

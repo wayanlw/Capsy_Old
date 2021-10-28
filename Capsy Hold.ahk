@@ -297,8 +297,8 @@ Capslock & SC027::SendInput {Blind}^{right}
 Capslock & z::AltTab
 ;Capslock & x:: SendInput ^x ; single press = find| long press = find selection
 Capslock & c::SendInput {Enter}
-;Capslock & v:: SendInput {Delete}    ; Single press = delete    | long press = delete line
-;Capslock & b:: SendInput {Blind}{BS} ; Single press = backspace | long press = delete word
+Capslock & v:: SendInput {Delete}    ; Single press = delete    | long press = delete line
+Capslock & b:: SendInput {Blind}{BS} ; Single press = backspace | long press = delete word
 Capslock & n::SendInput {Blind}{BS}
 Capslock & m::SendInput {Blind}^{BS}
 Capslock & ,::SendInput {Delete}
@@ -331,19 +331,19 @@ Capslock & Tab up::SendInput {Blind}{Shift up}
 
 RAlt::RControl
 
-; ;;---- this is the ideal case. However, sends ";" key when try to do "cntrl+right" shortcut. Eg. when file renaming
-*SC027::
-    Send {Blind}{Ctrl Down}
-    cDown := A_TickCount
-Return
+; ;;---- this is the ideal case. However, randomly sends ";" key when try to do "cntrl+right" shortcut.
+; *SC027::
+;     Send {Blind}{Ctrl Down}
+;     cDown := A_TickCount
+; Return
 
-*SC027 up::
-    If ((A_TickCount-cDown)<200)  ; Modify press time as needed (milliseconds)
-        Send {Blind}{Ctrl Up}{SC027}
-    Else
-        Send {Blind}{Ctrl Up}
-Return
-;
+; *SC027 up::
+;     If ((A_TickCount-cDown)<200)  ; Modify press time as needed (milliseconds)
+;         Send {Blind}{Ctrl Up}{SC027}
+;     Else
+;         Send {Blind}{Ctrl Up}
+; Return
+; ;
 ; ;making ' single press as ' and long press as control
 ; *'::
 ;     Send {Blind}{Ctrl Down}
@@ -375,7 +375,6 @@ CoordMode,Screen
 ; return
 
 PlaceWindow(x_pos,y_pos,width,height){
-	taskbar_heigth:=30
     WinGet, window, ID, A
     ; WinHide, ahk_id %window%
     WinRestore, ahk_id %window%
@@ -599,35 +598,35 @@ capslock & x::
 return
 
 ; ------------- Single Press = Delete | Long Press = Delete Line ---------------
-Capslock & v::
-    keywait, v, t 0.5
-    if errorlevel{
-        ;long press to delete line
-        SendInput, {Home}{Home}+{End}+{End}{Del}
-    }
-    else{
-        ;short press to delete
-        SendInput, {Del}
-        return
-    }
-    keywait,v
-return
+; Capslock & v::
+;     keywait, v, t 0.5
+;     if errorlevel{
+;         ;long press to delete line
+;         SendInput, {Home}{Home}+{End}+{End}{Del}
+;     }
+;     else{
+;         ;short press to delete
+;         SendInput, {Del}
+;         return
+;     }
+;     keywait,v
+; return
 
-; ---------- Single Press = BackSpace | Long Press = Backspace Word ------------
+; ; ---------- Single Press = BackSpace | Long Press = Backspace Word ------------
 
-Capslock & b::
-    keywait, b, t 0.2
-    if errorlevel{
-        ;long press to delete word
-        Send, ^{Left}+^{Right}{del}
-    }
-    else{
-        ;short press to backspace
-        SendInput, {Blind}{BS}
-        return
-    }
-    keywait,b, t 0.2
-return
+; Capslock & b::
+;     keywait, b, t 0.2
+;     if errorlevel{
+;         ;long press to delete word
+;         Send, ^{Left}+^{Right}{del}
+;     }
+;     else{
+;         ;short press to backspace
+;         SendInput, {Blind}{BS}
+;         return
+;     }
+;     keywait,b, t 0.2
+; return
 
 ; ------------------------------------------------------------------------------
 ;                            Sorround the Selection

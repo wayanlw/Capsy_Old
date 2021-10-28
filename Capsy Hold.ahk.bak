@@ -14,19 +14,25 @@
 SetCapsLockState, AlwaysOff
 SetScrollLockState, AlwaysOff
 
-; CoordMode,Mouse,Screen
+CoordMode,Mouse,Screen
 SetBatchLines -1
 
 ;-----------initializing autoexecution variables. Should be defined before the first hotkey
+;Variables should eith be defined in autoexecution section or within a function
+; starting up Command Mode for jk
 commandMode=False
 
-#WinActivateForce ; Prevent task bar buttons from flashing when different windows are activated quickly one after the other.
-#1::OpenOrShowAppBasedOnExeName("C:\Program Files\Microsoft Office\root\Office16\EXCEL.EXE")
-#2::OpenOrShowAppBasedOnExeName("C:\Scoop\apps\freecommander\current\FreeCommander.exe")
-#3::OpenOrShowAppBasedOnExeName("C:\Program Files (x86)\SAP\FrontEnd\SapGui\saplogon.exe")
-#4::OpenOrShowAppBasedOnExeName("C:\Program Files\Microsoft Office\root\Office16\OUTLOOK.EXE")
-#5::OpenOrShowAppBasedOnExeName("C:\Program Files (x86)\Teams Installer\Teams.exe")
-#+f::OpenOrShowAppBasedOnExeName("C:\Program Files (x86)\Microsoft\Edge\Application\msedge.exe")
+;window management function task bar height
+taskbar_heigth:=30
+
+;run or raise function - Programs Launched
+prog_1:="C:\Program Files\Microsoft Office\root\Office16\EXCEL.EXE"
+prog_2:="C:\Scoop\apps\freecommander\current\FreeCommander.exe"
+prog_3:="C:\Program Files (x86)\SAP\FrontEnd\SapGui\saplogon.exe"
+prog_4:="C:\Program Files\Microsoft Office\root\Office16\OUTLOOK.EXE"
+prog_5:="C:\Program Files (x86)\Teams Installer\Teams.exe"
+prog_6:="C:\Program Files (x86)\Microsoft\Edge\Application\msedge.exe"
+
 
 ;###################Start Mouse#####################
 #UseHook ; without this the mouse movement will not work
@@ -291,8 +297,8 @@ Capslock & SC027::SendInput {Blind}^{right}
 Capslock & z::AltTab
 ;Capslock & x:: SendInput ^x ; single press = find| long press = find selection
 Capslock & c::SendInput {Enter}
-;Capslock & v:: SendInput {Delete}    ; Single press = delete    | long press = delete line
-;Capslock & b:: SendInput {Blind}{BS} ; Single press = backspace | long press = delete word
+Capslock & v:: SendInput {Delete}    ; Single press = delete    | long press = delete line
+Capslock & b:: SendInput {Blind}{BS} ; Single press = backspace | long press = delete word
 Capslock & n::SendInput {Blind}{BS}
 Capslock & m::SendInput {Blind}^{BS}
 Capslock & ,::SendInput {Delete}
@@ -325,19 +331,19 @@ Capslock & Tab up::SendInput {Blind}{Shift up}
 
 RAlt::RControl
 
-; ;;---- this is the ideal case.
-*SC027::
-    Send {Blind}{Ctrl Down}
-    cDown := A_TickCount
-Return
+; ;;---- this is the ideal case. However, randomly sends ";" key when try to do "cntrl+right" shortcut.
+; *SC027::
+;     Send {Blind}{Ctrl Down}
+;     cDown := A_TickCount
+; Return
 
-*SC027 up::
-    If ((A_TickCount-cDown)<200)  ; Modify press time as needed (milliseconds)
-        Send {Blind}{Ctrl Up}{SC027}
-    Else
-        Send {Blind}{Ctrl Up}
-Return
-
+; *SC027 up::
+;     If ((A_TickCount-cDown)<200)  ; Modify press time as needed (milliseconds)
+;         Send {Blind}{Ctrl Up}{SC027}
+;     Else
+;         Send {Blind}{Ctrl Up}
+; Return
+; ;
 ; ;making ' single press as ' and long press as control
 ; *'::
 ;     Send {Blind}{Ctrl Down}
@@ -593,35 +599,35 @@ capslock & x::
 return
 
 ; ------------- Single Press = Delete | Long Press = Delete Line ---------------
-Capslock & v::
-    keywait, v, t 0.5
-    if errorlevel{
-        ;long press to delete line
-        SendInput, {Home}{Home}+{End}+{End}{Del}
-    }
-    else{
-        ;short press to delete
-        SendInput, {Del}
-        return
-    }
-    keywait,v
-return
+; Capslock & v::
+;     keywait, v, t 0.5
+;     if errorlevel{
+;         ;long press to delete line
+;         SendInput, {Home}{Home}+{End}+{End}{Del}
+;     }
+;     else{
+;         ;short press to delete
+;         SendInput, {Del}
+;         return
+;     }
+;     keywait,v
+; return
 
-; ---------- Single Press = BackSpace | Long Press = Backspace Word ------------
+; ; ---------- Single Press = BackSpace | Long Press = Backspace Word ------------
 
-Capslock & b::
-    keywait, b, t 0.2
-    if errorlevel{
-        ;long press to delete word
-        Send, ^{Left}+^{Right}{del}
-    }
-    else{
-        ;short press to backspace
-        SendInput, {Blind}{BS}
-        return
-    }
-    keywait,b, t 0.2
-return
+; Capslock & b::
+;     keywait, b, t 0.2
+;     if errorlevel{
+;         ;long press to delete word
+;         Send, ^{Left}+^{Right}{del}
+;     }
+;     else{
+;         ;short press to backspace
+;         SendInput, {Blind}{BS}
+;         return
+;     }
+;     keywait,b, t 0.2
+; return
 
 ; ------------------------------------------------------------------------------
 ;                            Sorround the Selection
@@ -915,7 +921,13 @@ return
 ; ------------------------------------------------------------------------------
 ;                               Run or Raise
 ; ------------------------------------------------------------------------------
-
+#WinActivateForce ; Prevent task bar buttons from flashing when different windows are activated quickly one after the other.
+#1::OpenOrShowAppBasedOnExeName(prog_1)
+#2::OpenOrShowAppBasedOnExeName(prog_2)
+#3::OpenOrShowAppBasedOnExeName(prog_3)
+#4::OpenOrShowAppBasedOnExeName(prog_4)
+#5::OpenOrShowAppBasedOnExeName(prog_5)
+#+f::OpenOrShowAppBasedOnExeName(prog_6)
 
 CoordMode,Screen
 ; AppAddress: The address to the .exe (Eg: "C:\Windows\System32\SnippingTool.exe")
