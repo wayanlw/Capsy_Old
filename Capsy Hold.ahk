@@ -14,14 +14,30 @@
 SetCapsLockState, AlwaysOff
 SetScrollLockState, AlwaysOff
 
+CoordMode,Mouse,Screen
 SetBatchLines -1
 
-;###################Start Mouse#####################
+;-----------initializing autoexecution variables. Should be defined before the first hotkey
+;Variables should eith be defined in autoexecution section or within a function
+; starting up Command Mode for jk
+commandMode=False
 
+;window management function task bar height
+taskbar_heigth:=30
+
+;run or raise function - Programs Launched
+prog_1:="C:\Program Files\Microsoft Office\root\Office16\EXCEL.EXE"
+prog_2:="C:\Scoop\apps\freecommander\current\FreeCommander.exe"
+prog_3:="C:\Program Files (x86)\SAP\FrontEnd\SapGui\saplogon.exe"
+prog_4:="C:\Program Files\Microsoft Office\root\Office16\OUTLOOK.EXE"
+prog_5:="C:\Program Files (x86)\Teams Installer\Teams.exe"
+prog_6:="C:\Program Files (x86)\Microsoft\Edge\Application\msedge.exe"
+
+
+;###################Start Mouse#####################
 #UseHook ; without this the mouse movement will not work
 MouseDelay = 0
 Increment = 1
-
 e::
 d::
 s::
@@ -43,7 +59,6 @@ RShift::
                 yVal := -IncrementValue
             If !yVal
                 yVal := 0
-
             If GetKeyState("s", "P")
                 xVal := -IncrementValue
             Else If GetKeyState("f", "P")
@@ -91,7 +106,6 @@ space::
 return
 
 ; ---------------------------- scroll up and down ------------------------------
-
 r::
     While GetKeyState("r", "P")
     {
@@ -107,11 +121,8 @@ w::
         sleep 100
     }
 return
+; -------------------- move the mouse cursor to corners --------------------
 
-/* -------------------- move the mouse cursor to corners --------------------
-*/
-
-CoordMode,Screen
 q::MouseMove, (A_ScreenWidth / 6 ), (A_ScreenHeight / 6 )
 t::MouseMove, (A_ScreenWidth / 6 * 5), (A_ScreenHeight / 6 * 1)
 a::MouseMove, (A_ScreenWidth / 6 * 1), (A_ScreenHeight / 6 * 3)
@@ -119,18 +130,35 @@ c::MouseMove, (A_ScreenWidth / 2), (A_ScreenHeight / 2)
 g::MouseMove, (A_ScreenWidth / 6 * 5), (A_ScreenHeight / 6 * 3)
 z::MouseMove, (A_ScreenWidth / 6 * 1), (A_ScreenHeight / 6 * 5)
 b::MouseMove, (A_ScreenWidth / 6 * 5), (A_ScreenHeight / 6 * 5)
-
 #if
 
 ;###############End Mouse #########################################
 
+; ---------------------------Extra mouse button mapping ---------------------
+
+XButton2::Send {Enter}
+XButton1::Send {Delete}
 
 
-/* --------------------- Real Mouse: buttons and wheels ---------------------
-*/
+; Mouse Buttons as Scroll Up and Down
+; XButton2::
+;     While GetKeyState("XButton2", "P")
+;     {
+;         Send {Wheelup}
+;         sleep 100
+;     }
+; return
 
-; XButton2::Send {Enter}
-; XButton1::Send {Delete}
+; XButton1::
+;     While GetKeyState("XButton1", "P")
+;     {
+;         Send {WheelDown}
+;         sleep 100
+;     }
+; return
+
+Capslock & LButton::click,2
+
 WheelLeft::WheelLeft
 WheelRight::WheelRight
 
@@ -160,38 +188,40 @@ WheelRight::WheelRight
     ^!d::SendInput !H{L}{s}{Enter}
     ^!x::SendInput !H{L}{c}{s}{Enter}
 
-    ;-----------------------------------------
+    ;-------- Control up/down
     Capslock & u::SendInput ^{Up}
     Capslock & o::SendInput ^{Down}
 
-    ;-----------------------------------------
+    ;-------- switch sheets
     Capslock & [::SendInput ^{pgup}
     Capslock & ]::SendInput ^{pgDn}
 
-    ;-----------------------------------------
+    ;------- Copy formula right / down
     Capslock & b::SendInput ^d
     Capslock & t::SendInput ^r
     ; Capslock & g::SendInput {Blind}{Control Down}{Shift Down}
     ; Capslock & g up::SendInput {Blind}{Control up}{Shift up}
+
+    ;------- F2 key
     Capslock & g::SendInput {F2}
 
-    ;-----------------------------------------
+    ;------- Arithmatic operators
     Capslock & F1::SendInput {-}
     Capslock & F2::SendInput {+}
     Capslock & F3::SendInput {*}
     Capslock & F4::SendInput {/}
 
     ; ---------------------------- alt Enter in excel ------------------------------
-Capslock & Enter::
-    If GetKeyState("space","p") = 1
-    {
-        SendInput,{Home}!{Enter}{Up}
-    }
-    Else
-    {
-        SendInput,{End}!{Enter}
-    }
-return
+    Capslock & Enter::
+        If GetKeyState("space","p") = 1
+        {
+            SendInput,{Home}!{Enter}{Up}
+        }
+        Else
+        {
+            SendInput,{End}!{Enter}
+        }
+    return
 
 ; --------------------- Enter and delete rows and columns ----------------------
 
@@ -264,7 +294,7 @@ Capslock & l::SendInput {Blind}{Right}
 Capslock & SC027::SendInput {Blind}^{right}
 ;Capslock & ':: --> Sorround with ""
 
-;Capslock & z:: --> alt tab
+Capslock & z::AltTab
 ;Capslock & x:: SendInput ^x ; single press = find| long press = find selection
 Capslock & c::SendInput {Enter}
 ;Capslock & v:: SendInput {Delete}    ; Single press = delete    | long press = delete line
@@ -277,7 +307,6 @@ Capslock & /::SendInput {Enter}
 
 ; ------------------------------- Special Keys ---------------------------------
 
-
 Capslock & alt::SendInput {Blind}{Alt}
 Capslock & space::return
 Capslock & BS::SendInput {Blind}^{BS}
@@ -287,29 +316,46 @@ Capslock & Tab::SendInput {Blind}{Shift Down}
 Capslock & Tab up::SendInput {Blind}{Shift up}
 
 
-; --------------------- Control Keys -----------------------
+; using alt+u/o to control+tab and control+shift+tab
+!o::SendInput ^{Tab}
+!u::SendInput ^+{Tab}
 
+; ------------------------------use jk as the escape ---------------------------
+
+;; --------------swap Ctrl | Win | Alt keys ----------------------------------
+;LAlt::LControl
+;Lwin::LAlt
+;LControl::LWin
+
+; --------------------- Control Key -----------------------
 
 RAlt::RControl
 
+; ;;---- this is the ideal case. However, sends ";" key when try to do "cntrl+right" shortcut. Eg. when file renaming
+*SC027::
+    Send {Blind}{Ctrl Down}
+    cDown := A_TickCount
+Return
 
-; making ' single press as ' and long press as control
+*SC027 up::
+    If ((A_TickCount-cDown)<200)  ; Modify press time as needed (milliseconds)
+        Send {Blind}{Ctrl Up}{SC027}
+    Else
+        Send {Blind}{Ctrl Up}
+Return
+;
+; ;making ' single press as ' and long press as control
 ; *'::
 ;     Send {Blind}{Ctrl Down}
 ;     cDown := A_TickCount
 ; Return
 
 ; *' up::
-;     If ((A_TickCount-cDown)<80)  ; Modify press time as needed (milliseconds)
+;     If ((A_TickCount-cDown)<200)  ; Modify press time as needed (milliseconds)
 ;         Send {Blind}{Ctrl Up}'
 ;     Else
 ;         Send {Blind}{Ctrl Up}
 ; Return
-
-; Capslock & up::SendInput ^{Up}
-; Capslock & Down::SendInput ^{Down}
-; Capslock & Left::SendInput ^{Left}
-; Capslock & Right::SendInput ^{Right}
 
 ; --------------------------- Close windows and tab ----------------------------
 
@@ -318,14 +364,29 @@ RAlt::RControl
 !+k::WinMinimize, A
 
 CoordMode,Screen
-!x:: ; [Win]+[=]
+; this is the internet copied version of windows move
+; !x::
+;     WinGet, window, ID, A
+;     ; InputBox, width, Resize, Width:, , 140, 130
+;     ; InputBox, height, Resize, Height:, , 140, 130
+;     WinMove, ahk_id %window%, , 2 , 2, A_ScreenWidth-5, A_ScreenHeight-30
+;     ; WinGetPos,,, sizeX, sizeY
+;     ; WinMove, (A_ScreenWidth/2)-(sizeX/2), (A_ScreenHeight/2)-(sizeY/2)
+; return
+
+PlaceWindow(x_pos,y_pos,width,height){
+	taskbar_heigth:=30
     WinGet, window, ID, A
-    ; InputBox, width, Resize, Width:, , 140, 130
-    ; InputBox, height, Resize, Height:, , 140, 130
-    WinMove, ahk_id %window%, , 2 , 2, A_ScreenWidth-5, A_ScreenHeight-30
-    ; WinGetPos,,, sizeX, sizeY
-    ; WinMove, (A_ScreenWidth/2)-(sizeX/2), (A_ScreenHeight/2)-(sizeY/2)
-    return
+    ; WinHide, ahk_id %window%
+    WinRestore, ahk_id %window%
+    WinMove, ahk_id %window%, ,x_pos, y_pos , width, height-taskbar_heigth
+    ; Winshow, ahk_id %window%
+	return
+}
+
+!+1::PlaceWindow(2,2,A_ScreenWidth-4, A_ScreenHeight)
+!+e::PlaceWindow(2,2,A_ScreenWidth/2-4, A_ScreenHeight)
+!+r::PlaceWindow(A_ScreenWidth/2+2,2,A_ScreenWidth/2-4, A_ScreenHeight)
 
 ; ------------------------------- Line Editing ---------------------------------
 
@@ -342,34 +403,15 @@ return
 
 
 
-Capslock & Home::SendInput {Home}{Home}+{End}+{End}^c{End}{Enter}^v{Up}{End} ;duplicate the line and go to the end
-Capslock & End::SendInput {Home}{Home}+{End}+{End}^c{End}{Enter}^v ; duplicate line and to the end of the duplicated line
-Capslock & PgUp::SendInput {End}{space}{Delete}{End} ; bring the below line to the current line
-Capslock & PgDn::SendInput {Home}{Home}{BackSpace}{space}{End} ; Take the current line to the line above
+Capslock & Home::SendInput {Home}{Home}+{End}+{End}^c{End}{Enter}^v{Up}{End} ;duplicate the line up and go to the end of the duplicated
+Capslock & End::SendInput {Home}{Home}+{End}+{End}^c{End}{Enter}^v ; duplicate line down and go to the end of the duplicated line
+Capslock & PgDn::SendInput {End}{space}{Delete}{End} ; bring the below line to the current line
+Capslock & PgUp::SendInput {Home}{Home}{BackSpace}{space}{End} ; Take the current line to the line above
 
 ; --------------------------------- F keys ---------------------------------*/
 
 Capslock & F1:: SendInput {AppsKey}
-Capslock & F2::
-    if (%top% = True)
-    {
-        WinSet, AlwaysOnTop, toggle, A
-        ToolTip ,%AlwayOnTopWindow% `r NOT on top!
-        Sleep, 500
-        ToolTip
-        AlwayOnTopWindow = ""
-        top = False
-    }
-    Else
-    {
-        WinGetTitle, AlwayOnTopWindow, A ; A stands for Active Window
-        WinSet, AlwaysOnTop, toggle, A
-        ToolTip , %AlwayOnTopWindow% `rstays on top!
-        Sleep, 500
-        ToolTip
-        top = True
-    }
-return
+; Capslock & F2:: --------------
 ; Capslock & F3:: --------------
 ; Capslock & F4:: --------------
 ; Capslock & F5:: --------------
@@ -378,14 +420,57 @@ return
 ; Capslock & F8:: --------------
 ; Capslock & F9:: --------------
 ; Capslock & F10:: --------------
-; Capslock & F11:: --------------
-; Capslock & F12::--------------
+capslock & F11::
+	; activate/deactivate command mode
+    if (%commandMode% = True){
+		commandMode = False
+        ToolTip ,Command Mode %commandMode%!
+		sleep 1000
+		ToolTip
+	}
+	else{
+		commandMode = True
+        ToolTip ,Command Mode %commandMode%!
+		sleep 1000
+		ToolTip
+	}
+return
+;CapsLock & F10::MsgBox, %commandMode%
+#if (%commandMode%=True) ; if command mode is on activate the commands
+	:?*:jk::
+		sendInput {Esc}
+	return
+	; :?*:jj::
+	; 	sendInput {Enter}
+	; return
+#IF
 
-/* ------------------------------- Number keys ------------------------------
-*/
+Capslock & F12:: ;window always on top
+    if (%top% = True)
+    {
+        WinSet, AlwaysOnTop, toggle, A
+        ToolTip ,%AlwayOnTopWindow% `r NOT on top!
+        Sleep, 1500
+        ToolTip
+        AlwayOnTopWindow = ""
+        top = False
+    }
+    Else
+    {
+        WinGetTitle, AlwayOnTopWindow, A ; A stands for Active Window
+        WinSet, AlwaysOnTop, toggle, A
+        ToolTip , %AlwayOnTopWindow% `r stays on top!
+        Sleep, 1500
+        ToolTip
+        top = True
+    }
+return
+
+; ------------------------------- Number keys ------------------------------
+
 ; Capslock & `:: SendInput --------------
-Capslock & 1:: SendInput {F2}
-Capslock & 2:: SendInput {AppsKey}
+Capslock & 1:: SendInput {AppsKey}
+Capslock & 2:: SendInput {F2}
 Capslock & 3:: =
 ;Capslock & 4:: Excel F4
 Capslock & 5:: SendInput {Blind}^{Home}
@@ -402,7 +487,6 @@ Capslock & =:: +
 ;                               Special Functions
 ; ------------------------------------------------------------------------------
 
-Capslock & z::AltTab
 
 ; ---- single press=copy word |double press=delete word | hold=Select word -----
 Capslock & t::
@@ -497,7 +581,6 @@ Capslock & g::
     }
     keywait,g
 return
-
 
 
 ; ------------- Single Press = Find | Long Press = Find Selected ---------------
@@ -652,7 +735,7 @@ Capslock & ]::  ; Sourround in {}
     }
     else
     {
-        SendInput ""{left}
+        SendInput {{}{}}{left}
         return
     }
 return
@@ -669,12 +752,16 @@ return
 +^!i:: SendInput {Numpad8}
 +^!o:: SendInput {Numpad9}
 +^!p:: SendInput {*}
++^![:: SendInput {/}
 +^!':: SendInput {-}
 +^!SC027:: SendInput {+}
-+^!/:: SendInput {/}
++^!/:: SendInput {Enter}
 +^!n:: SendInput {BS}
++^!BS:: SendInput {BS}
++^!Enter:: SendInput {Enter}
++^!h:: SendInput {=}
 
-; ------------------------------- Numpad kys --------------------------------
+; ------------------------------- Numberpad keys --------------------------------
 Capslock & Numpad8:: SendInput {Blind}{Up}
 Capslock & Numpad4:: SendInput {Blind}{Left}
 Capslock & Numpad5:: SendInput {Blind}{Down}
@@ -702,7 +789,7 @@ Capslock & NumLock:: SendInput {Esc}
 
 Capslock & w::
 
-    Input Key, L2 T2 ; L3 to limit the input to 3 eys. T5 , wait for 5 seconds
+    Input Key, L2 T2 ; L2 to limit the input to 2 keys. T2 , wait for 2 seconds. Whichever occurs first
     ;----------------------Delete all
     if Key=fa
     {
@@ -830,6 +917,79 @@ Capslock & w::
 
 return
 
+
+; ------------------------------------------------------------------------------
+;                               Run or Raise
+; ------------------------------------------------------------------------------
+#WinActivateForce ; Prevent task bar buttons from flashing when different windows are activated quickly one after the other.
+#1::OpenOrShowAppBasedOnExeName(prog_1)
+#2::OpenOrShowAppBasedOnExeName(prog_2)
+#3::OpenOrShowAppBasedOnExeName(prog_3)
+#4::OpenOrShowAppBasedOnExeName(prog_4)
+#5::OpenOrShowAppBasedOnExeName(prog_5)
+#+f::OpenOrShowAppBasedOnExeName(prog_6)
+
+CoordMode,Screen
+; AppAddress: The address to the .exe (Eg: "C:\Windows\System32\SnippingTool.exe")
+OpenOrShowAppBasedOnExeName(AppAddress)
+{
+    AppExeName := SubStr(AppAddress, InStr(AppAddress, "\", false, -1) + 1)
+    IfWinExist ahk_exe %AppExeName% ; if window currently exist
+    {
+        IfWinActive ; if the window is active
+        {
+            WinGet, ActiveProcess, ProcessName, A
+            WinGet, OpenWindowsAmount, Count, ahk_exe %ActiveProcess%
+
+            If OpenWindowsAmount = 1 ; If only one Window exist, do nothing
+                Return
+            Else ; if there are multiple windows prewsent cycle between the windows
+            {
+                WinGetTitle, FullTitle, A
+                AppTitle := SubStr(FullTitle, InStr(FullTitle, " ", false, -1) + 1)
+                SetTitleMatchMode, 2
+                WinGet, WindowsWithSameTitleList, List, %AppTitle%
+                If WindowsWithSameTitleList > 1 ; If several Window of same type (title checking) exist
+                {
+                    WinActivate, % "ahk_id " WindowsWithSameTitleList%WindowsWithSameTitleList%	; Activate next Window
+                }
+            }
+            Return
+        }
+        else ; if the window exists,but not active --> activate the window
+        {
+            WinActivate
+
+			;;; uncomment this section to bring the window to the main screen (if required)
+			; WinGet, window, ID, A
+			; WinMove, ahk_id %window%, , 2 , 2, A_ScreenWidth-5, A_ScreenHeight-30
+
+            Return
+        }
+    }
+    else ; if program doesnt exist try to run it
+    {
+        Run, %AppAddress%, UseErrorLevel
+        If ErrorLevel
+        {
+            Msgbox, File %AppExeName% Not Found
+            Return
+        }
+        else
+        {
+            WinWait, ahk_exe %AppExeName%
+            WinActivate ahk_exe %AppExeName%
+
+			;;; uncomment this section to brings the window to the main screen (if required)
+			; WinGet, window, ID, A
+			; WinMove, ahk_id %window%, , 2 , 2, A_ScreenWidth-5, A_ScreenHeight-30
+
+            Return
+        }
+    }
+}
+
+
 ; ------------------------------------------------------------------------------
 ;                               Search Functions
 ; ------------------------------------------------------------------------------
@@ -848,7 +1008,7 @@ return
 ; ----------------------- Youtube Search Selected Words ------------------------
 
 
-#^y::
+#+y::
     OldClipboard:= Clipboard
     Clipboard:= ""
     Send, ^c ;copies selected text
@@ -863,7 +1023,7 @@ return
 
 ; ------------------------------- Google Search --------------------------------
 
-#^s::
+#s::
     InputBox, Search, Google Search, , , 400, 100
     if not ErrorLevel ; when cancel is not pressed
     {
@@ -874,7 +1034,7 @@ return
 
 ; ------------------------ Google Search Selected Word -------------------------
 
-#s::
+#+s::
     OldClipboard:= Clipboard
     Clipboard:= ""
     SendInput, ^c ;copies selected text
@@ -960,7 +1120,7 @@ return
 ;                      Gather text to any preselected app
 ; ------------------------------------------------------------------------------
 
-+!c::
++!c::  ; alt+shift+c to copy to the selected window
 
     If !WinTag
     {
@@ -993,7 +1153,7 @@ return
         ; Check again, if ON active then paste else error
         IfWinActive, %winTitlePart%
         {
-            Send, ^v`r ; Use sendplay to avoid unexpected interactions with Win key
+            Send, ^v`r`r ; Use sendplay to avoid unexpected interactions with Win key
             ; Switch window back to previously active
             WinActivate, %actWin%
         }
@@ -1006,15 +1166,14 @@ return
     Clipboard := OldClipboard
 return
 
-^#+z::
-    Click, %A_CaretX%, %A_CaretY%
+^#+z:: ;Ctrl+win+shift+z tag a window as a copy destination
+    ; Click, %A_CaretX%, %A_CaretY%
     MouseGetPos, , , WinTag, Control
     WinGetTitle, winTitlePart, ahk_id %WinTag%
     MsgBox, , Capsy CopyToApp, " %winTitlePart% " is tagged as the destination window!`r - Press < Alt+Shift+C > to copy selection to this app.`r - Press < Ctrl+Win+Shift+R > to reset.
-    ; MsgBox, , Capsy CopyToApp, < %winTitlePart% > is tagged as the destination window!`rUnique ID: %WinTag%`rControl: %Control%`rCtrl+Win+Alt+R to activate.,3
 return
 
-^#+r::
+^#+r:: ;Ctrl+win+shift+r tag a window as a reset destination
     WinActivate, ahk_id %WinTag%
     MsgBox, , Capsy CopyToApp, CopyToApp windows is reset!, 3
     WinTag:=""
