@@ -25,7 +25,7 @@ commandMode=False
 taskbar_heigth:=30
 
 ;run or raise function - Programs Launched
-prog_1:="C:\Program Files\Microsoft Office\root\Office16\EXCEL.EXE"
+prog_1:= "C:\Program Files\Microsoft Office\root\Office16\EXCEL.EXE"
 prog_2:="C:\Scoop\apps\freecommander\current\FreeCommander.exe"
 prog_3:="C:\Program Files (x86)\SAP\FrontEnd\SapGui\saplogon.exe"
 prog_4:="C:\Program Files\Microsoft Office\root\Office16\OUTLOOK.EXE"
