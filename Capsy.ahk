@@ -11,7 +11,7 @@
 #Persistent
 ; SendMode Input ; with this the launcher keys will not work with the mouse section d: f: etc.  (w)
 SetCapsLockState, AlwaysOff
-SetScrollLockState, AlwaysOff
+; SetScrollLockState, AlwaysOff
 
 CoordMode,Mouse,Screen
 SetBatchLines -1
@@ -382,9 +382,11 @@ PlaceWindow(x_pos,y_pos,width,height){
 	return
 }
 
+#if (%commandMode%=True) ; if command mode is on activate the commands
 !+1::PlaceWindow(2,2,A_ScreenWidth-4, A_ScreenHeight)
 !+e::PlaceWindow(2,2,A_ScreenWidth/2-4, A_ScreenHeight)
 !+r::PlaceWindow(A_ScreenWidth/2+2,2,A_ScreenWidth/2-4, A_ScreenHeight)
+#if
 
 ; ------------------------------- Line Editing ---------------------------------
 
