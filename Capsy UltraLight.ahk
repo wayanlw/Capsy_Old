@@ -93,8 +93,8 @@ Capslock & Left::SendInput {Home}{Home}{BackSpace}{space}{end}
 
 ; -------------------------------- Number Row ----------------------------------
 
-Capslock & 1:: SendInput {F2}
-Capslock & 2:: SendInput {AppsKey}
+Capslock & 1:: SendInput {AppsKey}
+Capslock & 2:: SendInput {F2}
 Capslock & 3:: =
 Capslock & 4:: SendInput {Blind}^{Home}
 Capslock & 5:: SendInput {Blind}^{End}

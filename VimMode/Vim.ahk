@@ -12,20 +12,20 @@ SetScrollLockState, AlwaysOff
 ~$CapsLock::
     KeyWait, CapsLock,D
 
-    GetKeyState, state, CapsLock, T 
+    GetKeyState, state, CapsLock, T
 
-    if state = D 
-        ToolTip, <<<<<<< VIM--MODE >>>>>>>>  
+    if state = D
+        ToolTip, <<<<<<< VIM--MODE >>>>>>>>
 
-    if state = U 
+    if state = U
         ToolTip, I
 
-    SetTimer, RemoveToolTip, 2000 
-return 
+    SetTimer, RemoveToolTip, 2000
+return
 
-RemoveToolTip: 
-    SetTimer, RemoveToolTip, Off 
-    ToolTip 
+RemoveToolTip:
+    SetTimer, RemoveToolTip, Off
+    ToolTip
 return
 
 SetCapsLockOff(){
@@ -43,11 +43,11 @@ SetCapsLockOn(){
 #If GetKeyState("Capslock","T") = 1
 
 h::SendInput {Blind}{Left} ; SendInput {Blind}^{Left}
-j::SendInput {Blind}{Down} 
+j::SendInput {Blind}{Down}
 k::SendInput {Blind}{Up}
 l::SendInput {Blind}{Right}
-+h::SendInput {Blind}{Left} 
-+j::SendInput {Blind}{Down} 
++h::SendInput {Blind}{Left}
++j::SendInput {Blind}{Down}
 +k::SendInput {Blind}{Up}
 +l::SendInput {Blind}{Right}
 i::SetCapsLockOff()
@@ -135,7 +135,7 @@ Return
 y::
     keywait,y
     keywait, y, d ,t 0.2
-    if errorlevel 
+    if errorlevel
         Sendinput, ^c
     else
         Sendinput, {Home}+{End}^c
@@ -156,8 +156,8 @@ y & a::sendinput ^a^c
 d::
     keywait,d
     keywait, d, d ,t 0.2
-    if errorlevel 
-        Sendinput, ^x 
+    if errorlevel
+        Sendinput, ^x
     else
         Sendinput, {Home}+{End}^x
 return
@@ -165,8 +165,8 @@ return
 ;------------------- Delete Related
 x:: sendinput {delete}
 
-+x:: 
-    sendinput {delete} 
++x::
+    sendinput {delete}
     SetCapsLockOff()
 Return
 
@@ -175,7 +175,7 @@ Return
 g::
     keywait,g
     keywait, g, d ,t 0.2
-    if errorlevel 
+    if errorlevel
         return
     else
         Sendinput, ^{Home}
@@ -188,7 +188,7 @@ c::
     SetCapsLockOff()
 Return
 
-+c:: 
++c::
     sendinput, +{End}{Delete}
     SetCapsLockState,off
 return
@@ -196,18 +196,18 @@ return
 v:: sendinput ^v
 
 ;--------------- Find the next occurance of the current word
-f:: 
+f::
     sendinput ^f
     SetCapsLockOff()
     return
 +f::
-    sendinput ^{right}+^{left}^c 
+    sendinput ^{right}+^{left}^c
     sendinput ^f
     sleep 100
     sendinput ^v{Enter}
 return
 
-#If 
+#If
 
 
 ; Esc::

@@ -11,7 +11,7 @@
 #Persistent
 ; SendMode Input ; with this the launcher keys will not work with the mouse section d: f: etc.  (w)
 SetCapsLockState, AlwaysOff
-SetScrollLockState, AlwaysOff
+; SetScrollLockState, AlwaysOff
 
 CoordMode,Mouse,Screen
 SetBatchLines -1
@@ -330,19 +330,19 @@ Capslock & Tab up::SendInput {Blind}{Shift up}
 
 RAlt::RControl
 
-; ;;---- this is the ideal case.
-*SC027::
-    Send {Blind}{Ctrl Down}
-    cDown := A_TickCount
-Return
+; ;;---- this is the ideal case. However, randomly sends ";" key when try to do "cntrl+right" shortcut.
+; *SC027::
+;     Send {Blind}{Ctrl Down}
+;     cDown := A_TickCount
+; Return
 
-*SC027 up::
-    If ((A_TickCount-cDown)<200)  ; Modify press time as needed (milliseconds)
-        Send {Blind}{Ctrl Up}{SC027}
-    Else
-        Send {Blind}{Ctrl Up}
-Return
-
+; *SC027 up::
+;     If ((A_TickCount-cDown)<200)  ; Modify press time as needed (milliseconds)
+;         Send {Blind}{Ctrl Up}{SC027}
+;     Else
+;         Send {Blind}{Ctrl Up}
+; Return
+; ;
 ; ;making ' single press as ' and long press as control
 ; *'::
 ;     Send {Blind}{Ctrl Down}
@@ -382,9 +382,11 @@ PlaceWindow(x_pos,y_pos,width,height){
 	return
 }
 
+#if (%commandMode%=True) ; if command mode is on activate the commands
 !+1::PlaceWindow(2,2,A_ScreenWidth-4, A_ScreenHeight)
 !+e::PlaceWindow(2,2,A_ScreenWidth/2-4, A_ScreenHeight)
 !+r::PlaceWindow(A_ScreenWidth/2+2,2,A_ScreenWidth/2-4, A_ScreenHeight)
+#if
 
 ; ------------------------------- Line Editing ---------------------------------
 
