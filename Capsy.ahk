@@ -701,8 +701,8 @@ Capslock & Numpad7:: SendInput {Blind}^{Left}
 Capslock & Numpad2:: SendInput {Blind}^{Down}
 Capslock & Numpad9:: SendInput {Blind}^{Right}
 
-Capslock & Numpad1:: SendInput {Blind}^{BS}
-Capslock & Numpad3:: SendInput {Blind}^{Del}
+Capslock & Numpad1:: SendInput {Blind}{BS}
+Capslock & Numpad3:: SendInput {Blind}{Del}
 
 Capslock & Numpad0::SendInput {F2}
 
