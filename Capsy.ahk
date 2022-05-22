@@ -365,8 +365,8 @@ ww_PlaceWindow(x_pos,y_pos,width,height){
 #if
 
 
-^!8::wp_WinPreviouslyActive(A_ScreenWidth/2,A_ScreenHeight)
-^!9::wp_WinPreviouslyActive(A_ScreenWidth,A_ScreenHeight)
+!+a::wp_WinPreviouslyActive(A_ScreenWidth/2,A_ScreenHeight)
+!+d::wp_WinPreviouslyActive(A_ScreenWidth,A_ScreenHeight)
 
 wp_WinPreviouslyActive(width,height)
 {
