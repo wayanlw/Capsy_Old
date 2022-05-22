@@ -77,6 +77,9 @@ WheelRight::WheelRight
     Capslock & [::SendInput ^{pgup}
     Capslock & ]::SendInput ^{pgDn}
 
+    !,::SendInput ^{pgup}
+    !.::SendInput ^{pgDn}
+
     ;------- Copy formula right / down
     Capslock & b::SendInput ^d
     Capslock & t::SendInput ^r
@@ -122,7 +125,7 @@ return
 ; ------------------------------------------------------------------------------
 
 Capslock & q::SendInput {Esc}
-Capslock & w::SendInput ^a
+;Capslock & w::Launcher
 Capslock & e::SendInput ^z ; This has repetitive press. Sould be a comfortable place.
 Capslock & r::SendInput ^y ; redo
 ;Capslock & t:: The Word Key --> single press = copy word | double press = delete word | long press = select word
@@ -185,7 +188,7 @@ RAlt::RControl
 ; ──────────────────────────── windows placement ─────────────────────────── */
 
 CoordMode,Screen
-PlaceWindow(x_pos,y_pos,width,height){
+ww_PlaceWindow(x_pos,y_pos,width,height){
     WinGet, window, ID, A
     ; WinHide, ahk_id %window%
     WinRestore, ahk_id %window%
@@ -195,12 +198,12 @@ PlaceWindow(x_pos,y_pos,width,height){
 }
 
 #if (%commandMode%=True) ; if command mode is on activate the commands
-!+1::PlaceWindow(2,2,A_ScreenWidth-4, A_ScreenHeight)
-!+e::PlaceWindow(2,2,A_ScreenWidth/2-4, A_ScreenHeight)
-!+r::PlaceWindow(A_ScreenWidth/2+2,2,A_ScreenWidth/2-4, A_ScreenHeight)
+!+1::ww_PlaceWindow(2,2,A_ScreenWidth-4, A_ScreenHeight)
+!+e::ww_PlaceWindow(2,2,A_ScreenWidth/2-4, A_ScreenHeight)
+!+r::ww_PlaceWindow(A_ScreenWidth/2+2,2,A_ScreenWidth/2-4, A_ScreenHeight)
 #if
 
-; ────────────────────────────── Line Editing ────────────────────────────── */
+; ------------------------------- Line Editing ---------------------------------
 
 Capslock & Enter::
     If GetKeyState("space","p") = 1
@@ -500,6 +503,108 @@ Capslock & NumpadEnter:: SendInput {Blind}^{Enter}
 
 Capslock & NumLock:: SendInput {Esc}
 
+Capslock & w::
+
+    Input Key, L2 T2 ; L2 to limit the input to 2 keys. T2 , wait for 2 seconds. Whichever occurs first
+    ;----------------------Delete all
+    if Key=fa
+    {
+        SendInput ^a{delete}
+        return
+    }
+    ;----------------------Delete to Start
+    else if key=fs
+    {
+        SendInput, +{Home}+{Home}{delete}
+        return
+    }
+    ;----------------------Delete to End
+    else if key=fe
+    {
+        SendInput, +{End}+{End}{delete}
+        return
+    }
+
+    ;-----------------------copy all
+    else if key=da
+    {
+        SendInput, ^a^c
+        return
+    }
+    ;-----------------------copy to start
+    else if key=ds
+    {
+        SendInput, +{Home}+{Home}^c
+        return
+    }
+    ;-----------------------copy to End
+    else if key=df
+    {
+        SendInput, +{End}+{End}^c
+        return
+    }
+
+    ;----------------------- cut all
+    else if key=va
+    {
+        SendInput, ^a^x
+        return
+    }
+    ;----------------------- cut line
+    else if key=vv
+    {
+        SendInput, {Home}{Home}+{End}+{End}^x
+        return
+    }
+    ;----------------------- cut to start
+    else if key=vs
+    {
+        SendInput, +{Home}+{Home}^x
+        return
+    }
+    ;----------------------- cut to End
+    else if key=vd
+    {
+        SendInput, +{End}+{End}^x
+        return
+    }
+
+    ;----------------------- Select all
+    else if key=sa
+    {
+        SendInput, ^a
+        return
+    }
+
+; ----------------------------Excel Rows | Cols
+    else if key=dc
+    {
+        SendInput, ^{space}^{-}
+        return
+    }
+
+    else if key=dr
+    {
+        SendInput, +{space}^{-}
+        return
+    }
+    else if key=ec
+    {
+        SendInput, ^{space}
+        sleep 100
+        SendInput, !H{I}{C}
+        return
+    }
+
+    else if key=er
+    {
+        SendInput,+{space}
+        sleep 100
+        SendInput, !H{I}{R}
+        return
+    }
+
+return
 
 ; ------------------------------------------------------------------------------
 ;                               Run or Raise

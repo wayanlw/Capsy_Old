@@ -374,7 +374,7 @@ CoordMode,Screen
 ;     ; WinMove, (A_ScreenWidth/2)-(sizeX/2), (A_ScreenHeight/2)-(sizeY/2)
 ; return
 
-PlaceWindow(x_pos,y_pos,width,height){
+ww_PlaceWindow(x_pos,y_pos,width,height){
     WinGet, window, ID, A
     ; WinHide, ahk_id %window%
     WinRestore, ahk_id %window%
@@ -383,9 +383,9 @@ PlaceWindow(x_pos,y_pos,width,height){
 	return
 }
 
-!+1::PlaceWindow(2,2,A_ScreenWidth-4, A_ScreenHeight)
-!+e::PlaceWindow(2,2,A_ScreenWidth/2-4, A_ScreenHeight)
-!+r::PlaceWindow(A_ScreenWidth/2+2,2,A_ScreenWidth/2-4, A_ScreenHeight)
+!+1::ww_PlaceWindow(2,2,A_ScreenWidth-4, A_ScreenHeight)
+!+e::ww_PlaceWindow(2,2,A_ScreenWidth/2-4, A_ScreenHeight)
+!+r::ww_PlaceWindow(A_ScreenWidth/2+2,2,A_ScreenWidth/2-4, A_ScreenHeight)
 
 ; ------------------------------- Line Editing ---------------------------------
 
