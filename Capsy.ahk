@@ -365,8 +365,12 @@ ww_PlaceWindow(x_pos,y_pos,width,height){
 #if
 
 
-!+a::wp_WinPreviouslyActive(A_ScreenWidth/2,A_ScreenHeight)
-!+d::wp_WinPreviouslyActive(A_ScreenWidth,A_ScreenHeight)
+; !+a::wp_WinPreviouslyActive(A_ScreenWidth/2,A_ScreenHeight)
+; !+d::wp_WinPreviouslyActive(A_ScreenWidth,A_ScreenHeight)
+!+a::altertab(A_ScreenWidth/2,A_ScreenHeight)
+!+d::altertab(A_ScreenWidth,A_ScreenHeight)
+
+
 
 wp_WinPreviouslyActive(width,height)
 {
@@ -401,6 +405,15 @@ wp_WinPreviouslyActive(width,height)
     ; ----- ww: Uncomment the below section if you want to reactivate the previously active window
     ; WinExist("ahk_id " . win%active%)
     ; WinActivate, ahk_id %active%
+}
+
+altertab(width,height)
+{
+	ww_PlaceWindow(width+2,2,width-4, height)
+	Sleep, 100
+	send, {AltDown}{Tab}{AltUp}
+	Sleep, 100
+	ww_PlaceWindow(2,2,width-4, height)
 }
 
 
