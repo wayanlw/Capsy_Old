@@ -334,7 +334,8 @@ RAlt::RControl
 
 !+q::SendInput !{F4}
 !q::SendInput ^w
-;!+k::WinMinimize, A
+
+; ---------------------------- windows placement --------------------------- */
 
 CoordMode,Screen
 ; this is the internet copied version of windows move
@@ -410,9 +411,9 @@ wp_WinPreviouslyActive(width,height)
 altertab(width,height)
 {
 	ww_PlaceWindow(width+2,2,width-4, height)
-	Sleep, 100
+	Sleep, 150
 	send, {AltDown}{Tab}{AltUp}
-	Sleep, 100
+	Sleep, 150
 	ww_PlaceWindow(2,2,width-4, height)
 }
 
@@ -514,15 +515,27 @@ Capslock & =:: +
 ;                               Special Functions
 ; ------------------------------------------------------------------------------
 
-; ------------- single press=copy word |double press=delete word ---------------
+; ----- SinglePress=copy word|DoublePress=delete word|longPress=select word ----
+
 Capslock & t::
-    keywait,t
-    keywait, t, d ,t 0.15
-    if errorlevel
-        ; single press to copy word
+    keywait, t, t 0.5
+    if errorlevel{
+        ;long press to select word
+        SendInput, ^{Left}+^{Right}
+    }
+    else{
+        keywait,t
+        keywait, t, d ,t 0.15
+        if errorlevel
+            ; single press to copy word
         SendInput, ^{Left}+^{Right}^c
-    else
-        SendInput, ^{Left}+^{Right}^{Del}
+        else{
+            ; double press to delet word
+            SendInput, ^{Left}+^{Right}^{Del}
+            return
+        }
+    }
+    keywait,t
 return
 
 ; ---------------- Single Press = Save| Double Press = Save As -----------------
@@ -577,7 +590,18 @@ capslock & x::
     }
     else{
         ;short press to copy
-        sendinput, ^f
+        OldClipboard := Clipboard
+        Clipboard := ""
+        Send ^c
+        ClipWait, 1
+        Clipboard = '%Clipboard%'
+		Send ^f
+        Send ^v
+		Sleep 500
+		Send Return
+        Clipboard := OldClipboard
+        OldClipboard := ""
+        ; Send, ^c
         return
     }
     keywait,x
@@ -820,7 +844,6 @@ Capslock & w::
         SendInput, ^a
         return
     }
-
     ;----------------------- Select to start
 
     else if key=ss

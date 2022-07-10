@@ -125,7 +125,7 @@ return
 ; ------------------------------------------------------------------------------
 
 Capslock & q::SendInput {Esc}
-; Capslock & w::SendInput ^a
+;Capslock & w::Launcher
 Capslock & e::SendInput ^z ; This has repetitive press. Sould be a comfortable place.
 Capslock & r::SendInput ^y ; redo
 ;Capslock & t:: The Word Key --> single press = copy word | double press = delete word | long press = select word
@@ -188,7 +188,7 @@ RAlt::RControl
 ; ──────────────────────────── windows placement ─────────────────────────── */
 
 CoordMode,Screen
-PlaceWindow(x_pos,y_pos,width,height){
+ww_PlaceWindow(x_pos,y_pos,width,height){
     WinGet, window, ID, A
     ; WinHide, ahk_id %window%
     WinRestore, ahk_id %window%
@@ -198,12 +198,66 @@ PlaceWindow(x_pos,y_pos,width,height){
 }
 
 #if (%commandMode%=True) ; if command mode is on activate the commands
-!+1::PlaceWindow(2,2,A_ScreenWidth-4, A_ScreenHeight)
-!+e::PlaceWindow(2,2,A_ScreenWidth/2-4, A_ScreenHeight)
-!+r::PlaceWindow(A_ScreenWidth/2+2,2,A_ScreenWidth/2-4, A_ScreenHeight)
+!+1::ww_PlaceWindow(2,2,A_ScreenWidth-4, A_ScreenHeight)
+!+2::ww_PlaceWindow(A_ScreenWidth,2,A_ScreenWidth-4, A_ScreenHeight)
+!+e::ww_PlaceWindow(2,2,A_ScreenWidth/2-4, A_ScreenHeight)
+!+r::ww_PlaceWindow(A_ScreenWidth/2+2,2,A_ScreenWidth/2-4, A_ScreenHeight)
 #if
 
-; ────────────────────────────── Line Editing ────────────────────────────── */
+
+; !+a::wp_WinPreviouslyActive(A_ScreenWidth/2,A_ScreenHeight)
+; !+d::wp_WinPreviouslyActive(A_ScreenWidth,A_ScreenHeight)
+!+a::altertab(A_ScreenWidth/2,A_ScreenHeight)
+!+d::altertab(A_ScreenWidth,A_ScreenHeight)
+
+
+
+wp_WinPreviouslyActive(width,height)
+{
+	; place the active window
+    ww_PlaceWindow(width+2,2,width-4, height)
+
+	; get the hwind (ahk_id) of the Active Window
+    active := WinActive("A")
+
+    WinGet, win, List
+
+    ; Find the active window.
+    ; (Might not be win1 if there are always-on-top windows?)
+    Loop, %win%
+        if (win%A_Index% = active)
+    {
+        if (A_Index < win)
+            N := A_Index+1
+        ; hack for PSPad: +1 seems to get the document (child!) window, so do +2
+        ifWinActive, ahk_class TfPSPad
+            N += 1
+        break
+    }
+
+    ; Use WinExist to set Last Found Window (for consistency with WinActive())
+    ; return WinExist("ahk_id " . win%N%)
+    WinExist("ahk_id " . win%N%)
+    WinActivate
+    ; ww_PlaceWindow(2,2,width/2-4, height)
+    ww_PlaceWindow(2,2,width-4, height)
+
+    ; ----- ww: Uncomment the below section if you want to reactivate the previously active window
+    ; WinExist("ahk_id " . win%active%)
+    ; WinActivate, ahk_id %active%
+}
+
+altertab(width,height)
+{
+	ww_PlaceWindow(width+2,2,width-4, height)
+	Sleep, 150
+	send, {AltDown}{Tab}{AltUp}
+	Sleep, 150
+	ww_PlaceWindow(2,2,width-4, height)
+}
+
+
+; ------------------------------- Line Editing ---------------------------------
 
 Capslock & Enter::
     If GetKeyState("space","p") = 1
@@ -481,6 +535,26 @@ Capslock & ]::  ; Sourround in {}
     }
 return
 
+; ------------------------------- Num lock keys --------------------------------
++^!Space:: SendInput {Numpad0}
++^!m:: SendInput {Numpad1}
++^!,:: SendInput {Numpad2}
++^!.:: SendInput {Numpad3}
++^!j:: SendInput {Numpad4}
++^!k:: SendInput {Numpad5}
++^!l:: SendInput {Numpad6}
++^!u:: SendInput {Numpad7}
++^!i:: SendInput {Numpad8}
++^!o:: SendInput {Numpad9}
++^!p:: SendInput {*}
++^![:: SendInput {/}
++^!':: SendInput {-}
++^!SC027:: SendInput {+}
++^!/:: SendInput {Enter}
++^!n:: SendInput {BS}
++^!BS:: SendInput {BS}
++^!Enter:: SendInput {Enter}
++^!h:: SendInput {=}
 
 ; ------------------------------- Numberpad keys --------------------------------
 Capslock & Numpad8:: SendInput {Blind}{Up}
@@ -502,6 +576,11 @@ Capslock & NumpadAdd:: SendInput {Blind}{=}
 Capslock & NumpadEnter:: SendInput {Blind}^{Enter}
 
 Capslock & NumLock:: SendInput {Esc}
+
+
+; ------------------------------------------------------------------------------
+;                                   Launcher
+; ------------------------------------------------------------------------------
 
 Capslock & w::
 
@@ -573,6 +652,19 @@ Capslock & w::
     else if key=sa
     {
         SendInput, ^a
+        return
+    }
+    ;----------------------- Select to start
+
+    else if key=ss
+    {
+        SendInput, +{Home}+{Home}
+        return
+    }
+    ;----------------------- Select to End
+    else if key=se
+    {
+        SendInput, +{End}+{End}
         return
     }
 

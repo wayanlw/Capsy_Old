@@ -22,7 +22,7 @@ SetBatchLines -1
 commandMode=False
 
 ;window management function task bar height
-taskbar_heigth:=30
+taskbar_height:=35
 
 ;run or raise function - Programs Launched
 prog_1:="C:\Program Files\Microsoft Office\root\Office16\EXCEL.EXE"
@@ -177,15 +177,15 @@ WheelRight::WheelRight
 
     ;-----------------pasting ----------------
 
-    +!v::SendInput ^!v{v}{Enter}
-    ^!f::SendInput ^!v{f}{Enter}
-    ^!t::SendInput ^!v{t}{Enter}
-    ^!z::SendInput ^!v{l}
+    +!v::SendInput ^!v{v}{Enter} ; paste values
+    ^!f::SendInput ^!v{f}{Enter} ; paste formulas
+    ^!t::SendInput ^!v{t}{Enter} ; paste formatting
+    ^!z::SendInput ^!v{l}		;paste links
 
     ;--------Conditional formating ------------
-    ^!s::SendInput !H{L}{d}{Enter}
-    ^!d::SendInput !H{L}{s}{Enter}
-    ^!x::SendInput !H{L}{c}{s}{Enter}
+    ; ^!s::SendInput ^{space}^{-}
+    ; ^!d::SendInput +{space}^{-}
+    ; ^!x::SendInput !H{L}{c}{s}{Enter}
 
     ;-------- Control up/down
     Capslock & u::SendInput ^{Up}
@@ -194,6 +194,9 @@ WheelRight::WheelRight
     ;-------- switch sheets
     Capslock & [::SendInput ^{pgup}
     Capslock & ]::SendInput ^{pgDn}
+
+    !,::SendInput ^{pgup}
+    !.::SendInput ^{pgDn}
 
     ;------- Copy formula right / down
     Capslock & b::SendInput ^d
@@ -221,34 +224,6 @@ WheelRight::WheelRight
             SendInput,{End}!{Enter}
         }
     return
-
-; --------------------- Enter and delete rows and columns ----------------------
-
-; Capslock & up::
-;     If GetKeyState("SPACE","p") = 1
-;     {
-;         SendInput {Up}+{space}^{-}{Up}{down}
-;         RETURN
-;     }
-;     Else
-;     {
-;         SendInput +{space}^+{=}{down}
-;         RETURN
-;     }
-; return
-
-; Capslock & left::
-;     If GetKeyState("SPACE","p") = 1
-;     {
-;         SendInput {left}^{space}^{-}{left}{right}
-;         RETURN
-;     }
-;     Else
-;     {
-;         SendInput ^{space}^+{=}{right}
-;         RETURN
-;     }
-; return
 
 #IfWinActive
 
@@ -327,7 +302,6 @@ Capslock & Tab up::SendInput {Blind}{Shift up}
 ;LControl::LWin
 
 ; --------------------- Control Key -----------------------
-
 RAlt::RControl
 
 ; ;;---- this is the ideal case. However, randomly sends ";" key when try to do "cntrl+right" shortcut.
@@ -360,7 +334,7 @@ RAlt::RControl
 
 !+q::SendInput !{F4}
 !q::SendInput ^w
-!+k::WinMinimize, A
+;!+k::WinMinimize, A
 
 CoordMode,Screen
 ; this is the internet copied version of windows move
@@ -373,20 +347,75 @@ CoordMode,Screen
 ;     ; WinMove, (A_ScreenWidth/2)-(sizeX/2), (A_ScreenHeight/2)-(sizeY/2)
 ; return
 
-PlaceWindow(x_pos,y_pos,width,height){
+ww_PlaceWindow(x_pos,y_pos,width,height){
+	global taskbar_height ; to use a global variable inside a function keyword "global" should be used
     WinGet, window, ID, A
     ; WinHide, ahk_id %window%
     WinRestore, ahk_id %window%
-    WinMove, ahk_id %window%, ,x_pos, y_pos , width, height-taskbar_heigth
+    WinMove, ahk_id %window%, ,x_pos, y_pos , width, height-taskbar_height
     ; Winshow, ahk_id %window%
 	return
 }
 
 #if (%commandMode%=True) ; if command mode is on activate the commands
-!+1::PlaceWindow(2,2,A_ScreenWidth-4, A_ScreenHeight)
-!+e::PlaceWindow(2,2,A_ScreenWidth/2-4, A_ScreenHeight)
-!+r::PlaceWindow(A_ScreenWidth/2+2,2,A_ScreenWidth/2-4, A_ScreenHeight)
+!+1::ww_PlaceWindow(2,2,A_ScreenWidth-4, A_ScreenHeight)
+!+2::ww_PlaceWindow(A_ScreenWidth,2,A_ScreenWidth-4, A_ScreenHeight)
+!+e::ww_PlaceWindow(2,2,A_ScreenWidth/2-4, A_ScreenHeight)
+!+r::ww_PlaceWindow(A_ScreenWidth/2+2,2,A_ScreenWidth/2-4, A_ScreenHeight)
 #if
+
+
+; !+a::wp_WinPreviouslyActive(A_ScreenWidth/2,A_ScreenHeight)
+; !+d::wp_WinPreviouslyActive(A_ScreenWidth,A_ScreenHeight)
+!+a::altertab(A_ScreenWidth/2,A_ScreenHeight)
+!+d::altertab(A_ScreenWidth,A_ScreenHeight)
+
+
+
+wp_WinPreviouslyActive(width,height)
+{
+	; place the active window
+    ww_PlaceWindow(width+2,2,width-4, height)
+
+	; get the hwind (ahk_id) of the Active Window
+    active := WinActive("A")
+
+    WinGet, win, List
+
+    ; Find the active window.
+    ; (Might not be win1 if there are always-on-top windows?)
+    Loop, %win%
+        if (win%A_Index% = active)
+    {
+        if (A_Index < win)
+            N := A_Index+1
+        ; hack for PSPad: +1 seems to get the document (child!) window, so do +2
+        ifWinActive, ahk_class TfPSPad
+            N += 1
+        break
+    }
+
+    ; Use WinExist to set Last Found Window (for consistency with WinActive())
+    ; return WinExist("ahk_id " . win%N%)
+    WinExist("ahk_id " . win%N%)
+    WinActivate
+    ; ww_PlaceWindow(2,2,width/2-4, height)
+    ww_PlaceWindow(2,2,width-4, height)
+
+    ; ----- ww: Uncomment the below section if you want to reactivate the previously active window
+    ; WinExist("ahk_id " . win%active%)
+    ; WinActivate, ahk_id %active%
+}
+
+altertab(width,height)
+{
+	ww_PlaceWindow(width+2,2,width-4, height)
+	Sleep, 150
+	send, {AltDown}{Tab}{AltUp}
+	Sleep, 150
+	ww_PlaceWindow(2,2,width-4, height)
+}
+
 
 ; ------------------------------- Line Editing ---------------------------------
 
@@ -400,8 +429,6 @@ Capslock & Enter::
         Send,{End}{End}{Enter}
     }
 return
-
-
 
 Capslock & Home::SendInput {Home}{Home}+{End}+{End}^c{End}{Enter}^v{Up}{End} ;duplicate the line up and go to the end of the duplicated
 Capslock & End::SendInput {Home}{Home}+{End}+{End}^c{End}{Enter}^v ; duplicate line down and go to the end of the duplicated line
@@ -435,7 +462,7 @@ capslock & F11::
 		ToolTip
 	}
 return
-;CapsLock & F10::MsgBox, %commandMode%
+CapsLock & F10::MsgBox, %commandMode%
 #if (%commandMode%=True) ; if command mode is on activate the commands
 	:?*:jk::
 		sendInput {Esc}
@@ -486,7 +513,6 @@ Capslock & =:: +
 ; ------------------------------------------------------------------------------
 ;                               Special Functions
 ; ------------------------------------------------------------------------------
-
 
 ; ------------- single press=copy word |double press=delete word ---------------
 Capslock & t::
@@ -751,7 +777,7 @@ Capslock & w::
         return
     }
     ;-----------------------copy to End
-    else if key=de
+    else if key=df
     {
         SendInput, +{End}+{End}^c
         return
@@ -782,7 +808,7 @@ Capslock & w::
         return
     }
     ;----------------------- cut to End
-    else if key=ve
+    else if key=vd
     {
         SendInput, +{End}+{End}^x
         return
@@ -794,7 +820,6 @@ Capslock & w::
         SendInput, ^a
         return
     }
-
     ;----------------------- Select to start
 
     else if key=ss
@@ -845,7 +870,6 @@ Capslock & w::
     }
 
 return
-
 
 ; ------------------------------------------------------------------------------
 ;                               Run or Raise

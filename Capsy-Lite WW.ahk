@@ -23,7 +23,7 @@ SetBatchLines -1
 commandMode=False
 
 ;window management function task bar height
-taskbar_heigth:=30
+taskbar_height:=35
 
 ;run or raise function - Programs Launched
 prog_1:="C:\Program Files\Microsoft Office\root\Office16\EXCEL.EXE"
@@ -189,19 +189,74 @@ RAlt::RControl
 
 CoordMode,Screen
 ww_PlaceWindow(x_pos,y_pos,width,height){
+	global taskbar_height ; to use a global variable inside a function keyword "global" should be used
     WinGet, window, ID, A
     ; WinHide, ahk_id %window%
     WinRestore, ahk_id %window%
-    WinMove, ahk_id %window%, ,x_pos, y_pos , width, height-taskbar_heigth
+    WinMove, ahk_id %window%, ,x_pos, y_pos , width, height-taskbar_height
     ; Winshow, ahk_id %window%
 	return
 }
 
 #if (%commandMode%=True) ; if command mode is on activate the commands
 !+1::ww_PlaceWindow(2,2,A_ScreenWidth-4, A_ScreenHeight)
+!+2::ww_PlaceWindow(A_ScreenWidth,2,A_ScreenWidth-4, A_ScreenHeight)
 !+e::ww_PlaceWindow(2,2,A_ScreenWidth/2-4, A_ScreenHeight)
 !+r::ww_PlaceWindow(A_ScreenWidth/2+2,2,A_ScreenWidth/2-4, A_ScreenHeight)
 #if
+
+
+; !+a::wp_WinPreviouslyActive(A_ScreenWidth/2,A_ScreenHeight)
+; !+d::wp_WinPreviouslyActive(A_ScreenWidth,A_ScreenHeight)
+!+a::altertab(A_ScreenWidth/2,A_ScreenHeight)
+!+d::altertab(A_ScreenWidth,A_ScreenHeight)
+
+
+
+wp_WinPreviouslyActive(width,height)
+{
+	; place the active window
+    ww_PlaceWindow(width+2,2,width-4, height)
+
+	; get the hwind (ahk_id) of the Active Window
+    active := WinActive("A")
+
+    WinGet, win, List
+
+    ; Find the active window.
+    ; (Might not be win1 if there are always-on-top windows?)
+    Loop, %win%
+        if (win%A_Index% = active)
+    {
+        if (A_Index < win)
+            N := A_Index+1
+        ; hack for PSPad: +1 seems to get the document (child!) window, so do +2
+        ifWinActive, ahk_class TfPSPad
+            N += 1
+        break
+    }
+
+    ; Use WinExist to set Last Found Window (for consistency with WinActive())
+    ; return WinExist("ahk_id " . win%N%)
+    WinExist("ahk_id " . win%N%)
+    WinActivate
+    ; ww_PlaceWindow(2,2,width/2-4, height)
+    ww_PlaceWindow(2,2,width-4, height)
+
+    ; ----- ww: Uncomment the below section if you want to reactivate the previously active window
+    ; WinExist("ahk_id " . win%active%)
+    ; WinActivate, ahk_id %active%
+}
+
+altertab(width,height)
+{
+	ww_PlaceWindow(width+2,2,width-4, height)
+	Sleep, 150
+	send, {AltDown}{Tab}{AltUp}
+	Sleep, 150
+	ww_PlaceWindow(2,2,width-4, height)
+}
+
 
 ; ------------------------------- Line Editing ---------------------------------
 
@@ -481,6 +536,26 @@ Capslock & ]::  ; Sourround in {}
     }
 return
 
+; ------------------------------- Num lock keys --------------------------------
++^!Space:: SendInput {Numpad0}
++^!m:: SendInput {Numpad1}
++^!,:: SendInput {Numpad2}
++^!.:: SendInput {Numpad3}
++^!j:: SendInput {Numpad4}
++^!k:: SendInput {Numpad5}
++^!l:: SendInput {Numpad6}
++^!u:: SendInput {Numpad7}
++^!i:: SendInput {Numpad8}
++^!o:: SendInput {Numpad9}
++^!p:: SendInput {*}
++^![:: SendInput {/}
++^!':: SendInput {-}
++^!SC027:: SendInput {+}
++^!/:: SendInput {Enter}
++^!n:: SendInput {BS}
++^!BS:: SendInput {BS}
++^!Enter:: SendInput {Enter}
++^!h:: SendInput {=}
 
 ; ------------------------------- Numberpad keys --------------------------------
 Capslock & Numpad8:: SendInput {Blind}{Up}
@@ -502,6 +577,11 @@ Capslock & NumpadAdd:: SendInput {Blind}{=}
 Capslock & NumpadEnter:: SendInput {Blind}^{Enter}
 
 Capslock & NumLock:: SendInput {Esc}
+
+
+; ------------------------------------------------------------------------------
+;                                   Launcher
+; ------------------------------------------------------------------------------
 
 Capslock & w::
 
@@ -575,6 +655,19 @@ Capslock & w::
         SendInput, ^a
         return
     }
+    ;----------------------- Select to start
+
+    else if key=ss
+    {
+        SendInput, +{Home}+{Home}
+        return
+    }
+    ;----------------------- Select to End
+    else if key=se
+    {
+        SendInput, +{End}+{End}
+        return
+    }
 
 ; ----------------------------Excel Rows | Cols
     else if key=dc
@@ -615,7 +708,7 @@ return
 #3::OpenOrShowAppBasedOnExeName(prog_3)
 #4::OpenOrShowAppBasedOnExeName(prog_4)
 #5::OpenOrShowAppBasedOnExeName(prog_5)
-#+f::OpenOrShowAppBasedOnExeName(prog_6)
+!+f::OpenOrShowAppBasedOnExeName(prog_6)
 
 CoordMode,Screen
 ; AppAddress: The address to the .exe (Eg: "C:\Windows\System32\SnippingTool.exe")
