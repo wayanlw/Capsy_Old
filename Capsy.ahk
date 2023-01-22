@@ -270,7 +270,7 @@ Capslock & SC027::SendInput {Blind}^{right}
 
 Capslock & z::AltTab
 ;Capslock & x:: SendInput ^x ; single press = find| long press = find selection
-Capslock & c::SendInput {Esc}
+Capslock & c::SendInput {Enter}
 Capslock & v::SendInput {Delete}
 Capslock & b::SendInput {Blind}{BS}
 Capslock & n::SendInput {Blind}{BS}
@@ -334,6 +334,7 @@ RAlt::RControl
 
 !+q::SendInput !{F4}
 !q::SendInput ^w
+;!+k::WinMinimize, A
 
 ; ---------------------------- windows placement --------------------------- */
 
@@ -585,23 +586,24 @@ return
 capslock & x::
     keywait, x, t 0.5
     if errorlevel{
-        ;long press to copy line
-        sendinput, ^c^f^v
-    }
-    else{
         ;short press to copy
         OldClipboard := Clipboard
         Clipboard := ""
         Send ^c
         ClipWait, 1
-        Clipboard = '%Clipboard%'
+        Clipboard = %Clipboard%
 		Send ^f
         Send ^v
 		Sleep 500
-		Send Return
+		Send {Enter}
         Clipboard := OldClipboard
         OldClipboard := ""
         ; Send, ^c
+        return
+    }
+    else{
+        ;short press to copy
+        sendinput, ^f
         return
     }
     keywait,x
