@@ -134,9 +134,9 @@ b::MouseMove, (A_ScreenWidth / 6 * 5), (A_ScreenHeight / 6 * 5)
 ;###############End Mouse #########################################
 
 ; ---------------------------Extra mouse button mapping ---------------------
-
-XButton2::Send {Enter}
-XButton1::Send {Delete}
+; this is commented because the this functionality is implmented with xmousebuttonControl
+; XButton2::Send {Enter}
+; XButton1::Send {Delete}
 
 
 ; Mouse Buttons as Scroll Up and Down
