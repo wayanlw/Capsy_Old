@@ -87,7 +87,7 @@ return
 ; ------------------------------------------------------------------------------
 
 Capslock & q::Send "{Esc}"
-;Capslock & w::Launcher
+Capslock & w::Send "^a"
 Capslock & e::Send "^z" ; This has repetitive press. Sould be a comfortable place.
 Capslock & r::Send "^y"
 Capslock & t:: Send "^{Left}+^{Right}"
