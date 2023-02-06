@@ -85,8 +85,8 @@ return
 ; ------------------------------------------------------------------------------
 ;                                   Main Keys
 ; ------------------------------------------------------------------------------
-Capslock & Tab::Send ""
-Capslock & q::Send "{Esc}" 
+Capslock & Tab::Send "^a"
+Capslock & q::Send "{Esc}"
 Capslock & w::Send "^s"
 Capslock & e::Send "^z" ; This has repetitive press. Sould be a comfortable place.
 Capslock & r::Send "^y"
