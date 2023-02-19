@@ -171,9 +171,9 @@ return
 ; ------------------------------------------------------------------------------
 ;                                   Main Keys
 ; ------------------------------------------------------------------------------
-Capslock & Tab::Send "^a"
+
 Capslock & q::Send "{Esc}"
-Capslock & w::Send "^s"
+Capslock & w::Send "^a"
 Capslock & e::Send "^z" ; This has repetitive press. Sould be a comfortable place.
 Capslock & r::Send "^y"
 ; Capslock & t:: Send "^{Left}+^{Right}"
@@ -186,7 +186,7 @@ Capslock & p::Send "{Blind}{End}"
 ; Capslock & ]::Send []{Left}     ; Sorround in {}
 Capslock & \::Send "|"
 
-; Capslock & a:: Send the shift key
+; Capslock & a:: Single Press=Save | Double Press=Save As
 Capslock & s:: Send "^x"
 Capslock & d:: Send "^c"
 Capslock & f:: Send "^v"
@@ -218,8 +218,8 @@ Capslock & space::return
 Capslock & BS::Send "{Blind}^{BS}"
 #space::Send "{space}{left}"
 
-Capslock & a::Send "{Blind}{Shift Down}"
-Capslock & a up::Send "{Blind}{Shift up}"
+Capslock & Tab::Send "{Blind}{Shift Down}"
+Capslock & Tab up::Send "{Blind}{Shift up}"
 
 ; Capslock & a::
 ; {
@@ -303,6 +303,25 @@ Capslock & g::
 return
 }
 
+Capslock & a::
+{
+    ErrorLevel := !KeyWait("a")
+    ErrorLevel := !KeyWait("a", "d ,t 0.2")
+    if errorlevel
+    {
+        SendInput("^s") ; save
+    }
+    else
+    {
+        if WinActive("ahk_class XLMAIN")
+        {
+            SendInput("{f12}") ; save as in excel
+            return
+        }
+        SendInput("^+s") ; save as
+    }
+return
+}
 ; --------------------------------- F keys ---------------------------------*/
 
 Capslock & F1:: Send "{AppsKey}"
