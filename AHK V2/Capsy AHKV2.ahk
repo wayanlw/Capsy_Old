@@ -19,6 +19,92 @@ return
 }
 
 ; ------------------------------------------------------------------------------
+;                                Mouse Area
+; ------------------------------------------------------------------------------
+CoordMode("Mouse", "Screen")
+
+#UseHook ; without this the mouse movement will not work
+MouseDelay := "0"
+Increment := "1"
+e::
+d::
+s::
+f::
+RShift::
+{ ; V1toV2: Added bracket
+    xVal := ""
+    yVal := ""
+    If GetKeyState("RShift","p") = 1
+    {
+        IncrementValue := Increment
+        Loop
+        {
+            ; lower increment value higher startup speed. Lower increment slower acceleration
+            If (A_Index > IncrementValue * 1) and (IncrementValue < Increment * 5 )
+                IncrementValue := IncrementValue * 1
+            If GetKeyState("d", "P")
+                yVal := IncrementValue
+            Else If GetKeyState("e", "P")
+                yVal := -IncrementValue
+            If !yVal
+                yVal := 0
+            If GetKeyState("s", "P")
+                xVal := -IncrementValue
+            Else If GetKeyState("f", "P")
+                xVal := IncrementValue
+            If !xVal
+                xVal := 0
+            If GetKeyState(A_ThisHotKey, "P")
+                MouseMove(xVal, yVal, MouseDelay, "R")
+            Else
+                Break
+        }
+        Send("{RShift up}")
+    }
+    else
+    {
+        Send("{" . A_ThisHotKey . "}")
+} ; Added bracket before function
+        Send("{RShift up}")
+        ; Send, {RALT up}
+    }
+return
+
+
+#HotIf GetKeyState("RShift","P") = 1
+v::Click(1)
+x::Click(2)
+space::
+{
+    SendInput("{LButton Down}")
+    ErrorLevel := !KeyWait("space", "u")
+    SendInput("{LButton Up}")
+return
+
+}
+; ---------------------------- scroll up and down ------------------------------
+w::
+{
+    While GetKeyState("w", "P")
+    {
+        Send("{Wheelup}")
+        Sleep(100)
+    }
+return
+}
+
+r::
+{
+    While GetKeyState("r", "P")
+    {
+        Send("{WheelDown}")
+        Sleep(100)
+    }
+return
+}
+
+#HotIf
+; ------------------------------------------------------------------------------
 ;                                Excel Area
 ; ------------------------------------------------------------------------------
 
@@ -87,10 +173,10 @@ return
 ; ------------------------------------------------------------------------------
 Capslock & Tab::Send ""
 Capslock & q::Send "{Esc}"
-Capslock & w::Send "^s"
+Capslock & w::Send "^a"
 Capslock & e::Send "^z" ; This has repetitive press. Sould be a comfortable place.
 Capslock & r::Send "^y"
-Capslock & t:: Send "^{Left}+^{Right}"
+; Capslock & t:: Send "^{Left}+^{Right}"
 Capslock & y::Send "{Blind}{Home}" ;with space for contrl+End
 Capslock & u::Send "{Blind}{pgUp}"
 Capslock & i::Send "{Blind}{Up}"
@@ -100,11 +186,11 @@ Capslock & p::Send "{Blind}{End}"
 ; Capslock & ]::Send []{Left}     ; Sorround in {}
 Capslock & \::Send "|"
 
-; Capslock & a:: Send the shift key
+; Capslock & a:: Single Press=Save | Double Press=Save As
 Capslock & s:: Send "^x"
 Capslock & d:: Send "^c"
 Capslock & f:: Send "^v"
-Capslock & g:: Send "{Home}{Home}+{End}+{End}{Del}"
+; Capslock & g:: Send "{Home}{Home}+{End}+{End}{Del}"
 Capslock & h::Send "{Blind}^{Left}"
 Capslock & j::Send "{Blind}{Left}"
 Capslock & k::Send "{Blind}{Down}"
@@ -132,8 +218,8 @@ Capslock & space::return
 Capslock & BS::Send "{Blind}^{BS}"
 #space::Send "{space}{left}"
 
-Capslock & a::Send "{Blind}{Shift Down}"
-Capslock & a up::Send "{Blind}{Shift up}"
+Capslock & Tab::Send "{Blind}{Shift Down}"
+Capslock & Tab up::Send "{Blind}{Shift up}"
 
 ; Capslock & a::
 ; {
@@ -171,6 +257,71 @@ Capslock & End::Send "{Home}{Home}+{End}+{End}^c{End}{Enter}^v" ; duplicate line
 Capslock & PgDn::Send "{End}{space}{Delete}{End}" ; bring the below line to the current line
 Capslock & PgUp::Send "{Home}{Home}{BackSpace}{space}{End}" ; Take the current line to the line above
 
+Capslock & t::
+{
+    ErrorLevel := !KeyWait("t", "t 0.5")
+    if errorlevel{
+        ;long press to select word
+        SendInput("^{Left}+^{Right}")
+    }
+    else{
+        ErrorLevel := !KeyWait("t")
+        ErrorLevel := !KeyWait("t", "d ,t 0.15")
+        if errorlevel
+            ; single press to copy word
+        SendInput("^{Left}+^{Right}^c")
+        else{
+            ; double press to delet word
+            SendInput("^{Left}+^{Right}^{Del}")
+            return
+        }
+    }
+    ErrorLevel := !KeyWait("t")
+return
+}
+
+Capslock & g::
+{
+    ErrorLevel := !KeyWait("g", "t 0.5")
+    if errorlevel{
+        ;long press to select line
+        SendInput("{Home}{Home}+{End}+{End}")
+    }
+    else{
+        ErrorLevel := !KeyWait("g")
+        ErrorLevel := !KeyWait("g", "d ,t 0.15")
+        if errorlevel
+            ; single press to delete line
+        Send("{Home}{Home}+{End}+{End}{Del}")
+        else{
+            ; double press to copy line
+            Send("{Home}{Home}+{End}+{End}^c")
+            return
+        }
+    }
+    ErrorLevel := !KeyWait("g")
+return
+}
+
+Capslock & a::
+{
+    ErrorLevel := !KeyWait("a")
+    ErrorLevel := !KeyWait("a", "d ,t 0.2")
+    if errorlevel
+    {
+        SendInput("^s") ; save
+    }
+    else
+    {
+        if WinActive("ahk_class XLMAIN")
+        {
+            SendInput("{f12}") ; save as in excel
+            return
+        }
+        SendInput("^+s") ; save as
+    }
+return
+}
 ; --------------------------------- F keys ---------------------------------*/
 
 Capslock & F1:: Send "{AppsKey}"
